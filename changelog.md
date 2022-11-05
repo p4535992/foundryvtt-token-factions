@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### 0.3.5 
+
+. Little bug fix
+
 ### 0.3.4
 
 - Some bug fix and delete token behaviour

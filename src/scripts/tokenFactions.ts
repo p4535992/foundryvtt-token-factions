@@ -278,6 +278,9 @@ export class TokenFactions {
 		if (token instanceof TokenDocument) {
 			token = <Token>(<TokenDocument>token)?.object;
 		}
+		if(!token.id){
+			return token;
+		}
 		// OLD FVTT 9
 		/*
 		//@ts-ignore
@@ -728,7 +731,9 @@ export class TokenFactions {
 			// TokenDocument to Token
 			//@ts-ignore
 			const token: Token = tokenDoc._object;
-
+			if(!token.id){
+				return;
+			}
 			//@ts-ignore
 			if (!canvas.grid.faction) {
 				//@ts-ignore
