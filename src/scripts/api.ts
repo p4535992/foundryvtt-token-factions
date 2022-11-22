@@ -1,5 +1,5 @@
 import CONSTANTS from "./constants";
-import { isStringEquals, warn } from "./lib/lib";
+import { error, isStringEquals, warn } from "./lib/lib";
 import { TokenFactions } from "./tokenFactions";
 import type { FactionGraphic } from "./TokenFactionsModels";
 
@@ -108,6 +108,14 @@ const API = {
 
 	async clearGridFaction(tokenId: string) {
 		TokenFactions.clearGridFaction(tokenId);
+	},
+
+	clearGridFactionArr(...inAttributes) {
+		if (!Array.isArray(inAttributes)) {
+			throw error("clearGridFactionArr | inAttributes must be of type array");
+		}
+		const [tokenId] = inAttributes;
+		this.clearGridFaction(tokenId);
 	},
 };
 

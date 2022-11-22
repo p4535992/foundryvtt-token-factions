@@ -27,7 +27,7 @@ Artwork and assets kindly provided by and used with permission of Caeora. [www.c
 
 ## Unfortunately I have some small problems (both level of the code and of personal life XD) and I will not be able to keep up with this module, if someone feels like taking charge of it let me know
 
-**Part of the code of this is module is inspired from the  wonderful work done by [kandashi](https://github.com/kandashi) with its [Border-Control](https://github.com/kandashi/Border-Control) module.
+**Part of the code of this is module is inspired from the  wonderful work done by [kandashi](https://github.com/kandashi) with its [Border-Control](https://github.com/kandashi/Border-Control) and [Levels](https://github.com/theripper93/Levels) module.
 If you want to support more modules of this kind, I invite you to go and support his patreon.**
 
 [![alt-text](https://img.shields.io/badge/-Patreon-%23ff424d?style=for-the-badge)](https://www.patreon.com/kandashi)

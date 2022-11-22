@@ -284,6 +284,15 @@ export class TokenFactions {
 		if (!token.id) {
 			return token;
 		}
+		if (!token.document) {
+			return token;
+		}
+		// if (token.document.hidden) {
+		// 	const isPlayerOwned = <boolean>token.document.isOwner;
+		// 	if (!game.user?.isGM && !isPlayerOwned) {
+		// 		return token;
+		// 	}
+		// }
 		// OLD FVTT 9
 		/*
 		//@ts-ignore

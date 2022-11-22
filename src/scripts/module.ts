@@ -1,12 +1,16 @@
-import { warn, error, debug, i18n } from "./lib/lib";
+import { warn, error, debug, i18n, advancedLosTestInLos, getOwnedTokens } from "./lib/lib";
 import { TokenFactions } from "./tokenFactions";
 import CONSTANTS from "./constants";
 import { setApi } from "../main";
 import API from "./api";
+import { registerSocket, tokenFactionsSocket } from "./socket";
 
 export const initHooks = async () => {
 	warn("Init Hooks processing");
 	TokenFactions.onInit();
+
+	Hooks.once("socketlib.ready", registerSocket);
+	registerSocket();
 
 	Hooks.on("renderSettingsConfig", (app, el, data) => {
 		const nC = game.settings.get(CONSTANTS.MODULE_NAME, "neutralColor");
@@ -100,6 +104,51 @@ export const initHooks = async () => {
 		Hooks.on("updateToken", (tokenData: TokenDocument, data) => {
 			//TokenFactions.updateTokenDataFaction(tokenData);
 			// token?.refresh();
+			const isPlayerOwned = <boolean>tokenData.isOwner;
+			// When i hidden this hide for everyone except owner and gm
+			if (data.hidden || tokenData.hidden) {
+				if (!game.user?.isGM && !isPlayerOwned) {
+					TokenFactions.clearGridFaction(<string>tokenData.id);
+					// tokenFactionsSocket.executeAsGM("clearGridFaction", <string>tokenData.id);
+					return;
+				}
+			}
+			// or if a token is not visible
+			//@ts-ignore
+			if (tokenData.object) {
+				// //@ts-ignore
+				const target = tokenData.object;
+				let isVisible = false;
+				// const tolerance = Math.min(tokenData.object.w, tokenData.object.h) / 4; // this is the same of levels
+				// const point =
+				// const isVisible =
+				// 	//@ts-ignore
+				// 	canvas.effects.visibility.testVisibility(test.point, { tolerance: tolerance, object: target });
+				const ownedTokens = getOwnedTokens(true);
+				const someoneIsSelected = <number>canvas.tokens?.controlled?.length > 0;
+				if (ownedTokens && ownedTokens.length > 0) {
+					for (const token of <Token[]>canvas.tokens?.placeables) {
+						if (ownedTokens.includes(token)) {
+							if (game.user?.isGM && !someoneIsSelected) {
+								continue;
+							}
+						}
+						for (const ownedToken of ownedTokens) {
+							if (advancedLosTestInLos(ownedToken, target)) {
+								isVisible = true;
+								break;
+							}
+						}
+					}
+				}
+				if (!isVisible) {
+					if (!game.user?.isGM && !isPlayerOwned) {
+						TokenFactions.clearGridFaction(<string>tokenData.id);
+						// tokenFactionsSocket.executeAsGM("clearGridFaction", <string>tokenData.id);
+						return;
+					}
+				}
+			}
 			if (
 				hasProperty(data, "flags") &&
 				hasProperty(
@@ -162,16 +211,15 @@ export const setupHooks = async (): Promise<void> => {
 
 export const readyHooks = () => {
 	// DO NOTHING
+	Hooks.on("deleteToken", async (tokenDocument: TokenDocument, data: any, updateData: any) => {
+		const isPlayerOwned = <boolean>tokenDocument.isOwner;
+		if (!game.user?.isGM && !isPlayerOwned) {
+			return;
+		}
+		TokenFactions.clearGridFaction(<string>tokenDocument.id);
+		// tokenFactionsSocket.executeAsGM("clearGridFaction", <string>tokenDocument.id);
+	});
 };
-
-Hooks.on("deleteToken", async (tokenDocument: TokenDocument, data: any, updateData: any) => {
-	const isPlayerOwned = <boolean>tokenDocument.isOwner;
-	if (!game.user?.isGM && !isPlayerOwned) {
-		return;
-	}
-	TokenFactions.clearGridFaction(<string>tokenDocument.id);
-	//return true;
-});
 
 export const TokenPrototypeRefreshHandler = function (wrapped, ...args) {
 	const tokenData = this as TokenDocument;

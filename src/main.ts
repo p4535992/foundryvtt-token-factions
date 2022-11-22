@@ -64,6 +64,11 @@ Hooks.once("setup", function () {
 /* When ready							*/
 /* ------------------------------------ */
 Hooks.once("ready", () => {
+	if (!game.modules.get("socketLib")?.active && game.user?.isGM) {
+		let word = "install and activate";
+		if (game.modules.get("socketLib")) word = "activate";
+		throw error(`Requires the 'socketLib' module. Please ${word} it.`);
+	}
 	// Do anything once the module is ready
 	readyHooks();
 });
