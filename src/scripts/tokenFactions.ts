@@ -299,53 +299,52 @@ export class TokenFactions {
 		// or if a token is not visible
 		//@ts-ignore
 		if (token.document.object) {
-			// //@ts-ignore
-			const target = token.document.object;
-			let isVisible = token.isVisible && !isPlayerOwned;
 			const someoneIsSelected = <number>canvas.tokens?.controlled?.length > 0;
-			/*
-			const ownedTokens = getOwnedTokens(true);
-			if (ownedTokens && ownedTokens.length > 0) {
-				for (const token of <Token[]>canvas.tokens?.placeables) {
-					if (ownedTokens.includes(token)) {
-						if (game.user?.isGM && !someoneIsSelected) {
-							continue;
-						}
-					}
-					for (const ownedToken of ownedTokens) {
-						const sourceCenter = {
-							x: ownedToken.center.x,
-							y: ownedToken.center.y,
-							//@ts-ignore
-							z: ownedToken.losHeight,
-						};
-						// const isVisibleX = advancedLosTestInLos(ownedToken, target);
-						const tolerance = Math.min(token.w, token.h) / 4; // this is the same of levels
-						const isVisibleX =
-							//@ts-ignore
-							canvas.effects.visibility.testVisibility(
-								sourceCenter, { tolerance: 0, object: token }
-							);
-						if (isVisibleX) {
-							isVisible = true;
-							break;
-						}
-					}
-				}
-			}
-			*/
-			if (!isVisible) {
-				if (!game.user?.isGM && !isPlayerOwned) {
+			if (!game.user?.isGM && !isPlayerOwned) {
+				let isVisible = token.isVisible;
+				if (!isVisible) {
 					TokenFactions.clearGridFaction(<string>token.document.id);
 					// tokenFactionsSocket.executeAsGM("clearGridFaction", <string>tokenData.id);
 					return;
 				}
-				// if (game.user?.isGM && someoneIsSelected) {
-				// 	TokenFactions.clearGridFaction(<string>token.document.id);
-				// 	// tokenFactionsSocket.executeAsGM("clearGridFaction", <string>tokenData.id);
-				// 	return;
-				// }
 			}
+			// else if (game.user?.isGM && someoneIsSelected) {
+			// 	let isVisible = false;
+			// 	const tokensToClear = <string[]>[];
+			// 	for (const ownedToken of <Token[]>canvas.tokens?.placeables) {
+			// 		if (ownedToken.id === token.id) {
+			// 			continue;
+			// 		}
+			// 		//@ts-ignore
+			// 		if(ownedToken.controlled){
+			// 			continue;
+			// 		}
+			// 		const sourceCenter = {
+			// 			x: ownedToken.center.x,
+			// 			y: ownedToken.center.y,
+			// 			//@ts-ignore
+			// 			z: ownedToken.losHeight,
+			// 		};
+			// 		const tolerance = Math.min(ownedToken.w, ownedToken.h) / 4; // this is the same of levels
+			// 		const isVisibleX =
+			// 			//@ts-ignore
+			// 			canvas.effects.visibility.testVisibility(sourceCenter, { tolerance: tolerance, object: token });
+			// 		if (isVisibleX) {
+			// 			isVisible = true;
+			// 			break;
+			// 		} else {
+			// 			tokensToClear.push(ownedToken.id);
+			// 		}
+			// 	}
+			// 	// }
+			// 	if (!isVisible) {
+			// 		for(const id of tokensToClear){
+			// 			TokenFactions.clearGridFaction(<string>id);
+			// 		}
+			// 		// tokenFactionsSocket.executeAsGM("clearGridFaction", <string>tokenData.id);
+			// 		return;
+			// 	}
+			// }
 		}
 		// OLD FVTT 9
 		/*
