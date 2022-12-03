@@ -158,6 +158,10 @@ export const initHooks = async () => {
 			});
 		});
 
+		// Hooks.on("refreshToken", (token, options) => {
+		// 	TokenFactions.updateTokenDataFaction(token.document);
+		// });
+
 		// canvas.tokens?.placeables.forEach((t) => {
 		// 	if (!t.owner) {
 		// 		t.cursor = "default";
@@ -238,8 +242,7 @@ export const ActorPrototypeOnUpdateHandler = function (wrapped, ...args) {
 //   const token: Token = this as Token;
 //   //@ts-ignore
 //   TokenFactions.updateTokenDataFaction(token.document);
-//   return;
-//   // return wrapped(args);
+//   return wrapped(args);
 // };
 
 // export const TokenPrototypeGetBorderColorHandler = function (wrapped, ...args) {
