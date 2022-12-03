@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### 0.3.8
+
+- Fixed  https://github.com/p4535992/foundryvtt-token-factions/issues/22
+
 ### 0.3.7
 
 - Fixed at 90% https://github.com/p4535992/foundryvtt-token-factions/issues/22

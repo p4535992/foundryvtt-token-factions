@@ -292,7 +292,7 @@ export class TokenFactions {
 		if (!(token instanceof Token)) {
 			return token;
 		}
-		// token.sortableChildren = true;
+		token.sortableChildren = true;
 		/*
 		const isPlayerOwned = <boolean>token.document.isOwner;
 		// When i hidden this hide for everyone except owner and gm
@@ -417,9 +417,9 @@ export class TokenFactions {
 					//@ts-ignore
 					token.mesh.zIndex = token.border.zIndex - 1;
 					//@ts-ignore
-					if (factionBorderContainer.zIndex >= token.mesh.zIndex) {
+					if (token.faction.zIndex >= token.mesh.zIndex) {
 						//@ts-ignore
-						factionBorderContainer.zIndex = token.mesh.zIndex - 1;
+						token.faction.zIndex = token.mesh.zIndex - 1;
 					}
 				}
 				//@ts-ignore
@@ -427,21 +427,21 @@ export class TokenFactions {
 					//@ts-ignore
 					token.zIndex = token.border.zIndex - 1;
 					//@ts-ignore
-					if (factionBorderContainer.zIndex >= token.zIndex) {
+					if (token.faction.zIndex >= token.zIndex) {
 						//@ts-ignore
-						factionBorderContainer.zIndex = token.zIndex - 1;
+						token.faction.zIndex = token.zIndex - 1;
 					}
 				}
 				//@ts-ignore
-				if (factionBorderContainer.zIndex >= token.border.zIndex) {
+				if (token.faction.zIndex >= token.border.zIndex) {
 					//@ts-ignore
-					factionBorderContainer.zIndex = token.border.zIndex - 1;
+					token.faction.zIndex = token.border.zIndex - 1;
 				}
 			} else {
 				//@ts-ignore
-				if (factionBorderContainer.zIndex >= token.mesh.zIndex) {
+				if (token.faction.zIndex >= token.mesh.zIndex) {
 					//@ts-ignore
-					factionBorderContainer.zIndex = token.mesh.zIndex - 1;
+					token.faction.zIndex = token.mesh.zIndex - 1;
 				}
 			}
 		} else {
@@ -452,16 +452,16 @@ export class TokenFactions {
 					//@ts-ignore
 					token.zIndex = token.border.zIndex - 1;
 					//@ts-ignore
-					if (factionBorderContainer.zIndex >= token.zIndex) {
+					if (token.faction.zIndex >= token.zIndex) {
 						//@ts-ignore
-						factionBorderContainer.zIndex = token.zIndex - 1;
+						token.faction.zIndex = token.zIndex - 1;
 					}
 				}
 			} else {
 				//@ts-ignore
-				if (factionBorderContainer.zIndex >= token.zIndex) {
+				if (token.faction.zIndex >= token.zIndex) {
 					//@ts-ignore
-					factionBorderContainer.zIndex = token.zIndex - 1;
+					token.faction.zIndex = token.zIndex - 1;
 				}
 			}
 		}
@@ -807,7 +807,7 @@ export class TokenFactions {
 			if (!token.id) {
 				return;
 			}
-			// token.sortableChildren = true;
+			token.sortableChildren = true;
 			// FVTT 10 WITH GRID
 			/*
 			//@ts-ignore
@@ -833,8 +833,6 @@ export class TokenFactions {
 			}
 			//@ts-ignore
 			let factionBorderContainer: PIXI.Container = canvas.grid.faction[token.id];
-			// factionBorder.sortableChildren = true;
-			// factionBorder.clear();
 			*/
 
 			//@ts-ignore
@@ -861,9 +859,9 @@ export class TokenFactions {
 						//@ts-ignore
 						token.mesh.zIndex = token.border.zIndex - 1;
 						//@ts-ignore
-						if (factionBorderContainer.zIndex >= token.mesh.zIndex) {
+						if (token.faction.zIndex >= token.mesh.zIndex) {
 							//@ts-ignore
-							factionBorderContainer.zIndex = token.mesh.zIndex - 1;
+							token.faction.zIndex = token.mesh.zIndex - 1;
 						}
 					}
 					//@ts-ignore
@@ -871,21 +869,21 @@ export class TokenFactions {
 						//@ts-ignore
 						token.zIndex = token.border.zIndex - 1;
 						//@ts-ignore
-						if (factionBorderContainer.zIndex >= token.zIndex) {
+						if (token.faction.zIndex >= token.zIndex) {
 							//@ts-ignore
-							factionBorderContainer.zIndex = token.zIndex - 1;
+							token.faction.zIndex = token.zIndex - 1;
 						}
 					}
 					//@ts-ignore
-					if (factionBorderContainer.zIndex >= token.border.zIndex) {
+					if (token.faction.zIndex >= token.border.zIndex) {
 						//@ts-ignore
-						factionBorderContainer.zIndex = token.border.zIndex - 1;
+						token.faction.zIndex = token.border.zIndex - 1;
 					}
 				} else {
 					//@ts-ignore
-					if (factionBorderContainer.zIndex >= token.mesh.zIndex) {
+					if (token.faction.zIndex >= token.mesh.zIndex) {
 						//@ts-ignore
-						factionBorderContainer.zIndex = token.mesh.zIndex - 1;
+						token.faction.zIndex = token.mesh.zIndex - 1;
 					}
 				}
 			} else {
@@ -896,16 +894,16 @@ export class TokenFactions {
 						//@ts-ignore
 						token.zIndex = token.border.zIndex - 1;
 						//@ts-ignore
-						if (factionBorderContainer.zIndex >= token.zIndex) {
+						if (token.faction.zIndex >= token.zIndex) {
 							//@ts-ignore
-							factionBorderContainer.zIndex = token.zIndex - 1;
+							token.faction.zIndex = token.zIndex - 1;
 						}
 					}
 				} else {
 					//@ts-ignore
-					if (factionBorderContainer.zIndex >= token.zIndex) {
+					if (token.faction.zIndex >= token.zIndex) {
 						//@ts-ignore
-						factionBorderContainer.zIndex = token.zIndex - 1;
+						token.faction.zIndex = token.zIndex - 1;
 					}
 				}
 			}
@@ -1121,9 +1119,6 @@ export class TokenFactions {
 		}
 
 		const frameStyle = String(game.settings.get(CONSTANTS.MODULE_NAME, "frame-style"));
-
-		// token.sortableChildren = true;
-		// token.sortDirty = true;
 
 		if (frameStyle == TokenFactions.TOKEN_FACTIONS_FRAME_STYLE.FLAT) {
 			// frameStyle === 'flat'

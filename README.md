@@ -53,9 +53,7 @@ This module uses the [libWrapper](https://github.com/ruipin/fvtt-lib-wrapper) li
 ## Known issue
 
 - The old "BLevel" frame style not work anymore, but i'll try for the feature to make more customizable faction image, there are already may options, but i don' have time for all the others. FOR NOW JUST USE THE FLAT SETTING
-- If you are a gm while you control a token you still see the PIXI container of token hide from sight with walls, this something i can't fix anymore because i'm not so smart and because on 10 this stuff is no longer locate on the token but on the canvas himself.
-
-![img](/wiki/bug_gm_can_see.gif)
+- [With the fvtt 10 the border is now hidden behind the faction drawing](https://github.com/p4535992/foundryvtt-token-factions/issues/6)
 
 ## Configuration
 
