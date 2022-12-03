@@ -365,6 +365,7 @@ export class TokenFactions {
 		// token.sortDirty = true;
 		*/
 		// FVTT 10 WITH GRID
+		/*
 		//@ts-ignore
 		if (!canvas.grid.faction) {
 			//@ts-ignore
@@ -387,20 +388,24 @@ export class TokenFactions {
 			canvas.grid.addChild(canvas.grid.faction[token.id]);
 		}
 		//@ts-ignore
-		let factionBorder: PIXI.Container = canvas.grid.faction[token.id];
+		let factionBorderContainer: PIXI.Container = canvas.grid.faction[token.id];
 		// factionBorder.sortableChildren = true;
 		// factionBorder.clear();
+		*/
 
 		//@ts-ignore
-		/*
 		if (!token.faction || token.faction.destroyed) {
 			//@ts-ignore
 			token.faction = token.addChildAt(new PIXI.Container(), 0);
 		}
 		//@ts-ignore
-		let factionBorder: PIXI.Container = <PIXI.Container>token.faction;
-		
-		*/
+		let factionBorderContainer: PIXI.Container = <PIXI.Container>token.faction;
+
+		//@ts-ignore
+		factionBorderContainer = TokenFactions.drawBorderFaction(token, factionBorderContainer);
+		//@ts-ignore
+		token.addChildAt(factionBorderContainer, 0);
+		// TokenFactions.clearGridFaction(token.id);
 		//@ts-ignore
 		if (token.mesh) {
 			//@ts-ignore
@@ -410,9 +415,9 @@ export class TokenFactions {
 					//@ts-ignore
 					token.mesh.zIndex = token.border.zIndex - 1;
 					//@ts-ignore
-					if (factionBorder.zIndex >= token.mesh.zIndex) {
+					if (factionBorderContainer.zIndex >= token.mesh.zIndex) {
 						//@ts-ignore
-						factionBorder.zIndex = token.mesh.zIndex - 1;
+						factionBorderContainer.zIndex = token.mesh.zIndex - 1;
 					}
 				}
 				//@ts-ignore
@@ -420,21 +425,21 @@ export class TokenFactions {
 					//@ts-ignore
 					token.zIndex = token.border.zIndex - 1;
 					//@ts-ignore
-					if (factionBorder.zIndex >= token.zIndex) {
+					if (factionBorderContainer.zIndex >= token.zIndex) {
 						//@ts-ignore
-						factionBorder.zIndex = token.zIndex - 1;
+						factionBorderContainer.zIndex = token.zIndex - 1;
 					}
 				}
 				//@ts-ignore
-				if (factionBorder.zIndex >= token.border.zIndex) {
+				if (factionBorderContainer.zIndex >= token.border.zIndex) {
 					//@ts-ignore
-					factionBorder.zIndex = token.border.zIndex - 1;
+					factionBorderContainer.zIndex = token.border.zIndex - 1;
 				}
 			} else {
 				//@ts-ignore
-				if (factionBorder.zIndex >= token.mesh.zIndex) {
+				if (factionBorderContainer.zIndex >= token.mesh.zIndex) {
 					//@ts-ignore
-					factionBorder.zIndex = token.mesh.zIndex - 1;
+					factionBorderContainer.zIndex = token.mesh.zIndex - 1;
 				}
 			}
 		} else {
@@ -445,22 +450,19 @@ export class TokenFactions {
 					//@ts-ignore
 					token.zIndex = token.border.zIndex - 1;
 					//@ts-ignore
-					if (factionBorder.zIndex >= token.zIndex) {
+					if (factionBorderContainer.zIndex >= token.zIndex) {
 						//@ts-ignore
-						factionBorder.zIndex = token.zIndex - 1;
+						factionBorderContainer.zIndex = token.zIndex - 1;
 					}
 				}
 			} else {
 				//@ts-ignore
-				if (factionBorder.zIndex >= token.zIndex) {
+				if (factionBorderContainer.zIndex >= token.zIndex) {
 					//@ts-ignore
-					factionBorder.zIndex = token.zIndex - 1;
+					factionBorderContainer.zIndex = token.zIndex - 1;
 				}
 			}
 		}
-		//@ts-ignore
-		TokenFactions.drawBorderFaction(token, factionBorder);
-
 		return token;
 	}
 
@@ -804,6 +806,8 @@ export class TokenFactions {
 				return;
 			}
 			// token.sortableChildren = true;
+			// FVTT 10 WITH GRID
+			/*
 			//@ts-ignore
 			if (!canvas.grid.faction) {
 				//@ts-ignore
@@ -826,20 +830,80 @@ export class TokenFactions {
 				canvas.grid.addChild(canvas.grid.faction[token.id]);
 			}
 			//@ts-ignore
-			let factionBorder: PIXI.Container = canvas.grid.faction[token.id];
+			let factionBorderContainer: PIXI.Container = canvas.grid.faction[token.id];
 			// factionBorder.sortableChildren = true;
 			// factionBorder.clear();
+			*/
 
 			//@ts-ignore
-			TokenFactions.drawBorderFaction(token, factionBorder);
-
-			//@ts-ignore
-			token.mesh.zIndex = factionBorder.zIndex - 1;
-
-			//@ts-ignore
-			if (factionBorder) {
+			if (!token.faction || token.faction.destroyed) {
 				//@ts-ignore
-				factionBorder.zIndex = token.mesh.zIndex - 1;
+				token.faction = token.addChildAt(new PIXI.Container(), 0);
+			}
+			//@ts-ignore
+			let factionBorderContainer: PIXI.Container = <PIXI.Container>token.faction;
+
+			//@ts-ignore
+			factionBorderContainer = TokenFactions.drawBorderFaction(token, factionBorderContainer);
+			//@ts-ignore
+			token.addChildAt(factionBorderContainer, 0);
+			// TokenFactions.clearGridFaction(token.id);
+			//@ts-ignore
+			if (token.mesh) {
+				//@ts-ignore
+				if (token.border) {
+					//@ts-ignore
+					if (token.mesh.zIndex >= token.border.zIndex) {
+						//@ts-ignore
+						token.mesh.zIndex = token.border.zIndex - 1;
+						//@ts-ignore
+						if (factionBorderContainer.zIndex >= token.mesh.zIndex) {
+							//@ts-ignore
+							factionBorderContainer.zIndex = token.mesh.zIndex - 1;
+						}
+					}
+					//@ts-ignore
+					if (token.zIndex >= token.border.zIndex) {
+						//@ts-ignore
+						token.zIndex = token.border.zIndex - 1;
+						//@ts-ignore
+						if (factionBorderContainer.zIndex >= token.zIndex) {
+							//@ts-ignore
+							factionBorderContainer.zIndex = token.zIndex - 1;
+						}
+					}
+					//@ts-ignore
+					if (factionBorderContainer.zIndex >= token.border.zIndex) {
+						//@ts-ignore
+						factionBorderContainer.zIndex = token.border.zIndex - 1;
+					}
+				} else {
+					//@ts-ignore
+					if (factionBorderContainer.zIndex >= token.mesh.zIndex) {
+						//@ts-ignore
+						factionBorderContainer.zIndex = token.mesh.zIndex - 1;
+					}
+				}
+			} else {
+				//@ts-ignore
+				if (token.border) {
+					//@ts-ignore
+					if (token.zIndex >= token.border.zIndex) {
+						//@ts-ignore
+						token.zIndex = token.border.zIndex - 1;
+						//@ts-ignore
+						if (factionBorderContainer.zIndex >= token.zIndex) {
+							//@ts-ignore
+							factionBorderContainer.zIndex = token.zIndex - 1;
+						}
+					}
+				} else {
+					//@ts-ignore
+					if (factionBorderContainer.zIndex >= token.zIndex) {
+						//@ts-ignore
+						factionBorderContainer.zIndex = token.zIndex - 1;
+					}
+				}
 			}
 		});
 		return;
@@ -1001,8 +1065,11 @@ export class TokenFactions {
 			return;
 		}
 		if (token.x === 0 && token.y === 0) {
-			debug(`No token is founded or passed`);
-			return;
+			//@ts-ignore
+			if (token.document.x === 0 && token.document.y === 0) {
+				debug(`No token is founded or passed`);
+				return;
+			}
 		}
 
 		// OLD FVTT 9
@@ -1269,6 +1336,7 @@ export class TokenFactions {
 			const fillTexture = <boolean>game.settings.get(CONSTANTS.MODULE_NAME, "fillTexture");
 			TokenFactions.drawBorder(token, borderColor, container, fillTexture);
 		}
+		return container;
 	}
 
 	private static drawBorder(
