@@ -145,18 +145,33 @@ export const initHooks = async () => {
 			TokenFactions.AddBorderToggle(app, html, data);
 		});
 
-		Hooks.on("createToken", (data) => {
-			const token = <Token>canvas.tokens?.get(data.id);
-			if (!token.owner) {
-				token.cursor = "default";
-			}
+		// Hooks.on("createToken", (data) => {
+		// 	const token = <Token>canvas.tokens?.get(data.id);
+		// 	if (!token.owner) {
+		// 		token.cursor = "default";
+		// 	}
+		// });
+
+		Hooks.on("canvasReady", () => {
+			canvas.tokens?.placeables.forEach((t) => {
+				t.draw();
+			});
 		});
 
-		canvas.tokens?.placeables.forEach((t) => {
-			if (!t.owner) {
-				t.cursor = "default";
-			}
-		});
+		// canvas.tokens?.placeables.forEach((t) => {
+		// 	if (!t.owner) {
+		// 		t.cursor = "default";
+		// 	}
+		// });
+
+		if (!TokenFactions.bevelGradient || !TokenFactions.bevelGradient.baseTexture) {
+			TokenFactions.bevelGradient = <PIXI.Texture>(
+				await loadTexture(`modules/${CONSTANTS.MODULE_NAME}/assets/bevel-gradient.jpg`)
+			);
+			TokenFactions.bevelTexture = <PIXI.Texture>(
+				await loadTexture(`modules/${CONSTANTS.MODULE_NAME}/assets/bevel-texture.png`)
+			);
+		}
 	}
 };
 
