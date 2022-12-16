@@ -1074,10 +1074,29 @@ export class TokenFactions {
 			}
 		}
 
-		// OLD FVTT 9
-		//@ts-ignore
-		container.children.forEach((c) => c.clear());
-		// container.removeChildren().forEach(c => c.destroy());
+		// // OLD FVTT 9
+		// //@ts-ignore
+		// container.children.forEach((c) => c.clear());
+		// // container.removeChildren().forEach(c => c.destroy());
+
+        // Some systems have special classes for factions, if we can't removeChildren,
+        // then use the token's children and make sure to only remove the ones we created
+        //@ts-ignore
+        if (container.removeChildren) {
+            //@ts-ignore
+            container.children.forEach((c) => c.clear());
+            // container.removeChildren().forEach(c => c.destroy());
+        }
+        //@ts-ignore
+        else if (token.removeChildren) {
+            token.children.forEach(c => {
+                //@ts-ignore
+                if (c.source === CONSTANTS.MODULE_NAME) {
+                    c.destroy();
+                }
+            });
+        }
+
 		const borderColor = TokenFactions.colorBorderFaction(token);
 		if (!borderColor) {
 			return;
@@ -1122,13 +1141,6 @@ export class TokenFactions {
 
 		if (frameStyle == TokenFactions.TOKEN_FACTIONS_FRAME_STYLE.FLAT) {
 			// frameStyle === 'flat'
-			/*
-			//@ts-ignore
-			container.border = container.border ?? container.addChild(new PIXI.Graphics());
-			//@ts-ignore
-			const factionBorder = container.border;
-			factionBorder.zIndex = container.zIndex;
-			*/
 			const fillTexture = <boolean>game.settings.get(CONSTANTS.MODULE_NAME, "fillTexture");
 			TokenFactions.drawBorder(token, borderColor, container, fillTexture);
 		} else if (frameStyle == TokenFactions.TOKEN_FACTIONS_FRAME_STYLE.BELEVELED) {
@@ -1325,13 +1337,6 @@ export class TokenFactions {
       */
 			//}else if(frameStyle == TOKEN_FACTIONS_FRAME_STYLE.BORDER){
 		} else {
-			/*
-			//@ts-ignore
-			container.border = container.border ?? container.addChild(new PIXI.Graphics());
-			//@ts-ignore
-			const factionBorder = container.border;
-			factionBorder.zIndex = container.zIndex;
-			*/
 			const fillTexture = <boolean>game.settings.get(CONSTANTS.MODULE_NAME, "fillTexture");
 			TokenFactions.drawBorder(token, borderColor, container, fillTexture);
 		}
@@ -1344,8 +1349,23 @@ export class TokenFactions {
 		container: PIXI.Container,
 		fillTexture: boolean
 	) {
-		//@ts-ignore
-		const factionBorder = container.addChild(new PIXI.Graphics());
+		// //@ts-ignore
+		// const factionBorder = container.addChild(new PIXI.Graphics());
+        const factionBorder = new PIXI.Graphics();
+
+		// If we cannot create an faction as a child of the token through factions field,
+		// then do it through direct token's children while keeping track of which children we created
+
+		if (container.addChild) {
+			container.addChild(factionBorder);
+		}
+        //@ts-ignore
+        else if (token.addChild) {
+            //@ts-ignore
+			factionBorder.source = CONSTANTS.MODULE_NAME;
+			token.addChild(factionBorder);
+		}
+
 		//@ts-ignore
 		if (canvas.interface.reverseMaskfilter) {
 			//@ts-ignore
