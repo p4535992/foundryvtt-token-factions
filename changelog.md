@@ -1,4 +1,7 @@
 # CHANGELOG
+### 0.3.9
+
+- Update for pf2e
 
 ### 0.3.8
 
