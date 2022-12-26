@@ -1,4 +1,9 @@
 # CHANGELOG
+
+### 0.3.10
+
+- Bug fix: https://github.com/p4535992/foundryvtt-token-factions/issues/23
+
 ### 0.3.9
 
 - Update for pf2e

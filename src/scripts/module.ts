@@ -152,11 +152,11 @@ export const initHooks = async () => {
 		// 	}
 		// });
 
-		Hooks.on("canvasReady", () => {
-			canvas.tokens?.placeables.forEach((t) => {
-				t.draw();
-			});
-		});
+		// Hooks.on("canvasReady", () => {
+		// 	canvas.tokens?.placeables.forEach((t) => {
+		// 		t.draw();
+		// 	});
+		// });
 
 		// Hooks.on("refreshToken", (token, options) => {
 		// 	TokenFactions.updateTokenDataFaction(token.document);
