@@ -7,7 +7,7 @@ export const registerSettings = function () {
 		hint: `${CONSTANTS.MODULE_NAME}.setting.reset.hint`,
 		icon: "fas fa-coins",
 		type: ResetSettingsDialog,
-		restricted: true,
+		restricted: true
 	});
 
 	// =====================================================================
@@ -22,7 +22,7 @@ export const registerSettings = function () {
 		default: true,
 		type: Boolean,
 		scope: "world",
-		config: true,
+		config: true
 	});
 
 	game.settings.register(CONSTANTS.MODULE_NAME, "color-from", {
@@ -35,8 +35,8 @@ export const registerSettings = function () {
 		choices: <any>{
 			"token-disposition": i18n(CONSTANTS.MODULE_NAME + ".setting.color-from.opt.token-disposition"),
 			"actor-folder-color": i18n(CONSTANTS.MODULE_NAME + ".setting.color-from.opt.actor-folder-color"),
-			"custom-disposition": i18n(CONSTANTS.MODULE_NAME + ".setting.color-from.opt.custom-disposition"),
-		},
+			"custom-disposition": i18n(CONSTANTS.MODULE_NAME + ".setting.color-from.opt.custom-disposition")
+		}
 	});
 
 	game.settings.register(CONSTANTS.MODULE_NAME, "base-opacity", {
@@ -50,8 +50,8 @@ export const registerSettings = function () {
 		range: {
 			min: 0,
 			max: 1,
-			step: 0.05,
-		},
+			step: 0.05
+		}
 	});
 
 	game.settings.register(CONSTANTS.MODULE_NAME, "fillTexture", {
@@ -60,7 +60,7 @@ export const registerSettings = function () {
 		scope: "world",
 		type: Boolean,
 		default: true,
-		config: true,
+		config: true
 	});
 
 	// game.settings.register(CONSTANTS.MODULE_NAME, 'overrideBorderGraphic', {
@@ -103,9 +103,9 @@ export const registerSettings = function () {
 		type: String,
 		choices: <any>{
 			flat: i18n(CONSTANTS.MODULE_NAME + ".setting.frame-style.opt.flat"),
-			beveled: i18n(CONSTANTS.MODULE_NAME + ".setting.frame-style.opt.beveled"),
+			beveled: i18n(CONSTANTS.MODULE_NAME + ".setting.frame-style.opt.beveled")
 			// border: i18n(CONSTANTS.MODULE_NAME + '.setting.frame-style.opt.border'),
-		},
+		}
 	});
 
 	// game.settings.register(CONSTANTS.MODULE_NAME, 'frame-width', {
@@ -135,8 +135,8 @@ export const registerSettings = function () {
 		range: {
 			min: 0,
 			max: 1,
-			step: 0.05,
-		},
+			step: 0.05
+		}
 	});
 
 	// ===============================
@@ -160,10 +160,10 @@ export const registerSettings = function () {
 		choices: <any>{
 			0: "None",
 			1: "Non Owned",
-			2: "All",
+			2: "All"
 		},
 		default: "0",
-		config: true,
+		config: true
 	});
 
 	game.settings.register(CONSTANTS.MODULE_NAME, "permanentBorder", {
@@ -172,7 +172,7 @@ export const registerSettings = function () {
 		default: false,
 		type: Boolean,
 		scope: "world",
-		config: true,
+		config: true
 	});
 
 	game.settings.register(CONSTANTS.MODULE_NAME, "borderWidth", {
@@ -181,7 +181,7 @@ export const registerSettings = function () {
 		scope: "world",
 		type: Number,
 		default: 4,
-		config: true,
+		config: true
 	});
 
 	game.settings.register(CONSTANTS.MODULE_NAME, "borderGridScale", {
@@ -190,7 +190,7 @@ export const registerSettings = function () {
 		scope: "world",
 		type: Boolean,
 		default: false,
-		config: true,
+		config: true
 	});
 
 	game.settings.register(CONSTANTS.MODULE_NAME, "borderOffset", {
@@ -199,7 +199,7 @@ export const registerSettings = function () {
 		scope: "world",
 		type: Number,
 		default: 0,
-		config: true,
+		config: true
 	});
 
 	game.settings.register(CONSTANTS.MODULE_NAME, "circleBorders", {
@@ -208,7 +208,7 @@ export const registerSettings = function () {
 		scope: "world",
 		type: Boolean,
 		default: false,
-		config: true,
+		config: true
 	});
 
 	game.settings.register(CONSTANTS.MODULE_NAME, "scaleBorder", {
@@ -217,7 +217,7 @@ export const registerSettings = function () {
 		scope: "world",
 		type: Boolean,
 		default: false,
-		config: true,
+		config: true
 	});
 
 	game.settings.register(CONSTANTS.MODULE_NAME, "hudEnable", {
@@ -226,7 +226,7 @@ export const registerSettings = function () {
 		scope: "world",
 		type: Boolean,
 		default: true,
-		config: true,
+		config: true
 	});
 
 	/** Which column should the button be placed on */
@@ -239,8 +239,8 @@ export const registerSettings = function () {
 		default: "Right",
 		choices: <any>{
 			Left: "Left",
-			Right: "Right",
-		},
+			Right: "Right"
+		}
 	});
 
 	/** Whether the button should be placed on the top or bottom of the column */
@@ -253,8 +253,8 @@ export const registerSettings = function () {
 		default: "Bottom",
 		choices: <any>{
 			Top: "Top",
-			Bottom: "Bottom",
-		},
+			Bottom: "Bottom"
+		}
 	});
 
 	game.settings.register(CONSTANTS.MODULE_NAME, "controlledColor", {
@@ -263,7 +263,7 @@ export const registerSettings = function () {
 		scope: "world",
 		type: String,
 		default: "#FF9829",
-		config: true,
+		config: true
 	});
 
 	game.settings.register(CONSTANTS.MODULE_NAME, "controlledColorEx", {
@@ -272,7 +272,7 @@ export const registerSettings = function () {
 		scope: "world",
 		type: String,
 		default: "#000000",
-		config: true,
+		config: true
 	});
 
 	game.settings.register(CONSTANTS.MODULE_NAME, "hostileColor", {
@@ -281,7 +281,7 @@ export const registerSettings = function () {
 		scope: "world",
 		type: String,
 		default: "#E72124",
-		config: true,
+		config: true
 	});
 
 	game.settings.register(CONSTANTS.MODULE_NAME, "hostileColorEx", {
@@ -290,7 +290,7 @@ export const registerSettings = function () {
 		scope: "world",
 		type: String,
 		default: "#000000",
-		config: true,
+		config: true
 	});
 
 	game.settings.register(CONSTANTS.MODULE_NAME, "friendlyColor", {
@@ -299,7 +299,7 @@ export const registerSettings = function () {
 		scope: "world",
 		type: String,
 		default: "#43DFDF",
-		config: true,
+		config: true
 	});
 
 	game.settings.register(CONSTANTS.MODULE_NAME, "friendlyColorEx", {
@@ -308,7 +308,7 @@ export const registerSettings = function () {
 		scope: "world",
 		type: String,
 		default: "#000000",
-		config: true,
+		config: true
 	});
 
 	game.settings.register(CONSTANTS.MODULE_NAME, "neutralColor", {
@@ -317,7 +317,7 @@ export const registerSettings = function () {
 		scope: "world",
 		type: String,
 		default: "#F1D836",
-		config: true,
+		config: true
 	});
 
 	game.settings.register(CONSTANTS.MODULE_NAME, "neutralColorEx", {
@@ -326,7 +326,7 @@ export const registerSettings = function () {
 		scope: "world",
 		type: String,
 		default: "#000000",
-		config: true,
+		config: true
 	});
 
 	game.settings.register(CONSTANTS.MODULE_NAME, "partyColor", {
@@ -335,7 +335,7 @@ export const registerSettings = function () {
 		scope: "world",
 		type: String,
 		default: "#33BC4E",
-		config: true,
+		config: true
 	});
 
 	game.settings.register(CONSTANTS.MODULE_NAME, "partyColorEx", {
@@ -344,7 +344,7 @@ export const registerSettings = function () {
 		scope: "world",
 		type: String,
 		default: "#000000",
-		config: true,
+		config: true
 	});
 
 	game.settings.register(CONSTANTS.MODULE_NAME, "actorFolderColorEx", {
@@ -353,7 +353,7 @@ export const registerSettings = function () {
 		scope: "world",
 		type: String,
 		default: "#000000",
-		config: true,
+		config: true
 	});
 
 	game.settings.register(CONSTANTS.MODULE_NAME, "customDispositionColorEx", {
@@ -362,7 +362,7 @@ export const registerSettings = function () {
 		scope: "world",
 		type: String,
 		default: "#000000",
-		config: true,
+		config: true
 	});
 
 	// ========================================================================
@@ -373,7 +373,7 @@ export const registerSettings = function () {
 		scope: "client",
 		config: true,
 		default: false,
-		type: Boolean,
+		type: Boolean
 	});
 
 	const settings = defaultSettings();
@@ -404,14 +404,14 @@ class ResetSettingsDialog extends FormApplication<FormApplicationOptions, object
 					callback: async () => {
 						await applyDefaultSettings();
 						window.location.reload();
-					},
+					}
 				},
 				cancel: {
 					icon: '<i class="fas fa-times"></i>',
-					label: game.i18n.localize(`${CONSTANTS.MODULE_NAME}.dialogs.resetsettings.cancel`),
-				},
+					label: game.i18n.localize(`${CONSTANTS.MODULE_NAME}.dialogs.resetsettings.cancel`)
+				}
 			},
-			default: "cancel",
+			default: "cancel"
 		});
 	}
 
@@ -446,7 +446,7 @@ function otherSettings(apply = false) {
 			default: true,
 			type: Boolean,
 			scope: "world",
-			config: true,
+			config: true
 		},
 
 		"color-from": {
@@ -459,8 +459,8 @@ function otherSettings(apply = false) {
 			choices: <any>{
 				"token-disposition": i18n(CONSTANTS.MODULE_NAME + ".setting.color-from.opt.token-disposition"),
 				"actor-folder-color": i18n(CONSTANTS.MODULE_NAME + ".setting.color-from.opt.actor-folder-color"),
-				"custom-disposition": i18n(CONSTANTS.MODULE_NAME + ".setting.color-from.opt.custom-disposition"),
-			},
+				"custom-disposition": i18n(CONSTANTS.MODULE_NAME + ".setting.color-from.opt.custom-disposition")
+			}
 		},
 
 		"base-opacity": {
@@ -474,8 +474,8 @@ function otherSettings(apply = false) {
 			range: {
 				min: 0,
 				max: 1,
-				step: 0.05,
-			},
+				step: 0.05
+			}
 		},
 
 		fillTexture: {
@@ -484,7 +484,7 @@ function otherSettings(apply = false) {
 			scope: "world",
 			type: Boolean,
 			default: true,
-			config: true,
+			config: true
 		},
 
 		// overrideBorderGraphic': {
@@ -527,9 +527,9 @@ function otherSettings(apply = false) {
 			type: String,
 			choices: <any>{
 				flat: i18n(CONSTANTS.MODULE_NAME + ".setting.frame-style.opt.flat"),
-				beveled: i18n(CONSTANTS.MODULE_NAME + ".setting.frame-style.opt.beveled"),
+				beveled: i18n(CONSTANTS.MODULE_NAME + ".setting.frame-style.opt.beveled")
 				// border: i18n(CONSTANTS.MODULE_NAME + '.setting.frame-style.opt.border'),
-			},
+			}
 		},
 
 		// 'frame-width': {
@@ -559,8 +559,8 @@ function otherSettings(apply = false) {
 			range: {
 				min: 0,
 				max: 1,
-				step: 0.05,
-			},
+				step: 0.05
+			}
 		},
 
 		// ===============================
@@ -584,10 +584,10 @@ function otherSettings(apply = false) {
 			choices: <any>{
 				0: "None",
 				1: "Non Owned",
-				2: "All",
+				2: "All"
 			},
 			default: "0",
-			config: true,
+			config: true
 		},
 
 		permanentBorder: {
@@ -596,7 +596,7 @@ function otherSettings(apply = false) {
 			default: false,
 			type: Boolean,
 			scope: "world",
-			config: true,
+			config: true
 		},
 
 		borderWidth: {
@@ -605,7 +605,7 @@ function otherSettings(apply = false) {
 			scope: "world",
 			type: Number,
 			default: 4,
-			config: true,
+			config: true
 		},
 
 		borderGridScale: {
@@ -614,7 +614,7 @@ function otherSettings(apply = false) {
 			scope: "world",
 			type: Boolean,
 			default: false,
-			config: true,
+			config: true
 		},
 
 		borderOffset: {
@@ -623,7 +623,7 @@ function otherSettings(apply = false) {
 			scope: "world",
 			type: Number,
 			default: 0,
-			config: true,
+			config: true
 		},
 
 		circleBorders: {
@@ -632,7 +632,7 @@ function otherSettings(apply = false) {
 			scope: "world",
 			type: Boolean,
 			default: false,
-			config: true,
+			config: true
 		},
 
 		scaleBorder: {
@@ -641,7 +641,7 @@ function otherSettings(apply = false) {
 			scope: "world",
 			type: Boolean,
 			default: false,
-			config: true,
+			config: true
 		},
 
 		hudEnable: {
@@ -650,7 +650,7 @@ function otherSettings(apply = false) {
 			scope: "world",
 			type: Boolean,
 			default: true,
-			config: true,
+			config: true
 		},
 
 		/** Which column should the button be placed on */
@@ -663,8 +663,8 @@ function otherSettings(apply = false) {
 			default: "Right",
 			choices: <any>{
 				Left: "Left",
-				Right: "Right",
-			},
+				Right: "Right"
+			}
 		},
 
 		/** Whether the button should be placed on the top or bottom of the column */
@@ -677,8 +677,8 @@ function otherSettings(apply = false) {
 			default: "Bottom",
 			choices: <any>{
 				Top: "Top",
-				Bottom: "Bottom",
-			},
+				Bottom: "Bottom"
+			}
 		},
 
 		controlledColor: {
@@ -687,7 +687,7 @@ function otherSettings(apply = false) {
 			scope: "world",
 			type: String,
 			default: "#FF9829",
-			config: true,
+			config: true
 		},
 
 		controlledColorEx: {
@@ -696,7 +696,7 @@ function otherSettings(apply = false) {
 			scope: "world",
 			type: String,
 			default: "#000000",
-			config: true,
+			config: true
 		},
 
 		hostileColor: {
@@ -705,7 +705,7 @@ function otherSettings(apply = false) {
 			scope: "world",
 			type: String,
 			default: "#E72124",
-			config: true,
+			config: true
 		},
 
 		hostileColorEx: {
@@ -714,7 +714,7 @@ function otherSettings(apply = false) {
 			scope: "world",
 			type: String,
 			default: "#000000",
-			config: true,
+			config: true
 		},
 
 		friendlyColor: {
@@ -723,7 +723,7 @@ function otherSettings(apply = false) {
 			scope: "world",
 			type: String,
 			default: "#43DFDF",
-			config: true,
+			config: true
 		},
 
 		friendlyColorEx: {
@@ -732,7 +732,7 @@ function otherSettings(apply = false) {
 			scope: "world",
 			type: String,
 			default: "#000000",
-			config: true,
+			config: true
 		},
 
 		neutralColor: {
@@ -741,7 +741,7 @@ function otherSettings(apply = false) {
 			scope: "world",
 			type: String,
 			default: "#F1D836",
-			config: true,
+			config: true
 		},
 
 		neutralColorEx: {
@@ -750,7 +750,7 @@ function otherSettings(apply = false) {
 			scope: "world",
 			type: String,
 			default: "#000000",
-			config: true,
+			config: true
 		},
 
 		partyColor: {
@@ -759,7 +759,7 @@ function otherSettings(apply = false) {
 			scope: "world",
 			type: String,
 			default: "#33BC4E",
-			config: true,
+			config: true
 		},
 
 		partyColorEx: {
@@ -768,7 +768,7 @@ function otherSettings(apply = false) {
 			scope: "world",
 			type: String,
 			default: "#000000",
-			config: true,
+			config: true
 		},
 
 		actorFolderColorEx: {
@@ -777,7 +777,7 @@ function otherSettings(apply = false) {
 			scope: "world",
 			type: String,
 			default: "#000000",
-			config: true,
+			config: true
 		},
 
 		customDispositionColorEx: {
@@ -786,7 +786,7 @@ function otherSettings(apply = false) {
 			scope: "world",
 			type: String,
 			default: "#000000",
-			config: true,
+			config: true
 		},
 
 		debug: {
@@ -795,8 +795,8 @@ function otherSettings(apply = false) {
 			scope: "client",
 			config: true,
 			default: false,
-			type: Boolean,
-		},
+			type: Boolean
+		}
 	};
 }
 

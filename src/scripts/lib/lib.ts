@@ -178,14 +178,14 @@ export function advancedLosTestInLos(sourceToken, token) {
 	const sourceCenter = {
 		x: sourceToken.center.x,
 		y: sourceToken.center.y,
-		z: sourceToken.losHeight,
+		z: sourceToken.losHeight
 	};
 	const tokenCorners = [
 		{ x: token.center.x, y: token.center.y, z: targetLOSH },
 		{ x: token.x + tol, y: token.y + tol, z: targetLOSH },
 		{ x: token.x + token.w - tol, y: token.y + tol, z: targetLOSH },
 		{ x: token.x + tol, y: token.y + token.h - tol, z: targetLOSH },
-		{ x: token.x + token.w - tol, y: token.y + token.h - tol, z: targetLOSH },
+		{ x: token.x + token.w - tol, y: token.y + token.h - tol, z: targetLOSH }
 	];
 	//@ts-ignore
 	if (CONFIG.Levels && CONFIG.Levels.settings.get("exactTokenVisibility")) {
@@ -193,7 +193,7 @@ export function advancedLosTestInLos(sourceToken, token) {
 			{
 				x: token.center.x,
 				y: token.center.y,
-				z: targetElevation + (targetLOSH - targetElevation) / 2,
+				z: targetElevation + (targetLOSH - targetElevation) / 2
 			},
 			{ x: token.center.x, y: token.center.y, z: targetElevation },
 			{ x: token.x + tol, y: token.y + tol, z: targetElevation },
@@ -202,8 +202,8 @@ export function advancedLosTestInLos(sourceToken, token) {
 			{
 				x: token.x + token.w - tol,
 				y: token.y + token.h - tol,
-				z: targetElevation,
-			},
+				z: targetElevation
+			}
 		];
 		tokenCorners.push(...exactPoints);
 	}
@@ -315,7 +315,7 @@ function testCollision(p0, p1, type = "sight") {
 		return {
 			x: zIntersectionPointBG.x,
 			y: zIntersectionPointBG.y,
-			z: bgElevation,
+			z: bgElevation
 		};
 	}
 
@@ -334,7 +334,7 @@ function testCollision(p0, p1, type = "sight") {
 				return {
 					x: zIntersectionPoint.x,
 					y: zIntersectionPoint.y,
-					z: bottom,
+					z: bottom
 				};
 			}
 		}
@@ -461,12 +461,12 @@ function checkCollision(token1, token2, type = "sight") {
 	const p0 = {
 		x: token1.center.x,
 		y: token1.center.y,
-		z: token1LosH,
+		z: token1LosH
 	};
 	const p1 = {
 		x: token2.center.x,
 		y: token2.center.y,
-		z: token2LosH,
+		z: token2LosH
 	};
 	return testCollision(p0, p1, type);
 }

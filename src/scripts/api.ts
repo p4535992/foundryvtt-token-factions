@@ -116,7 +116,7 @@ const API = {
 		}
 		const [tokenId] = inAttributes;
 		this.clearGridFaction(tokenId);
-	},
+	}
 };
 
 export default API;
