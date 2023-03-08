@@ -694,7 +694,7 @@ export class TokenFactions {
 	}
 
 	// My function to interpolate between two colors completely, returning an array
-	private static interpolateColors(color1, color2, steps): number[] {
+	private static interpolateColors(color1, color2, steps): number[][] {
 		const stepFactor = 1 / (steps - 1);
 		const interpolatedColorArray: number[][] = [];
 
@@ -997,9 +997,11 @@ export class TokenFactions {
 
 		let borderColor = new FactionGraphic();
 		if (colorFrom === "token-disposition") {
+			//@ts-ignore
 			if (token.controlled) {
 				return overrides.CONTROLLED;
 			} else if (
+				//@ts-ignore
 				(hover ?? token.hover) ||
 				//@ts-ignore
 				canvas.tokens?._highlight ||
@@ -1023,8 +1025,6 @@ export class TokenFactions {
 				} else {
 					borderColor = overrides.HOSTILE;
 				}
-				//}
-				//else return null;
 			} else {
 				const disPath = CONST.TOKEN_DISPOSITIONS;
 
@@ -1044,8 +1044,6 @@ export class TokenFactions {
 				} else {
 					borderColor = overrides.HOSTILE;
 				}
-				//}
-				//else return null;
 			}
 		} else if (colorFrom === "actor-folder-color") {
 			borderColor = overrides.ACTOR_FOLDER_COLOR;
