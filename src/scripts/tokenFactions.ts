@@ -1123,10 +1123,14 @@ export class TokenFactions {
 		//@ts-ignore
 		let skipDraw;
 		try {
-			skipDraw = token.document.getFlag(
-				CONSTANTS.MODULE_NAME,
-				TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE
-			);
+			//skipDraw = token.document.getFlag(
+			//	CONSTANTS.MODULE_NAME,
+			//	TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE
+			//);
+            skipDraw = getProperty(
+				token.document,
+				`flags.${CONSTANTS.MODULE_NAME}.${TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE}`
+			)
 		} catch (e) {
 			//@ts-ignore
 			token.document.setFlag(CONSTANTS.MODULE_NAME, TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE, false);
