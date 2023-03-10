@@ -2,19 +2,19 @@ import { advancedLosTestInLos, debug, getOwnedTokens, i18n } from "./lib/lib";
 import { FactionGraphic } from "./TokenFactionsModels";
 import CONSTANTS from "./constants";
 
-export class TokenFactions {
-	// /*
-	//  * The allowed Token disposition types
-	//  * HOSTILE - Displayed as an enemy with a red border
-	//  * NEUTRAL - Displayed as neutral with a yellow border
-	//  * FRIENDLY - Displayed as an ally with a cyan border
-	//  */
-	// static TOKEN_DISPOSITIONS = {
-	//   HOSTILE: -1,
-	//   NEUTRAL: 0,
-	//   FRIENDLY: 1,
-	// };
+// /*
+//  * The allowed Token disposition types
+//  * HOSTILE - Displayed as an enemy with a red border
+//  * NEUTRAL - Displayed as neutral with a yellow border
+//  * FRIENDLY - Displayed as an ally with a cyan border
+//  */
+// static TOKEN_DISPOSITIONS = {
+//   HOSTILE: -1,
+//   NEUTRAL: 0,
+//   FRIENDLY: 1,
+// };
 
+export class TokenFactions {
 	static TOKEN_FACTIONS_FLAGS = {
 		FACTION_DRAW_FRAME: "factionDrawFrame", //'draw-frame',
 		FACTION_DISABLE: "factionDisable", // 'disable'
@@ -883,6 +883,10 @@ export class TokenFactions {
 	}
 
 	public static colorBorderFaction(token: Token): FactionGraphic {
+		if (!TokenFactions.defaultColors) {
+			TokenFactions.onInit();
+		}
+
 		const colorFrom = game.settings.get(CONSTANTS.MODULE_NAME, "color-from");
 		let color;
 		let icon;
@@ -1000,53 +1004,23 @@ export class TokenFactions {
 		if (borderControlCustom) {
 			borderColor = borderControlCustom;
 		} else if (colorFrom === "token-disposition") {
+			const disPath = CONST.TOKEN_DISPOSITIONS;
+
 			//@ts-ignore
-			if (token.controlled) {
-				return overrides.CONTROLLED;
-			} else if (
-				//@ts-ignore
-				(hover ?? token.hover) ||
-				//@ts-ignore
-				canvas.tokens?._highlight ||
-				game.settings.get(CONSTANTS.MODULE_NAME, "permanentBorder")
-			) {
-				const disPath = CONST.TOKEN_DISPOSITIONS;
-
-				//@ts-ignore
-				const d = parseInt(token.document.disposition);
-				//@ts-ignore
-				if (!game.user?.isGM && token.owner) {
-					borderColor = overrides.CONTROLLED;
-				}
-				//@ts-ignore
-				else if (token.actor?.hasPlayerOwner) {
-					borderColor = overrides.PARTY;
-				} else if (d === disPath.FRIENDLY) {
-					borderColor = overrides.FRIENDLY;
-				} else if (d === disPath.NEUTRAL) {
-					borderColor = overrides.NEUTRAL;
-				} else {
-					borderColor = overrides.HOSTILE;
-				}
+			const d = parseInt(token.document.disposition);
+			//@ts-ignore
+			if (!game.user?.isGM && token.owner) {
+				borderColor = overrides.CONTROLLED;
+			}
+			//@ts-ignore
+			else if (token.actor?.hasPlayerOwner) {
+				borderColor = overrides.PARTY;
+			} else if (d === disPath.FRIENDLY) {
+				borderColor = overrides.FRIENDLY;
+			} else if (d === disPath.NEUTRAL) {
+				borderColor = overrides.NEUTRAL;
 			} else {
-				const disPath = CONST.TOKEN_DISPOSITIONS;
-
-				//@ts-ignore
-				const d = parseInt(token.document.disposition);
-				//@ts-ignore
-				if (!game.user?.isGM && token.owner) {
-					borderColor = overrides.CONTROLLED;
-				}
-				//@ts-ignore
-				else if (token.actor?.hasPlayerOwner) {
-					borderColor = overrides.PARTY;
-				} else if (d === disPath.FRIENDLY) {
-					borderColor = overrides.FRIENDLY;
-				} else if (d === disPath.NEUTRAL) {
-					borderColor = overrides.NEUTRAL;
-				} else {
-					borderColor = overrides.HOSTILE;
-				}
+				borderColor = overrides.HOSTILE;
 			}
 		} else if (colorFrom === "actor-folder-color") {
 			borderColor = overrides.ACTOR_FOLDER_COLOR;

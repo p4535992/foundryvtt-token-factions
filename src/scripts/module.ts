@@ -23,9 +23,9 @@ export const initHooks = async () => {
 		const hCE = game.settings.get(CONSTANTS.MODULE_NAME, "hostileColorEx");
 		const cCE = game.settings.get(CONSTANTS.MODULE_NAME, "controlledColorEx");
 		const pCE = game.settings.get(CONSTANTS.MODULE_NAME, "partyColorEx");
-		const gS = game.settings.get(CONSTANTS.MODULE_NAME, "actorFolderColorEx");
-		const gE = game.settings.get(CONSTANTS.MODULE_NAME, "customDispositionColorEx");
-		// const gT = game.settings.get(CONSTANTS.MODULE_NAME, "healthGradientC");
+		const afCE = game.settings.get(CONSTANTS.MODULE_NAME, "actorFolderColorEx");
+		const cdCE = game.settings.get(CONSTANTS.MODULE_NAME, "customDispositionColorEx");
+
 		el.find('[name="token-factions.neutralColor"]')
 			.parent()
 			.append(`<input type="color" value="${nC}" data-edit="token-factions.neutralColor">`);
@@ -60,13 +60,10 @@ export const initHooks = async () => {
 
 		el.find('[name="token-factions.actorFolderColorEx"]')
 			.parent()
-			.append(`<input type="color" value="${gS}" data-edit="token-factions.actorFolderColorEx">`);
+			.append(`<input type="color" value="${afCE}" data-edit="token-factions.actorFolderColorEx">`);
 		el.find('[name="token-factions.customDispositionColorEx"]')
 			.parent()
-			.append(`<input type="color" value="${gE}" data-edit="token-factions.customDispositionColorEx">`);
-		// el.find('[name="token-factions.healthGradientC"]')
-		//  .parent()
-		//  .append(`<input type="color" value="${gT}" data-edit="token-factions.healthGradientC">`)
+			.append(`<input type="color" value="${cdCE}" data-edit="token-factions.customDispositionColorEx">`);
 	});
 
 	if (game.settings.get(CONSTANTS.MODULE_NAME, "tokenFactionsEnabled")) {

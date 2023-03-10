@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### 0.3.11
+
+- Some update
+
 ### 0.3.10
 
 - Bug fix: https://github.com/p4535992/foundryvtt-token-factions/issues/23
