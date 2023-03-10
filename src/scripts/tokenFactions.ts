@@ -498,24 +498,24 @@ export class TokenFactions {
 				TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE,
 				!borderIsDisabled
 			);
-			if (borderIsDisabled) {
-				await token.document.unsetFlag(
-					CONSTANTS.MODULE_NAME,
-					TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_COLOR_INT
-				);
-				await token.document.unsetFlag(
-					CONSTANTS.MODULE_NAME,
-					TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_COLOR_EXT
-				);
-				await token.document.unsetFlag(
-					CONSTANTS.MODULE_NAME,
-					TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_FRAME_OPACITY
-				);
-				await token.document.unsetFlag(
-					CONSTANTS.MODULE_NAME,
-					TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_BASE_OPACITY
-				);
-			}
+			// if (borderIsDisabled) {
+			// 	await token.document.unsetFlag(
+			// 		CONSTANTS.MODULE_NAME,
+			// 		TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_COLOR_INT
+			// 	);
+			// 	await token.document.unsetFlag(
+			// 		CONSTANTS.MODULE_NAME,
+			// 		TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_COLOR_EXT
+			// 	);
+			// 	await token.document.unsetFlag(
+			// 		CONSTANTS.MODULE_NAME,
+			// 		TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_FRAME_OPACITY
+			// 	);
+			// 	await token.document.unsetFlag(
+			// 		CONSTANTS.MODULE_NAME,
+			// 		TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_BASE_OPACITY
+			// 	);
+			// }
 		}
 
 		event.currentTarget.classList.toggle("active", !borderIsDisabled);
@@ -914,18 +914,6 @@ export class TokenFactions {
 			token.document.getFlag(CONSTANTS.MODULE_NAME, TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_COLOR_EXT)
 		);
 
-		if (currentCustomColorTokenInt && currentCustomColorTokenInt != "#000000") {
-			return {
-				INT: parseInt(String(currentCustomColorTokenInt).substr(1), 16),
-				EX: parseInt(String(currentCustomColorTokenExt).substr(1), 16),
-				ICON: "",
-				TEXTURE_INT: PIXI.Texture.EMPTY,
-				TEXTURE_EX: PIXI.Texture.EMPTY,
-				INT_S: String(currentCustomColorTokenInt),
-				EX_S: String(currentCustomColorTokenExt)
-			} as FactionGraphic;
-		}
-
 		const overrides = {
 			CONTROLLED: {
 				INT: parseInt(String(game.settings.get(CONSTANTS.MODULE_NAME, "controlledColor")).substr(1), 16),
@@ -995,8 +983,23 @@ export class TokenFactions {
 			}
 		};
 
+		let borderControlCustom: FactionGraphic | null = null;
+		if (currentCustomColorTokenInt && currentCustomColorTokenInt != "#000000") {
+			borderControlCustom = {
+				INT: parseInt(String(currentCustomColorTokenInt).substr(1), 16),
+				EX: parseInt(String(currentCustomColorTokenExt).substr(1), 16),
+				ICON: "",
+				TEXTURE_INT: PIXI.Texture.EMPTY,
+				TEXTURE_EX: PIXI.Texture.EMPTY,
+				INT_S: String(currentCustomColorTokenInt),
+				EX_S: String(currentCustomColorTokenExt)
+			} as FactionGraphic;
+		}
+
 		let borderColor = new FactionGraphic();
-		if (colorFrom === "token-disposition") {
+		if (borderControlCustom) {
+			borderColor = borderControlCustom;
+		} else if (colorFrom === "token-disposition") {
 			//@ts-ignore
 			if (token.controlled) {
 				return overrides.CONTROLLED;
@@ -1127,10 +1130,10 @@ export class TokenFactions {
 			//	CONSTANTS.MODULE_NAME,
 			//	TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE
 			//);
-            skipDraw = getProperty(
+			skipDraw = getProperty(
 				token.document,
 				`flags.${CONSTANTS.MODULE_NAME}.${TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE}`
-			)
+			);
 		} catch (e) {
 			//@ts-ignore
 			token.document.setFlag(CONSTANTS.MODULE_NAME, TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE, false);
