@@ -2,7 +2,7 @@
 	"id": "token-factions",
 	"title": "Token Factions",
 	"description": "Generate token bases based on token disposition or actor folder color.",
-	"version": "0.3.11",
+	"version": "0.3.12",
 	"authors": [
 		{
 			"name": "Voldemalort",
@@ -64,8 +64,8 @@
 	"styles": [],
 	"compatibility": {
 		"minimum": 10,
-		"verified": 10,
-		"maximum": 10
+		"verified": 11.301,
+		"maximum": 11
 	},
 	"manifestPlusVersion": "1.2.1",
 	"url": "https://github.com/p4535992/foundryvtt-token-factions",
