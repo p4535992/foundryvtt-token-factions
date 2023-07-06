@@ -12,11 +12,11 @@
 // Import JavaScript modules
 
 // Import TypeScript modules
-import { registerSettings } from "./scripts/settings";
-import { initHooks, readyHooks, setupHooks } from "./scripts/module";
-import CONSTANTS from "./scripts/constants";
-import type API from "./scripts/api";
-import { error } from "./scripts/lib/lib";
+import { registerSettings } from "./scripts/settings.js";
+import { initHooks, readyHooks, setupHooks } from "./scripts/module.js";
+import CONSTANTS from "./scripts/constants.js";
+import API from "./scripts/api.js";
+import { error } from "./scripts/lib/lib.js";
 
 /* ------------------------------------ */
 /* Initialize module					*/
@@ -75,17 +75,12 @@ Hooks.once("ready", () => {
 
 // Add any additional hooks if necessary
 
-export interface TokenFactionsModuleData {
-	api: typeof API;
-	socket: any;
-}
-
 /**
  * Initialization helper, to set API.
  * @param api to set to game module.
  */
-export function setApi(api: typeof API): void {
-	const data = game.modules.get(CONSTANTS.MODULE_NAME) as unknown as TokenFactionsModuleData;
+export function setApi(api) {
+	const data = game.modules.get(CONSTANTS.MODULE_NAME);
 	data.api = api;
 }
 
@@ -93,8 +88,8 @@ export function setApi(api: typeof API): void {
  * Returns the set API.
  * @returns Api from games module.
  */
-export function getApi(): typeof API {
-	const data = game.modules.get(CONSTANTS.MODULE_NAME) as unknown as TokenFactionsModuleData;
+export function getApi() {
+	const data = game.modules.get(CONSTANTS.MODULE_NAME);
 	return data.api;
 }
 
@@ -102,8 +97,8 @@ export function getApi(): typeof API {
  * Initialization helper, to set Socket.
  * @param socket to set to game module.
  */
-export function setSocket(socket: any): void {
-	const data = game.modules.get(CONSTANTS.MODULE_NAME) as unknown as TokenFactionsModuleData;
+export function setSocket(socket) {
+	const data = game.modules.get(CONSTANTS.MODULE_NAME);
 	data.socket = socket;
 }
 
@@ -112,6 +107,6 @@ export function setSocket(socket: any): void {
  * @returns Socket from games module.
  */
 export function getSocket() {
-	const data = game.modules.get(CONSTANTS.MODULE_NAME) as unknown as TokenFactionsModuleData;
+	const data = game.modules.get(CONSTANTS.MODULE_NAME);
 	return data.socket;
 }

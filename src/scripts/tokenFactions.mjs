@@ -1,18 +1,6 @@
-import { advancedLosTestInLos, debug, getOwnedTokens, i18n } from "./lib/lib";
-import { FactionGraphic } from "./TokenFactionsModels";
-import CONSTANTS from "./constants";
-
-// /*
-//  * The allowed Token disposition types
-//  * HOSTILE - Displayed as an enemy with a red border
-//  * NEUTRAL - Displayed as neutral with a yellow border
-//  * FRIENDLY - Displayed as an ally with a cyan border
-//  */
-// static TOKEN_DISPOSITIONS = {
-//   HOSTILE: -1,
-//   NEUTRAL: 0,
-//   FRIENDLY: 1,
-// };
+import { advancedLosTestInLos, debug, getOwnedTokens, i18n } from "./lib/lib.js";
+import { FactionGraphic } from "./TokenFactionsModels.js";
+import CONSTANTS from "./constants.js";
 
 export class TokenFactions {
 	static TOKEN_FACTIONS_FLAGS = {
@@ -48,8 +36,8 @@ export class TokenFactions {
 		return disposition;
 	};
 
-	static bevelGradient: PIXI.Texture;
-	static bevelTexture: PIXI.Texture;
+	static bevelGradient;
+	static bevelTexture;
 
 	static defaultColors;
 
@@ -77,16 +65,16 @@ export class TokenFactions {
 
 		TokenFactions.dispositions = Object.keys(TokenFactions.defaultColors);
 
-		TokenFactions.bevelGradient = <PIXI.Texture>(
+		TokenFactions.bevelGradient = (
 			await loadTexture(`modules/${CONSTANTS.MODULE_NAME}/assets/bevel-gradient.jpg`)
 		);
-		TokenFactions.bevelTexture = <PIXI.Texture>(
+		TokenFactions.bevelTexture = (
 			await loadTexture(`modules/${CONSTANTS.MODULE_NAME}/assets/bevel-texture.png`)
 		);
 	}
 
 	static renderTokenConfig = async function (config, html) {
-		const tokenDocument = config.object as TokenDocument;
+		const tokenDocument = config.object;
 		if (!game.user?.isGM) {
 			return;
 		}
@@ -193,7 +181,7 @@ export class TokenFactions {
 		//   .change(config._onChangeInput.bind(config));
 	};
 
-	// static _applyFactions = async function (document: TokenDocument | Actor, updateData): Promise<void> {
+	// static _applyFactions = async function (document | Actor, updateData): Promise<void> {
 	// 	// Set the disable flag
 	// 	let propertyNameDisable = `flags.${CONSTANTS.MODULE_NAME}.${TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE}`;
 	// 	if (document instanceof Actor) {
@@ -206,14 +194,14 @@ export class TokenFactions {
 	// 			if (document instanceof Actor) {
 	// 				const actor = <Actor>document;
 	// 				//@ts-ignore
-	// 				const token = <Token>actor.token?._object;
+	// 				const token = actor.token?._object;
 	// 				// token.refresh();
 	// 				await TokenFactions.updateTokenDataFaction(token.document);
 	// 				// token.draw();
 	// 			} else {
-	// 				const tokenDocument = <TokenDocument>document;
+	// 				const tokenDocument = document;
 	// 				//@ts-ignore
-	// 				const token = <Token>tokenDocument?._object;
+	// 				const token = tokenDocument?._object;
 	// 				// token.refresh();
 	// 				await TokenFactions.updateTokenDataFaction(token.document);
 	// 				// token.draw();
@@ -222,19 +210,19 @@ export class TokenFactions {
 	// 	}
 	// };
 
-	static updateTokenDataFaction(tokenData: TokenDocument) {
-		let tokens: Token[];
+	static updateTokenDataFaction(tokenData) {
+		let tokens;
 		try {
-			tokens = <Token[]>canvas.tokens?.placeables;
+			tokens = canvas.tokens?.placeables;
 		} catch (e) {
 			return;
 		}
 		/*
 		if (!TokenFactions.bevelGradient || !TokenFactions.bevelGradient.baseTexture) {
-			TokenFactions.bevelGradient = <PIXI.Texture>(
+			TokenFactions.bevelGradient = (
 				await loadTexture(`modules/${CONSTANTS.MODULE_NAME}/assets/bevel-gradient.jpg`)
 			);
-			TokenFactions.bevelTexture = <PIXI.Texture>(
+			TokenFactions.bevelTexture = (
 				await loadTexture(`modules/${CONSTANTS.MODULE_NAME}/assets/bevel-texture.png`)
 			);
 		}
@@ -251,12 +239,12 @@ export class TokenFactions {
 		});
 	}
 
-	static updateTokenFaction(token: Token | TokenDocument): Token | undefined | null {
+	static updateTokenFaction(token) {
 		if (!token) {
 			return undefined;
 		}
 		if (token instanceof TokenDocument) {
-			token = <Token>(<TokenDocument>token)?.object;
+			token = (token)?.object;
 		}
 		if (!token.id) {
 			return token;
@@ -270,31 +258,31 @@ export class TokenFactions {
 		}
 		token.sortableChildren = true;
 		/*
-		const isPlayerOwned = <boolean>token.document.isOwner;
+		const isPlayerOwned = token.document.isOwner;
 		// When i hidden this hide for everyone except owner and gm
 		if (token.document.hidden) {
 			if (!game.user?.isGM && !isPlayerOwned) {
-				TokenFactions.clearGridFaction(<string>token.document.id);
-				// tokenFactionsSocket.executeAsGM("clearGridFaction", <string>token.document.id);
+				TokenFactions.clearGridFaction(token.document.id);
+				// tokenFactionsSocket.executeAsGM("clearGridFaction", token.document.id);
 				return;
 			}
 		}
 		// or if a token is not visible
 		//@ts-ignore
 		if (token.document.object) {
-			const someoneIsSelected = <number>canvas.tokens?.controlled?.length > 0;
+			const someoneIsSelected = canvas.tokens?.controlled?.length > 0;
 			if (!game.user?.isGM && !isPlayerOwned) {
 				let isVisible = token.isVisible;
 				if (!isVisible) {
-					TokenFactions.clearGridFaction(<string>token.document.id);
-					// tokenFactionsSocket.executeAsGM("clearGridFaction", <string>tokenData.id);
+					TokenFactions.clearGridFaction(token.document.id);
+					// tokenFactionsSocket.executeAsGM("clearGridFaction", tokenData.id);
 					return;
 				}
 			}
 			// else if (game.user?.isGM && someoneIsSelected) {
 			// 	let isVisible = false;
 			// 	const tokensToClear = <string[]>[];
-			// 	for (const ownedToken of <Token[]>canvas.tokens?.placeables) {
+			// 	for (const ownedToken of canvas.tokens?.placeables) {
 			// 		if (ownedToken.id === token.id) {
 			// 			continue;
 			// 		}
@@ -322,9 +310,9 @@ export class TokenFactions {
 			// 	// }
 			// 	if (!isVisible) {
 			// 		for(const id of tokensToClear){
-			// 			TokenFactions.clearGridFaction(<string>id);
+			// 			TokenFactions.clearGridFaction(id);
 			// 		}
-			// 		// tokenFactionsSocket.executeAsGM("clearGridFaction", <string>tokenData.id);
+			// 		// tokenFactionsSocket.executeAsGM("clearGridFaction", tokenData.id);
 			// 		return;
 			// 	}
 			// }
@@ -364,7 +352,7 @@ export class TokenFactions {
 			canvas.grid.addChild(canvas.grid.faction[token.id]);
 		}
 		//@ts-ignore
-		let factionBorderContainer: PIXI.Container = canvas.grid.faction[token.id];
+		let factionBorderContainer = canvas.grid.faction[token.id];
 		// factionBorder.sortableChildren = true;
 		// factionBorder.clear();
 		*/
@@ -377,10 +365,10 @@ export class TokenFactions {
 		//@ts-ignore
 		token.faction.removeChildren().forEach((c) => c.destroy());
 		//@ts-ignore
-		let factionBorderContainer: PIXI.Container = <PIXI.Container>token.faction;
+		let factionBorderContainer = token.faction;
 
 		//@ts-ignore
-		factionBorderContainer = TokenFactions.drawBorderFaction(token, factionBorderContainer);
+		factionBorderContainer = TokenFactions._drawBorderFaction(token, factionBorderContainer);
 		//@ts-ignore
 		// token.addChildAt(factionBorderContainer, 0);
 		// TokenFactions.clearGridFaction(token.id);
@@ -468,8 +456,8 @@ export class TokenFactions {
       title="Toggle Faction Border"> <i class="fas fa-angry"></i>
     </div>`;
 
-		const settingHudColClass = <string>game.settings.get(CONSTANTS.MODULE_NAME, "hudColumn") ?? "right";
-		const settingHudTopBottomClass = <string>game.settings.get(CONSTANTS.MODULE_NAME, "hudTopBottom") ?? "bottom";
+		const settingHudColClass = game.settings.get(CONSTANTS.MODULE_NAME, "hudColumn") ?? "right";
+		const settingHudTopBottomClass = game.settings.get(CONSTANTS.MODULE_NAME, "hudTopBottom") ?? "bottom";
 
 		const buttonPos = "." + settingHudColClass.toLowerCase();
 
@@ -491,7 +479,7 @@ export class TokenFactions {
 			TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE
 		);
 
-		for (const token of <Token[]>canvas.tokens?.controlled) {
+		for (const token of canvas.tokens?.controlled) {
 			//@ts-ignore
 			await token.document.setFlag(
 				CONSTANTS.MODULE_NAME,
@@ -523,7 +511,7 @@ export class TokenFactions {
 
 	static async ToggleCustomBorder(event) {
 		//@ts-ignore
-		const tokenTmp = <Token>this.object;
+		const tokenTmp = this.object;
 
 		const currentCustomColorTokenInt =
 			tokenTmp.document.getFlag(
@@ -585,38 +573,38 @@ export class TokenFactions {
 				yes: {
 					label: i18n("token-factions.label.applyCustomColor"),
 					//@ts-ignore
-					callback: async (html: JQuery<HTMLElement>) => {
-						const newCurrentCustomColorTokenInt = <string>(
+					callback: async (html) => {
+						const newCurrentCustomColorTokenInt = (
 							$(
-								<HTMLElement>(
+								(
 									html.find(`input[data-edit='token-factions.currentCustomColorTokenInt']`)[0]
 								)
 							).val()
 						);
-						const newCurrentCustomColorTokenExt = <string>(
+						const newCurrentCustomColorTokenExt = (
 							$(
-								<HTMLElement>(
+								(
 									html.find(`input[data-edit='token-factions.currentCustomColorTokenExt']`)[0]
 								)
 							).val()
 						);
-						const newCurrentCustomColorTokenFrameOpacity = <string>(
+						const newCurrentCustomColorTokenFrameOpacity = (
 							$(
-								<HTMLElement>(
+								(
 									html.find(
 										`input[data-edit='token-factions.currentCustomColorTokenFrameOpacity']`
 									)[0]
 								)
 							).val()
 						);
-						const newCurrentCustomColorTokenBaseOpacity = <string>(
+						const newCurrentCustomColorTokenBaseOpacity = (
 							$(
-								<HTMLElement>(
+								(
 									html.find(`input[data-edit='token-factions.currentCustomColorTokenBaseOpacity']`)[0]
 								)
 							).val()
 						);
-						for (const token of <Token[]>canvas.tokens?.controlled) {
+						for (const token of canvas.tokens?.controlled) {
 							token.document.setFlag(
 								CONSTANTS.MODULE_NAME,
 								TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_COLOR_INT,
@@ -652,37 +640,37 @@ export class TokenFactions {
 		d.render(true);
 	}
 
-	private static clamp(value, max, min) {
+	static _clamp(value, max, min) {
 		return Math.min(Math.max(value, min), max);
 	}
 
-	private static componentToHex(c) {
+	static _componentToHex(c) {
 		const hex = c.toString(16);
 		return hex.length == 1 ? "0" + hex : hex;
 	}
 
-	private static rgbToHex(A) {
+	static _rgbToHex(A) {
 		if (A[0] === undefined || A[1] === undefined || A[2] === undefined) console.error("RGB color invalid");
 		return (
 			"#" +
-			TokenFactions.componentToHex(A[0]) +
-			TokenFactions.componentToHex(A[1]) +
-			TokenFactions.componentToHex(A[2])
+			TokenFactions._componentToHex(A[0]) +
+			TokenFactions._componentToHex(A[1]) +
+			TokenFactions._componentToHex(A[2])
 		);
 	}
 
-	private static hexToRgb(hex) {
+	static _hexToRgb(hex) {
 		const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
 		return result
 			? {
-					r: parseInt(<string>result[1], 16),
-					g: parseInt(<string>result[2], 16),
-					b: parseInt(<string>result[3], 16)
+					r: parseInt(result[1], 16),
+					g: parseInt(result[2], 16),
+					b: parseInt(result[3], 16)
 			  }
 			: null;
 	}
 
-	private static interpolateColor(color1, color2, factor): number[] {
+	static _interpolateColor(color1, color2, factor) {
 		if (arguments.length < 3) {
 			factor = 0.5;
 		}
@@ -694,15 +682,15 @@ export class TokenFactions {
 	}
 
 	// My function to interpolate between two colors completely, returning an array
-	private static interpolateColors(color1, color2, steps): number[][] {
+	static _interpolateColors(color1, color2, steps) {
 		const stepFactor = 1 / (steps - 1);
-		const interpolatedColorArray: number[][] = [];
+		const interpolatedColorArray = [];
 
 		color1 = color1.match(/\d+/g).map(Number);
 		color2 = color2.match(/\d+/g).map(Number);
 
 		for (let i = 0; i < steps; i++) {
-			interpolatedColorArray.push(TokenFactions.interpolateColor(color1, color2, stepFactor * i));
+			interpolatedColorArray.push(TokenFactions._interpolateColor(color1, color2, stepFactor * i));
 		}
 
 		return interpolatedColorArray;
@@ -715,21 +703,21 @@ export class TokenFactions {
 	// ADDED
 
 	static async updateTokensAll() {
-		canvas.tokens?.placeables.forEach((tokenDoc: Token) => {
-			TokenFactions.updateTokensBorder(tokenDoc.document);
+		canvas.tokens?.placeables.forEach((tokenDoc) => {
+			TokenFactions._updateTokensBorder(tokenDoc.document);
 		});
 	}
 
-	private static async updateTokensBorder(tokenData) {
+	static async _updateTokensBorder(tokenData) {
 		const currentTokenID = tokenData?.id ? tokenData?.id : tokenData?._id;
-		const tokens: TokenDocument[] = [];
-		const tokenDoc: TokenDocument = <TokenDocument>canvas.tokens?.get(currentTokenID)?.document;
+		const tokens = [];
+		const tokenDoc = canvas.tokens?.get(currentTokenID)?.document;
 		if (!tokenDoc) {
 			const actorID = currentTokenID; // game.actors?.get(currentTokenID)?.id;
-			const scene = game.scenes?.get(<string>game.user?.viewedScene);
+			const scene = game.scenes?.get(game.user?.viewedScene);
 			if (scene) {
 				scene.tokens.forEach((tokenTmp) => {
-					if (<boolean>(tokenTmp.actor && tokenTmp.actor.id === actorID)) {
+					if ((tokenTmp.actor && tokenTmp.actor.id === actorID)) {
 						tokens.push(tokenTmp);
 					}
 				});
@@ -738,33 +726,33 @@ export class TokenFactions {
 			tokens.push(tokenDoc);
 		}
 
-		tokens.forEach((tokenDoc: TokenDocument) => {
+		tokens.forEach((tokenDoc) => {
 			if (tokenDoc) {
 				const tokenID = tokenDoc.id;
-				const sceneID = <string>(<Token>canvas.tokens?.get(<string>tokenDoc.id)).scene.id;
+				const sceneID = (canvas.tokens?.get(tokenDoc.id)).scene.id;
 				const specifiedScene = game.scenes?.get(sceneID);
 				if (specifiedScene) {
 					if (!specifiedScene) {
 						return;
 					}
-					tokenDoc = <TokenDocument>specifiedScene.tokens.find((tokenTmp) => {
-						return <boolean>(tokenTmp.id === tokenID);
+					tokenDoc = specifiedScene.tokens.find((tokenTmp) => {
+						return (tokenTmp.id === tokenID);
 					});
 				}
 				if (!tokenDoc) {
-					let foundToken: TokenDocument | null = null;
+					let foundToken = null;
 					game.scenes?.find((sceneTmp) => {
 						// getTokenForScene(scene, tokenID);
 						if (!sceneTmp) {
 							foundToken = null;
 						}
-						foundToken = <TokenDocument>sceneTmp.tokens.find((token) => {
+						foundToken = sceneTmp.tokens.find((token) => {
 							return token.id === tokenID;
 						});
 						return !!foundToken;
 					});
 					//@ts-ignore
-					tokenDoc = <TokenDocument>foundToken;
+					tokenDoc = foundToken;
 				}
 			}
 
@@ -774,7 +762,7 @@ export class TokenFactions {
 			}
 			// TokenDocument to Token
 			//@ts-ignore
-			const token: Token = tokenDoc._object;
+			const token = tokenDoc._object;
 			if (!token.id) {
 				return;
 			}
@@ -803,7 +791,7 @@ export class TokenFactions {
 				canvas.grid.addChild(canvas.grid.faction[token.id]);
 			}
 			//@ts-ignore
-			let factionBorderContainer: PIXI.Container = canvas.grid.faction[token.id];
+			let factionBorderContainer = canvas.grid.faction[token.id];
 			*/
 
 			//@ts-ignore
@@ -814,10 +802,10 @@ export class TokenFactions {
 			//@ts-ignore
 			token.faction.removeChildren().forEach((c) => c.destroy());
 			//@ts-ignore
-			let factionBorderContainer: PIXI.Container = <PIXI.Container>token.faction;
+			let factionBorderContainer = token.faction;
 
 			//@ts-ignore
-			factionBorderContainer = TokenFactions.drawBorderFaction(token, factionBorderContainer);
+			factionBorderContainer = TokenFactions._drawBorderFaction(token, factionBorderContainer);
 			//@ts-ignore
 			// token.addChildAt(factionBorderContainer, 0);
 			// TokenFactions.clearGridFaction(token.id);
@@ -882,7 +870,7 @@ export class TokenFactions {
 		return;
 	}
 
-	public static colorBorderFaction(token: Token): FactionGraphic {
+	static colorBorderFaction(token) {
 		if (!TokenFactions.defaultColors) {
 			TokenFactions.onInit();
 		}
@@ -907,14 +895,14 @@ export class TokenFactions {
 			// TODO PUT SOME NEW FLAG ON THE TOKEN
 			const disposition = TokenFactions.dispositionKey(token);
 			if (disposition) {
-				color = <string>game.settings.get(CONSTANTS.MODULE_NAME, `custom-${disposition}-color`);
+				color = game.settings.get(CONSTANTS.MODULE_NAME, `custom-${disposition}-color`);
 			}
 		}
 
-		const currentCustomColorTokenInt = <string>(
+		const currentCustomColorTokenInt = (
 			token.document.getFlag(CONSTANTS.MODULE_NAME, TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_COLOR_INT)
 		);
-		const currentCustomColorTokenExt = <string>(
+		const currentCustomColorTokenExt = (
 			token.document.getFlag(CONSTANTS.MODULE_NAME, TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_COLOR_EXT)
 		);
 
@@ -927,7 +915,7 @@ export class TokenFactions {
 				TEXTURE_EX: PIXI.Texture.EMPTY,
 				INT_S: String(game.settings.get(CONSTANTS.MODULE_NAME, "controlledColor")),
 				EX_S: String(game.settings.get(CONSTANTS.MODULE_NAME, "controlledColorEx"))
-			} as FactionGraphic,
+			},
 			FRIENDLY: {
 				INT: parseInt(String(game.settings.get(CONSTANTS.MODULE_NAME, "friendlyColor")).substr(1), 16),
 				EX: parseInt(String(game.settings.get(CONSTANTS.MODULE_NAME, "friendlyColorEx")).substr(1), 16),
@@ -936,7 +924,7 @@ export class TokenFactions {
 				TEXTURE_EX: PIXI.Texture.EMPTY,
 				INT_S: String(game.settings.get(CONSTANTS.MODULE_NAME, "friendlyColor")),
 				EX_S: String(game.settings.get(CONSTANTS.MODULE_NAME, "friendlyColorEx"))
-			} as FactionGraphic,
+			},
 			NEUTRAL: {
 				INT: parseInt(String(game.settings.get(CONSTANTS.MODULE_NAME, "neutralColor")).substr(1), 16),
 				EX: parseInt(String(game.settings.get(CONSTANTS.MODULE_NAME, "neutralColorEx")).substr(1), 16),
@@ -945,7 +933,7 @@ export class TokenFactions {
 				TEXTURE_EX: PIXI.Texture.EMPTY,
 				INT_S: String(game.settings.get(CONSTANTS.MODULE_NAME, "neutralColor")),
 				EX_S: String(game.settings.get(CONSTANTS.MODULE_NAME, "neutralColorEx"))
-			} as FactionGraphic,
+			},
 			HOSTILE: {
 				INT: parseInt(String(game.settings.get(CONSTANTS.MODULE_NAME, "hostileColor")).substr(1), 16),
 				EX: parseInt(String(game.settings.get(CONSTANTS.MODULE_NAME, "hostileColorEx")).substr(1), 16),
@@ -954,16 +942,16 @@ export class TokenFactions {
 				TEXTURE_EX: PIXI.Texture.EMPTY,
 				INT_S: String(game.settings.get(CONSTANTS.MODULE_NAME, "hostileColor")),
 				EX_S: String(game.settings.get(CONSTANTS.MODULE_NAME, "hostileColorEx"))
-			} as FactionGraphic,
+			},
 			PARTY: {
 				INT: parseInt(String(game.settings.get(CONSTANTS.MODULE_NAME, "partyColor")).substr(1), 16),
 				EX: parseInt(String(game.settings.get(CONSTANTS.MODULE_NAME, "partyColorEx")).substr(1), 16),
 				ICON: "",
-				TEXTURE_INT: PIXI.Texture.EMPTY,
+                TEXTURE_INT: PIXI.Texture.EMPTY,
 				TEXTURE_EX: PIXI.Texture.EMPTY,
 				INT_S: String(game.settings.get(CONSTANTS.MODULE_NAME, "partyColor")),
 				EX_S: String(game.settings.get(CONSTANTS.MODULE_NAME, "partyColorEx"))
-			} as FactionGraphic,
+			},
 			ACTOR_FOLDER_COLOR: {
 				INT: parseInt(String(color).substr(1), 16),
 				EX: parseInt(String(game.settings.get(CONSTANTS.MODULE_NAME, "actorFolderColorEx")).substr(1), 16),
@@ -987,7 +975,7 @@ export class TokenFactions {
 			}
 		};
 
-		let borderControlCustom: FactionGraphic | null = null;
+		let borderControlCustom = null;
 		if (currentCustomColorTokenInt && currentCustomColorTokenInt != "#000000") {
 			borderControlCustom = {
 				INT: parseInt(String(currentCustomColorTokenInt).substr(1), 16),
@@ -997,7 +985,7 @@ export class TokenFactions {
 				TEXTURE_EX: PIXI.Texture.EMPTY,
 				INT_S: String(currentCustomColorTokenInt),
 				EX_S: String(currentCustomColorTokenExt)
-			} as FactionGraphic;
+			};
 		}
 
 		let borderColor = new FactionGraphic();
@@ -1032,7 +1020,7 @@ export class TokenFactions {
 		return borderColor;
 	}
 
-	private static drawBorderFaction(token: Token, container: PIXI.Container) {
+	static _drawBorderFaction(token, container) {
 		//@ts-ignore
 		if (!container && token.faction) {
 			//@ts-ignore
@@ -1125,26 +1113,26 @@ export class TokenFactions {
 
 		if (frameStyle == TokenFactions.TOKEN_FACTIONS_FRAME_STYLE.FLAT) {
 			// frameStyle === 'flat'
-			const fillTexture = <boolean>game.settings.get(CONSTANTS.MODULE_NAME, "fillTexture");
-			TokenFactions.drawBorder(token, borderColor, container, fillTexture);
+			const fillTexture = game.settings.get(CONSTANTS.MODULE_NAME, "fillTexture");
+			TokenFactions._drawBorder(token, borderColor, container, fillTexture);
 		} else if (frameStyle == TokenFactions.TOKEN_FACTIONS_FRAME_STYLE.BELEVELED) {
 			// frameStyle === 'bevelled'
-			const fillTexture = <boolean>game.settings.get(CONSTANTS.MODULE_NAME, "fillTexture");
+			const fillTexture = game.settings.get(CONSTANTS.MODULE_NAME, "fillTexture");
 			const frameWidth =
-				<number>canvas.grid?.grid?.w *
-				<number>(<any>game.settings.get(CONSTANTS.MODULE_NAME, "borderWidth") / 100);
+				canvas.grid?.grid?.w *
+				(game.settings.get(CONSTANTS.MODULE_NAME, "borderWidth") / 100);
 
 			// BASE CONFIG
 			let t =
-				<number>game.settings.get(CONSTANTS.MODULE_NAME, "borderWidth") || CONFIG.Canvas.objectBorderThickness;
-			const p = <number>game.settings.get(CONSTANTS.MODULE_NAME, "borderOffset");
+				game.settings.get(CONSTANTS.MODULE_NAME, "borderWidth") || CONFIG.Canvas.objectBorderThickness;
+			const p = game.settings.get(CONSTANTS.MODULE_NAME, "borderOffset");
 			//@ts-ignore
 			if (game.settings.get(CONSTANTS.MODULE_NAME, "permanentBorder") && token._controlled) {
 				t = t * 2;
 			}
 			const sB = game.settings.get(CONSTANTS.MODULE_NAME, "scaleBorder");
 			const bS = game.settings.get(CONSTANTS.MODULE_NAME, "borderGridScale");
-			const nBS = bS ? (<Canvas.Dimensions>canvas.dimensions)?.size / 100 : 1;
+			const nBS = bS ? (canvas.dimensions)?.size / 100 : 1;
 			//@ts-ignore
 			const sX = sB ? token.document.texture.scaleX : 1;
 			//@ts-ignore
@@ -1152,16 +1140,16 @@ export class TokenFactions {
 			const sW = sB ? (token.w - token.w * sX) / 2 : 0;
 			const sH = sB ? (token.h - token.h * sY) / 2 : 0;
 
-			let frameOpacity = <number>game.settings.get(CONSTANTS.MODULE_NAME, "frame-opacity") || 0.5;
-			let baseOpacity = <number>game.settings.get(CONSTANTS.MODULE_NAME, "base-opacity") || 0.5;
+			let frameOpacity = game.settings.get(CONSTANTS.MODULE_NAME, "frame-opacity") || 0.5;
+			let baseOpacity = game.settings.get(CONSTANTS.MODULE_NAME, "base-opacity") || 0.5;
 
-			const customFrameOpacity = <number>(
+			const customFrameOpacity = (
 				token.document.getFlag(
 					CONSTANTS.MODULE_NAME,
 					TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_FRAME_OPACITY
 				)
 			);
-			const customBaseOpacity = <number>(
+			const customBaseOpacity = (
 				token.document.getFlag(
 					CONSTANTS.MODULE_NAME,
 					TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_BASE_OPACITY
@@ -1175,7 +1163,7 @@ export class TokenFactions {
 				baseOpacity = customBaseOpacity;
 			}
 
-			const textureINT = borderColor.TEXTURE_INT || PIXI.Texture.EMPTY; //await PIXI.Texture.fromURL(<string>token.document.texture.src) || PIXI.Texture.EMPTY;
+			const textureINT = borderColor.TEXTURE_INT || PIXI.Texture.EMPTY; //await PIXI.Texture.fromURL(token.document.texture.src) || PIXI.Texture.EMPTY;
 			const textureEX = borderColor.TEXTURE_EX || PIXI.Texture.EMPTY;
 
 			const h = Math.round(t / 2);
@@ -1183,20 +1171,20 @@ export class TokenFactions {
 
 			// const ringTexture = new PIXI.Sprite(TokenFactions.bevelTexture);
 			// ringTexture.tint = borderColor.INT;
-			// ringTexture.alpha = <number>frameOpacity;
+			// ringTexture.alpha = frameOpacity;
 			// container.addChild(ringTexture);
 			// const factionBorder = new PIXI.Graphics();
 			/*
 			const borderColorBeleveled = borderColor;
 			borderColorBeleveled.TEXTURE_INT = TokenFactions.bevelTexture;
 			borderColorBeleveled.TEXTURE_EX = TokenFactions.bevelGradient;
-			TokenFactions.drawBorder(token, borderColorBeleveled, factionBorder, fillTexture);
+			TokenFactions._drawBorder(token, borderColorBeleveled, factionBorder, fillTexture);
 			*/
 			// ringTexture.mask = factionBorder;
 
-			const outerRing = TokenFactions.drawGradient(token, borderColor.INT, TokenFactions.bevelGradient);
-			const innerRing = TokenFactions.drawGradient(token, borderColor.INT, TokenFactions.bevelGradient);
-			const ringTexture = TokenFactions.drawTexture(token, borderColor.INT, TokenFactions.bevelTexture);
+			const outerRing = TokenFactions._drawGradient(token, borderColor.INT, TokenFactions.bevelGradient);
+			const innerRing = TokenFactions._drawGradient(token, borderColor.INT, TokenFactions.bevelGradient);
+			const ringTexture = TokenFactions._drawTexture(token, borderColor.INT, TokenFactions.bevelTexture);
 			const outerRingMask = new PIXI.Graphics();
 			const innerRingMask = new PIXI.Graphics();
 			const ringTextureMask = new PIXI.Graphics();
@@ -1246,7 +1234,7 @@ export class TokenFactions {
 			ringTexture.mask = ringTextureMask;
 
 			/*
-      const fillTexture = <boolean>game.settings.get(CONSTANTS.MODULE_NAME, 'fillTexture');
+      const fillTexture = game.settings.get(CONSTANTS.MODULE_NAME, 'fillTexture');
       if (fillTexture) {
         // TODO FILL TEXTURE
       }
@@ -1273,9 +1261,9 @@ export class TokenFactions {
       const innerRingMask = new PIXI.Graphics();
       const ringTextureMask = new PIXI.Graphics();
 
-      outerRing.alpha = <number>frameOpacity;
-      innerRing.alpha = <number>frameOpacity;
-      ringTexture.alpha = <number>frameOpacity;
+      outerRing.alpha = frameOpacity;
+      innerRing.alpha = frameOpacity;
+      ringTexture.alpha = frameOpacity;
 
       innerRing.pivot.set(1000.0, 1000.0);
       innerRing.angle = 180;
@@ -1287,7 +1275,7 @@ export class TokenFactions {
 
       const borderColorOuterRingMask = borderColor;
       borderColorOuterRingMask.INT = 0xffffff;
-      TokenFactions.drawBorder(token,borderColorOuterRingMask,outerRingMask,false);
+      TokenFactions._drawBorder(token,borderColorOuterRingMask,outerRingMask,false);
 
       // innerRingMask
       //   .lineStyle(t / 2, 0xffffff, 1.0, 0)
@@ -1296,7 +1284,7 @@ export class TokenFactions {
 
       const borderColorInnerRingMask = borderColor;
       borderColorInnerRingMask.INT = 0xffffff;
-      TokenFactions.drawBorder(token,borderColorInnerRingMask,innerRingMask,false);
+      TokenFactions._drawBorder(token,borderColorInnerRingMask,innerRingMask,false);
 
       // ringTextureMask
       //   .lineStyle(t, 0xffffff, 1.0, 0)
@@ -1305,7 +1293,7 @@ export class TokenFactions {
 
       const borderColorRingTextureMask = borderColor;
       borderColorRingTextureMask.INT = 0xffffff;
-      TokenFactions.drawBorder(token,borderColorRingTextureMask,ringTextureMask,false);
+      TokenFactions._drawBorder(token,borderColorRingTextureMask,ringTextureMask,false);
 
       container.addChild(outerRing);
       container.addChild(outerRingMask);
@@ -1321,17 +1309,17 @@ export class TokenFactions {
       */
 			//}else if(frameStyle == TOKEN_FACTIONS_FRAME_STYLE.BORDER){
 		} else {
-			const fillTexture = <boolean>game.settings.get(CONSTANTS.MODULE_NAME, "fillTexture");
-			TokenFactions.drawBorder(token, borderColor, container, fillTexture);
+			const fillTexture = game.settings.get(CONSTANTS.MODULE_NAME, "fillTexture");
+			TokenFactions._drawBorder(token, borderColor, container, fillTexture);
 		}
 		return container;
 	}
 
-	private static drawBorder(
-		token: Token,
-		borderColor: FactionGraphic,
-		container: PIXI.Container,
-		fillTexture: boolean
+	static _drawBorder(
+		token,
+		borderColor,
+		container,
+		fillTexture
 	) {
 		// //@ts-ignore
 		// const factionBorder = container.addChild(new PIXI.Graphics());
@@ -1358,15 +1346,15 @@ export class TokenFactions {
 		//@ts-ignore
 		// factionBorder.zIndex = container.zIndex;
 
-		let t = <number>game.settings.get(CONSTANTS.MODULE_NAME, "borderWidth") || CONFIG.Canvas.objectBorderThickness;
-		const p = <number>game.settings.get(CONSTANTS.MODULE_NAME, "borderOffset");
+		let t = game.settings.get(CONSTANTS.MODULE_NAME, "borderWidth") || CONFIG.Canvas.objectBorderThickness;
+		const p = game.settings.get(CONSTANTS.MODULE_NAME, "borderOffset");
 		//@ts-ignore
 		if (game.settings.get(CONSTANTS.MODULE_NAME, "permanentBorder") && token._controlled) {
 			t = t * 2;
 		}
 		const sB = game.settings.get(CONSTANTS.MODULE_NAME, "scaleBorder");
 		const bS = game.settings.get(CONSTANTS.MODULE_NAME, "borderGridScale");
-		const nBS = bS ? (<Canvas.Dimensions>canvas.dimensions)?.size / 100 : 1;
+		const nBS = bS ? (canvas.dimensions)?.size / 100 : 1;
 		//@ts-ignore
 		const sX = sB ? token.document.texture.scaleX : 1;
 		//@ts-ignore
@@ -1379,16 +1367,16 @@ export class TokenFactions {
 		// const sW = sB ? (token.w - token.w * s) / 2 : 0;
 		// const sH = sB ? (token.h - token.h * s) / 2 : 0;
 
-		let frameOpacity = <number>game.settings.get(CONSTANTS.MODULE_NAME, "frame-opacity") || 0.5;
-		let baseOpacity = <number>game.settings.get(CONSTANTS.MODULE_NAME, "base-opacity") || 0.5;
+		let frameOpacity = game.settings.get(CONSTANTS.MODULE_NAME, "frame-opacity") || 0.5;
+		let baseOpacity = game.settings.get(CONSTANTS.MODULE_NAME, "base-opacity") || 0.5;
 
-		const customFrameOpacity = <number>(
+		const customFrameOpacity = (
 			token.document.getFlag(
 				CONSTANTS.MODULE_NAME,
 				TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_FRAME_OPACITY
 			)
 		);
-		const customBaseOpacity = <number>(
+		const customBaseOpacity = (
 			token.document.getFlag(
 				CONSTANTS.MODULE_NAME,
 				TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_BASE_OPACITY
@@ -1402,7 +1390,7 @@ export class TokenFactions {
 			baseOpacity = customBaseOpacity;
 		}
 
-		const textureINT = borderColor.TEXTURE_INT || PIXI.Texture.EMPTY; //await PIXI.Texture.fromURL(<string>token.document.texture.src) || PIXI.Texture.EMPTY;
+		const textureINT = borderColor.TEXTURE_INT || PIXI.Texture.EMPTY; //await PIXI.Texture.fromURL(token.document.texture.src) || PIXI.Texture.EMPTY;
 		const textureEX = borderColor.TEXTURE_EX || PIXI.Texture.EMPTY;
 
 		factionBorder.alpha = frameOpacity;
@@ -1412,7 +1400,7 @@ export class TokenFactions {
 		const hexTypes = [gt.HEXEVENQ, gt.HEXEVENR, gt.HEXODDQ, gt.HEXODDR];
 
 		if (game.settings.get(CONSTANTS.MODULE_NAME, "circleBorders")) {
-			// const p = <number>game.settings.get(CONSTANTS.MODULE_NAME, "borderOffset");
+			// const p = game.settings.get(CONSTANTS.MODULE_NAME, "borderOffset");
 			const h = Math.round(t / 2);
 			const o = Math.round(h / 2);
 
@@ -1458,7 +1446,7 @@ export class TokenFactions {
 		}
 		//@ts-ignore
 		else if (hexTypes.includes(canvas.grid?.type) && token.width === 1 && token.height === 1) {
-			// const p = <number>game.settings.get(CONSTANTS.MODULE_NAME, "borderOffset");
+			// const p = game.settings.get(CONSTANTS.MODULE_NAME, "borderOffset");
 			const q = Math.round(p / 2);
 			//@ts-ignore
 			const polygon = canvas.grid?.grid?.getPolygon(
@@ -1509,7 +1497,7 @@ export class TokenFactions {
 
 		// Otherwise Draw Square border
 		else {
-			// const p = <number>game.settings.get(CONSTANTS.MODULE_NAME, "borderOffset");
+			// const p = game.settings.get(CONSTANTS.MODULE_NAME, "borderOffset");
 			const q = Math.round(p / 2);
 			const h = Math.round(t / 2);
 			const o = Math.round(h / 2);
@@ -1556,8 +1544,8 @@ export class TokenFactions {
 		}
 	}
 
-	public static clearAllGridFaction() {
-		const tokens = <Token[]>canvas.tokens?.placeables;
+	static clearAllGridFaction() {
+		const tokens = canvas.tokens?.placeables;
 		for (const token of tokens) {
 			//@ts-ignore
 			if (token.faction) {
@@ -1568,11 +1556,11 @@ export class TokenFactions {
 		}
 	}
 
-	public static clearGridFaction(tokenId: string) {
+	static clearGridFaction(tokenId) {
 		//@ts-ignore
 		if (canvas?.grid?.faction) {
 			//@ts-ignore
-			const factionBorder: PIXI.Container = canvas?.grid?.faction[tokenId];
+			const factionBorder = canvas?.grid?.faction[tokenId];
 			//@ts-ignore
 			if (factionBorder && !factionBorder.destroyed) {
 				//@ts-ignore
@@ -1591,7 +1579,7 @@ export class TokenFactions {
 		}
 	}
 
-	private static drawGradient(token, color, bevelGradient) {
+	static _drawGradient(token, color, bevelGradient) {
 		const bg = new PIXI.Sprite(bevelGradient);
 
 		bg.anchor.set(0.0, 0.0);
@@ -1604,7 +1592,7 @@ export class TokenFactions {
 		return bg;
 	}
 
-	private static drawTexture(token, color, bevelTexture) {
+	static _drawTexture(token, color, bevelTexture) {
 		const bg = new PIXI.Sprite(bevelTexture);
 
 		bg.anchor.set(0.0, 0.0);

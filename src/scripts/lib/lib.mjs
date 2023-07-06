@@ -1,11 +1,11 @@
-import CONSTANTS from "../constants";
+import CONSTANTS from "../constants.js";
 
 // =============================
 // Module Generic function
 // =============================
 
-export function isGMConnected(): boolean {
-	return Array.from(<Users>game.users).find((user) => user.isGM && user.active) ? true : false;
+export function isGMConnected() {
+	return Array.from(game.users).find((user) => user.isGM && user.active) ? true : false;
 }
 
 export function wait(ms) {
@@ -55,19 +55,19 @@ export function error(error, notify = true) {
 	return new Error(error.replace("<br>", "\n"));
 }
 
-export function timelog(message): void {
+export function timelog(message) {
 	warn(Date.now(), message);
 }
 
-export const i18n = (key: string): string => {
+export const i18n = (key) => {
 	return game.i18n.localize(key)?.trim();
 };
 
-export const i18nFormat = (key: string, data = {}): string => {
+export const i18nFormat = (key, data = {}) => {
 	return game.i18n.format(key, data)?.trim();
 };
 
-// export const setDebugLevel = (debugText: string): void => {
+// export const setDebugLevel = (debugText) => {
 //   debugEnabled = { none: 0, warn: 1, debug: 2, all: 3 }[debugText] || 0;
 //   // 0 = none, warnings = 1, debug = 2, all = 3
 //   if (debugEnabled >= 3) CONFIG.debug.hooks = true;
@@ -81,7 +81,7 @@ export function dialogWarning(message, icon = "fas fa-exclamation-triangle") {
       </p>`;
 }
 
-export function cleanUpString(stringToCleanUp: string) {
+export function cleanUpString(stringToCleanUp) {
 	// regex expression to match all non-alphanumeric characters in string
 	const regex = /[^A-Za-z0-9]/g;
 	if (stringToCleanUp) {
@@ -91,7 +91,7 @@ export function cleanUpString(stringToCleanUp: string) {
 	}
 }
 
-export function isStringEquals(stringToCheck1: string, stringToCheck2: string, startsWith = false): boolean {
+export function isStringEquals(stringToCheck1, stringToCheck2, startsWith = false) {
 	if (stringToCheck1 && stringToCheck2) {
 		const s1 = cleanUpString(stringToCheck1) ?? "";
 		const s2 = cleanUpString(stringToCheck2) ?? "";
@@ -124,29 +124,29 @@ export function buildButton(html, tooltip, iconClass) {
   return button;
 }
 */
-export function getOwnedTokens(priorityToControlledIfGM: boolean): Token[] {
+export function getOwnedTokens(priorityToControlledIfGM) {
 	const gm = game.user?.isGM;
 	if (gm) {
 		if (priorityToControlledIfGM) {
-			const arr = <Token[]>canvas.tokens?.controlled;
+			const arr = canvas.tokens?.controlled;
 			if (arr && arr.length > 0) {
 				return arr;
 			} else {
-				return <Token[]>canvas.tokens?.placeables;
+				return canvas.tokens?.placeables;
 			}
 		} else {
-			return <Token[]>canvas.tokens?.placeables;
+			return canvas.tokens?.placeables;
 		}
 	}
 	if (priorityToControlledIfGM) {
-		const arr = <Token[]>canvas.tokens?.controlled;
+		const arr = canvas.tokens?.controlled;
 		if (arr && arr.length > 0) {
 			return arr;
 		}
 	}
-	let ownedTokens = <Token[]>canvas.tokens?.placeables.filter((token) => token.isOwner && (!token.data.hidden || gm));
+	let ownedTokens = canvas.tokens?.placeables.filter((token) => token.isOwner && (!token.data.hidden || gm));
 	if (ownedTokens.length === 0 || !canvas.tokens?.controlled[0]) {
-		ownedTokens = <Token[]>(
+		ownedTokens = (
 			canvas.tokens?.placeables.filter((token) => (token.observer || token.isOwner) && (!token.data.hidden || gm))
 		);
 	}
@@ -242,13 +242,13 @@ function tokenInRange(sourceToken, token) {
 	if (range === Infinity) return true;
 	const tokensSizeAdjust = (Math.min(token.w, token.h) || 0) / Math.SQRT2;
 	const dist =
-		(getUnitTokenDist(sourceToken, token) * <number>canvas.dimensions?.size) / <number>canvas.dimensions?.distance -
+		(getUnitTokenDist(sourceToken, token) * canvas.dimensions?.size) / canvas.dimensions?.distance -
 		tokensSizeAdjust;
 	return dist <= range;
 }
 
 function getUnitTokenDist(token1, token2) {
-	const unitsToPixel = <number>canvas.dimensions?.size / <number>canvas.dimensions?.distance;
+	const unitsToPixel = canvas.dimensions?.size / canvas.dimensions?.distance;
 	const x1 = token1.center.x;
 	const y1 = token1.center.y;
 	const z1 = token1.losHeight * unitsToPixel;

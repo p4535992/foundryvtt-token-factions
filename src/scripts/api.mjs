@@ -1,16 +1,15 @@
-import CONSTANTS from "./constants";
-import { error, isStringEquals, warn } from "./lib/lib";
-import { TokenFactions } from "./tokenFactions";
-import type { FactionGraphic } from "./TokenFactionsModels";
+import CONSTANTS from "./constants.js";
+import { error, isStringEquals, warn } from "./lib/lib.js";
+import { TokenFactions } from "./tokenFactions.js";
 
 const API = {
-	async disableDrawBorderFactionsFromTokens(tokenIdsOrNames: string[]) {
+	async disableDrawBorderFactionsFromTokens(tokenIdsOrNames) {
 		for (const tokenIdOrName of tokenIdsOrNames) {
 			this.disableDrawBorderFactionsFromToken(tokenIdOrName);
 		}
 	},
 
-	async disableDrawBorderFactionsFromToken(tokenIdOrName: string) {
+	async disableDrawBorderFactionsFromToken(tokenIdOrName) {
 		const token = canvas.tokens?.placeables.find((t) => {
 			return isStringEquals(t.id, tokenIdOrName) || isStringEquals(t.name, tokenIdOrName);
 		});
@@ -22,13 +21,13 @@ const API = {
 		await token.document.setFlag(CONSTANTS.MODULE_NAME, TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE, true);
 	},
 
-	async enableDrawBorderFactionsFromTokens(tokenIdsOrNames: string[]) {
+	async enableDrawBorderFactionsFromTokens(tokenIdsOrNames) {
 		for (const tokenIdOrName of tokenIdsOrNames) {
 			this.enableDrawBorderFactionsFromToken(tokenIdOrName);
 		}
 	},
 
-	async enableDrawBorderFactionsFromToken(tokenIdOrName: string) {
+	async enableDrawBorderFactionsFromToken(tokenIdOrName) {
 		const token = canvas.tokens?.placeables.find((t) => {
 			return isStringEquals(t.id, tokenIdOrName) || isStringEquals(t.name, tokenIdOrName);
 		});
@@ -40,7 +39,7 @@ const API = {
 		await token.document.setFlag(CONSTANTS.MODULE_NAME, TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE, false);
 	},
 
-	async retrieveBorderFactionsColorFromToken(tokenIdOrName: string): Promise<string> {
+	async retrieveBorderFactionsColorFromToken(tokenIdOrName) {
 		const token = canvas.tokens?.placeables.find((t) => {
 			return isStringEquals(t.id, tokenIdOrName) || isStringEquals(t.name, tokenIdOrName);
 		});
@@ -106,7 +105,7 @@ const API = {
 		TokenFactions.clearAllGridFaction();
 	},
 
-	async clearGridFaction(tokenId: string) {
+	async clearGridFaction(tokenId) {
 		TokenFactions.clearGridFaction(tokenId);
 	},
 

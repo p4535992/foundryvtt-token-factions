@@ -1,8 +1,8 @@
-import { warn, error, debug, i18n, advancedLosTestInLos, getOwnedTokens } from "./lib/lib";
-import { TokenFactions } from "./tokenFactions";
-import CONSTANTS from "./constants";
-import { setApi } from "../main";
-import API from "./api";
+import { warn, error, debug, i18n, advancedLosTestInLos, getOwnedTokens } from "./lib/lib.js";
+import { TokenFactions } from "./tokenFactions.js";
+import CONSTANTS from "./constants.js";
+import { setApi } from "../main.js";
+import API from "./api.js";
 // import { registerSocket, tokenFactionsSocket } from "./socket";
 
 export const initHooks = async () => {
@@ -81,8 +81,8 @@ export const initHooks = async () => {
 			TokenFactions.updateTokensAll();
 		});
 
-		Hooks.on("updateActor", (tokenData: Actor, data) => {
-			// TokenFactions.updateTokenDataFaction(tokenData);
+		Hooks.on("updateActor", (actor, data) => {
+			// TokenFactions.updateTokenDataFaction(actor);
 			// token?.refresh();
 			if (
 				hasProperty(data, "flags") &&
@@ -94,12 +94,12 @@ export const initHooks = async () => {
 			) {
 				// DO NOTHING
 			} else {
-				TokenFactions.updateTokenFaction(<TokenDocument>tokenData.token);
+				TokenFactions.updateTokenFaction(actor.token);
 			}
 		});
 
-		Hooks.on("updateToken", (tokenData: TokenDocument, data) => {
-			//TokenFactions.updateTokenDataFaction(tokenData);
+		Hooks.on("updateToken", (tokenDocument, data) => {
+			//TokenFactions.updateTokenDataFaction(tokenDocument);
 			// token?.refresh();
 			if (
 				hasProperty(data, "flags") &&
@@ -111,18 +111,18 @@ export const initHooks = async () => {
 			) {
 				// DO NOTHING
 			} else {
-				TokenFactions.updateTokenFaction(tokenData);
+				TokenFactions.updateTokenFaction(actor);
 			}
 		});
 
-		Hooks.on("updateFolder", (tokenData, data) => {
-			TokenFactions.updateTokenDataFaction(tokenData);
+		Hooks.on("updateFolder", (folder, data) => {
+			TokenFactions.updateTokenDataFaction(actor);
 		});
 
-		// Hooks.on('preUpdateActor', (actor:Actor, updateData) => {
+		// Hooks.on('preUpdateActor', (actor, updateData) => {
 		//   TokenFactions._applyFactions(actor, updateData);
 		// });
-		// Hooks.on('preUpdateToken', (tokenDocument:TokenDocument, updateData) => {
+		// Hooks.on('preUpdateToken', (tokenDocument, updateData) => {
 		//   TokenFactions._applyFactions(tokenDocument,updateData);
 		// });
 
@@ -143,7 +143,7 @@ export const initHooks = async () => {
 		});
 
 		// Hooks.on("createToken", (data) => {
-		// 	const token = <Token>canvas.tokens?.get(data.id);
+		// 	const token = canvas.tokens?.get(data.id);
 		// 	if (!token.owner) {
 		// 		token.cursor = "default";
 		// 	}
@@ -166,40 +166,40 @@ export const initHooks = async () => {
 		// });
 
 		if (!TokenFactions.bevelGradient || !TokenFactions.bevelGradient.baseTexture) {
-			TokenFactions.bevelGradient = <PIXI.Texture>(
+			TokenFactions.bevelGradient = (
 				await loadTexture(`modules/${CONSTANTS.MODULE_NAME}/assets/bevel-gradient.jpg`)
 			);
-			TokenFactions.bevelTexture = <PIXI.Texture>(
+			TokenFactions.bevelTexture = (
 				await loadTexture(`modules/${CONSTANTS.MODULE_NAME}/assets/bevel-texture.png`)
 			);
 		}
 	}
 };
 
-export const setupHooks = async (): Promise<void> => {
+export const setupHooks = async () => {
 	setApi(API);
 };
 
 export const readyHooks = () => {
 	// DO NOTHING
-	Hooks.on("deleteToken", async (tokenDocument: TokenDocument, data: any, updateData: any) => {
-		const isPlayerOwned = <boolean>tokenDocument.isOwner;
+	Hooks.on("deleteToken", async (tokenDocument, data, updateData) => {
+		const isPlayerOwned = tokenDocument.isOwner;
 		if (!game.user?.isGM && !isPlayerOwned) {
 			return;
 		}
-		TokenFactions.clearGridFaction(<string>tokenDocument.id);
-		// tokenFactionsSocket.executeAsGM("clearGridFaction", <string>tokenDocument.id);
+		TokenFactions.clearGridFaction(tokenDocument.id);
+		// tokenFactionsSocket.executeAsGM("clearGridFaction", tokenDocument.id);
 	});
 };
 
 export const TokenPrototypeRefreshHandler = function (wrapped, ...args) {
-	const tokenData = this as TokenDocument;
-	TokenFactions.updateTokenDataFaction(tokenData);
+	const tokenDocument = this;
+	TokenFactions.updateTokenDataFaction(tokenDocument);
 	return wrapped(...args);
 };
 
 export const TokenPrototypeDrawHandler = function (wrapped, ...args) {
-	const token = this as Token;
+	const token = this;
 	TokenFactions.updateTokenDataFaction(token.document);
 	// this.drawFactions();
 	return wrapped(...args);
@@ -213,7 +213,7 @@ export const TokenPrototypeOnUpdateHandler = function (wrapped, ...args) {
 	) {
 		// DO NOTHING
 	} else {
-		const token = this as Token;
+		const token = this;
 		TokenFactions.updateTokenDataFaction(token.document);
 	}
 	return wrapped(...args);
@@ -227,7 +227,7 @@ export const ActorPrototypeOnUpdateHandler = function (wrapped, ...args) {
 	) {
 		// DO NOTHING
 	} else {
-		const actor = this as Actor;
+		const actor = this;
 		//@ts-ignore
 		TokenFactions.updateTokenDataFaction(actor.prototypeToken.document);
 	}

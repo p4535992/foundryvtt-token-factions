@@ -1,7 +1,7 @@
-import CONSTANTS from "./constants";
-import API from "./api";
-import { debug } from "./lib/lib";
-import { setSocket } from "../main";
+import CONSTANTS from "./constants.js";
+import API from "./api.js";
+import { debug } from "./lib/lib.js";
+import { setSocket } from "../main.js";
 
 // export let tokenFactionsSocket;
 

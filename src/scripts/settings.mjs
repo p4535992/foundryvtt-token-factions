@@ -1,5 +1,5 @@
-import { debug, log, warn, i18n } from "./lib/lib";
-import CONSTANTS from "./constants";
+import { debug, log, warn, i18n } from "./lib/lib.js";
+import CONSTANTS from "./constants.js";
 
 export const registerSettings = function () {
 	game.settings.registerMenu(CONSTANTS.MODULE_NAME, "resetAllSettings", {
@@ -32,7 +32,7 @@ export const registerSettings = function () {
 		config: true,
 		default: "token-disposition",
 		type: String,
-		choices: <any>{
+		choices: {
 			"token-disposition": i18n(CONSTANTS.MODULE_NAME + ".setting.color-from.opt.token-disposition"),
 			"actor-folder-color": i18n(CONSTANTS.MODULE_NAME + ".setting.color-from.opt.actor-folder-color")
 			// "custom-disposition": i18n(CONSTANTS.MODULE_NAME + ".setting.color-from.opt.custom-disposition")
@@ -101,7 +101,7 @@ export const registerSettings = function () {
 		config: true,
 		default: "flat",
 		type: String,
-		choices: <any>{
+		choices: {
 			flat: i18n(CONSTANTS.MODULE_NAME + ".setting.frame-style.opt.flat"),
 			beveled: i18n(CONSTANTS.MODULE_NAME + ".setting.frame-style.opt.beveled")
 			// border: i18n(CONSTANTS.MODULE_NAME + '.setting.frame-style.opt.border'),
@@ -157,7 +157,7 @@ export const registerSettings = function () {
 		hint: i18n(CONSTANTS.MODULE_NAME + ".setting.removeBorders.hint"),
 		scope: "world",
 		type: String,
-		choices: <any>{
+		choices: {
 			0: "None",
 			1: "Non Owned",
 			2: "All"
@@ -237,7 +237,7 @@ export const registerSettings = function () {
 		config: true,
 		type: String,
 		default: "Right",
-		choices: <any>{
+		choices: {
 			Left: "Left",
 			Right: "Right"
 		}
@@ -251,7 +251,7 @@ export const registerSettings = function () {
 		config: true,
 		type: String,
 		default: "Bottom",
-		choices: <any>{
+		choices: {
 			Top: "Top",
 			Bottom: "Bottom"
 		}
@@ -378,7 +378,7 @@ export const registerSettings = function () {
 	});
 };
 
-class ResetSettingsDialog extends FormApplication<FormApplicationOptions, object, any> {
+class ResetSettingsDialog extends FormApplication {
 	constructor(...args) {
 		//@ts-ignore
 		super(...args);
@@ -413,7 +413,7 @@ class ResetSettingsDialog extends FormApplication<FormApplicationOptions, object
 		});
 	}
 
-	async _updateObject(event: Event, formData?: object): Promise<any> {
+	async _updateObject(event, formData = null) {
 		// do nothing
 	}
 }
