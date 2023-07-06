@@ -12,9 +12,6 @@ import cleanPlugin from 'vite-plugin-clean';
 import { normalizePath } from 'vite';
 import path from 'path';
 import vue from '@vitejs/plugin-vue'
-// import sassDts from 'vite-plugin-sass-dts'
-// import hbsPlugin from './build/hbsPlugin';
-// import translationPlugin from './build/translationPlugin';
 
 // ATTENTION!
 // Please modify the below variables: s_PACKAGE_ID and s_SVELTE_HASH_ID appropriately.
@@ -172,12 +169,12 @@ export default () => {
       // When s_TYPHONJS_MODULE_LIB is true transpile against the Foundry module version of TRL.
       s_TYPHONJS_MODULE_LIB && typhonjsRuntime(),
 
-      viteZip({
-        folderPath:  `./dist/${s_MODULE_ID}`,
-        outPath: './package',
-        zipName: 'module.zip',
-        enabled: true
-      }),
+      // viteZip({
+      //   folderPath: normalizePath(path.resolve(__dirname, `./dist/${s_MODULE_ID}`)),
+      //   outPath: normalizePath(path.resolve(__dirname, './package')),
+      //   zipName: 'module.zip',
+      //   enabled: true
+      // }),
       cleanPlugin()
     ]
   };
