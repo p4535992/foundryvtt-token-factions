@@ -57,6 +57,8 @@ jobs:
       # Build distribution.
       - run: npm run build
 
+      - run: mkdir package
+
       - run: mv -v ./dist/* ./package/
 
       # Create a zip file with all files required by the module to add to the release
