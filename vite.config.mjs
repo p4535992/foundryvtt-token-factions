@@ -173,8 +173,8 @@ export default () => {
       s_TYPHONJS_MODULE_LIB && typhonjsRuntime(),
 
       viteZip({
-        folderPath: normalizePath(path.resolve(__dirname, `./dist/${s_MODULE_ID}`)),
-        outPath: normalizePath(path.resolve(__dirname, './package')),
+        folderPath:  `./dist/${s_MODULE_ID}`,
+        outPath: './package',
         zipName: 'module.zip',
         enabled: true
       }),
