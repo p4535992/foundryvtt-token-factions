@@ -69,7 +69,7 @@ jobs:
       # and the parentheses run everything in a subshell, so the current directory 
       # is restored at the end. Using OLDPWD avoids having to calculate the relative path to package.zip.
       # https://unix.stackexchange.com/questions/385405/zip-all-files-and-subfolder-in-directory-without-parent-directory
-      - run: (cd package && zip -r "$OLDPWD/module.zip" . && mv "$OLDPWD/module.zip" ./package/)
+      - run: (cd package && zip -r "$OLDPWD/module.zip" . && mv -v "$OLDPWD/*.zip" ./)
       
       - name: Update Release with Files
         id: create_version_release
@@ -80,7 +80,7 @@ jobs:
           draft: false
           prerelease: false
           token: ${{ secrets.GITHUB_TOKEN }}
-          artifacts: './src/module.json, ./package/module.zip'
+          artifacts: './src/module.json, ./module.zip'
           tag: ${{ github.event.release.tag_name }}
           body: ${{ github.event.release.body }}
 
