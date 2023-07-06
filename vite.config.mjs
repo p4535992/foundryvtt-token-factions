@@ -138,6 +138,10 @@ export default () => {
             dest: normalizePath(path.resolve(__dirname, `./dist/${s_MODULE_ID}/styles`)), // 2️
           },
           {
+            src: normalizePath(path.resolve(__dirname, './src/packs')) + '/[!.]*', // 1️
+            dest: normalizePath(path.resolve(__dirname, `./dist/${s_MODULE_ID}/packs`)), // 2️
+          },
+          {
             src: normalizePath(path.resolve(__dirname, './src/module.json')), // 1️
             dest: normalizePath(path.resolve(__dirname, `./dist/${s_MODULE_ID}/`)), // 2️
           },
@@ -169,8 +173,8 @@ export default () => {
       s_TYPHONJS_MODULE_LIB && typhonjsRuntime(),
 
       viteZip({
-        folderPath: path.resolve(__dirname, `./dist/${s_MODULE_ID}`),
-        outPath: path.resolve(__dirname, './package'),
+        folderPath: normalizePath(path.resolve(__dirname, `./dist/${s_MODULE_ID}`)),
+        outPath: normalizePath(path.resolve(__dirname, './package')),
         zipName: 'module.zip',
         enabled: true
       }),
