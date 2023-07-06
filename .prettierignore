@@ -4,3 +4,5 @@
 /.yarn/
 /.vscode/
 /.idea
+.vite-cache/**
+**/*.md
