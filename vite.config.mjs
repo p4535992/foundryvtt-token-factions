@@ -86,7 +86,7 @@ export default () => {
       },
     },
     build: {
-      outDir: normalizePath( path.resolve(__dirname, `./dist`)), // __dirname,
+      outDir: normalizePath( path.resolve(__dirname, `./dist/${s_MODULE_ID}`)), // __dirname,
       emptyOutDir: false,
       sourcemap: s_SOURCEMAPS,
       brotliSize: true,
@@ -108,39 +108,39 @@ export default () => {
         targets: [
           {
             src: normalizePath(path.resolve(__dirname, './src/assets')) + '/[!.]*', // 1️
-            dest: normalizePath(path.resolve(__dirname, `./dist/assets`)), // 2️
+            dest: normalizePath(path.resolve(__dirname, `./dist/${s_MODULE_ID}/assets`)), // 2️
           },
           {
             src: normalizePath(path.resolve(__dirname, './src/images')) + '/[!.]*', // 1️
-            dest: normalizePath(path.resolve(__dirname, `./dist/images`)), // 2️
+            dest: normalizePath(path.resolve(__dirname, `./dist/${s_MODULE_ID}/images`)), // 2️
           },
           {
             src: normalizePath(path.resolve(__dirname, './src/icons')) + '/[!.]*', // 1️
-            dest: normalizePath(path.resolve(__dirname, `./dist/icons`)), // 2️
+            dest: normalizePath(path.resolve(__dirname, `./dist/${s_MODULE_ID}/icons`)), // 2️
           },
           {
             src: normalizePath(path.resolve(__dirname, './src/templates')) + '/[!.]*', // 1️
-            dest: normalizePath(path.resolve(__dirname, `./dist/templates`)), // 2️
+            dest: normalizePath(path.resolve(__dirname, `./dist/${s_MODULE_ID}/templates`)), // 2️
           },
           {
             src: normalizePath(path.resolve(__dirname, './src/lang')) + '/[!.]*', // 1️
-            dest: normalizePath(path.resolve(__dirname, `./dist/lang`)), // 2️
+            dest: normalizePath(path.resolve(__dirname, `./dist/${s_MODULE_ID}/lang`)), // 2️
           },
           {
             src: normalizePath(path.resolve(__dirname, './src/languages')) + '/[!.]*', // 1️
-            dest: normalizePath(path.resolve(__dirname, `./dist/languages`)), // 2️
+            dest: normalizePath(path.resolve(__dirname, `./dist/${s_MODULE_ID}/languages`)), // 2️
           },
           {
             src: normalizePath(path.resolve(__dirname, './src/styles')) + '/[!.]*', // 1️
-            dest: normalizePath(path.resolve(__dirname, `./dist/styles`)), // 2️
+            dest: normalizePath(path.resolve(__dirname, `./dist/${s_MODULE_ID}/styles`)), // 2️
           },
           {
             src: normalizePath(path.resolve(__dirname, './src/packs')) + '/[!.]*', // 1️
-            dest: normalizePath(path.resolve(__dirname, `./dist/packs`)), // 2️
+            dest: normalizePath(path.resolve(__dirname, `./dist/${s_MODULE_ID}/packs`)), // 2️
           },
           {
             src: normalizePath(path.resolve(__dirname, './src/module.json')), // 1️
-            dest: normalizePath(path.resolve(__dirname, `./dist/`)), // 2️
+            dest: normalizePath(path.resolve(__dirname, `./dist/${s_MODULE_ID}/`)), // 2️
           },
         ],
       }),
@@ -170,7 +170,7 @@ export default () => {
       s_TYPHONJS_MODULE_LIB && typhonjsRuntime(),
 
       // viteZip({
-      //   folderPath: normalizePath(path.resolve(__dirname, `./dist`)),
+      //   folderPath: normalizePath(path.resolve(__dirname, `./dist/${s_MODULE_ID}`)),
       //   outPath: normalizePath(path.resolve(__dirname, './package')),
       //   zipName: 'module.zip',
       //   enabled: true
