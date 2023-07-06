@@ -19,14 +19,15 @@
   "devDependencies": {
     "@league-of-foundry-developers/foundry-vtt-types": "^9.238.1",
     "@typhonjs-config/eslint-config": "^0.3.0",
-    "@typhonjs-fvtt/eslint-config-foundry.mjs": "^0.8.0",
     "eslint": "^8",
-    "svelte-dnd-action": "^0.9.18",
-    "svelte-preprocess": "^5",
-    "vite": "^4.3.8",
     "husky": "^8.0.3",
     "lint-staged": "^13.2.1",
-    "prettier": "^2.8.7"
+    "prettier": "^2.8.7",
+    "svelte-dnd-action": "^0.9.18",
+    "svelte-preprocess": "^5",
+    "vite": "^4.4.0",
+    "vite-plugin-static-copy": "^0.16.0",
+    "vite-plugin-zip-file": "^2.1.0"
   },
   "browserslist": [
     ">5%",

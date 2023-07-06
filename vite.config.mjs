@@ -2,6 +2,12 @@ import { svelte } from "@sveltejs/vite-plugin-svelte";
 import resolve from "@rollup/plugin-node-resolve"; // This resolves NPM modules from node_modules.
 import preprocess from "svelte-preprocess";
 import { postcssConfig, terserConfig } from "@typhonjs-fvtt/runtime/rollup";
+import { viteZip } from 'vite-plugin-zip-file';
+import { viteStaticCopy } from 'vite-plugin-static-copy';
+import { normalizePath } from 'vite';
+import path from 'path';
+// import hbsPlugin from './build/hbsPlugin';
+// import translationPlugin from './build/translationPlugin';
 
 // ATTENTION!
 // Please modify the below variables: s_PACKAGE_ID and s_SVELTE_HASH_ID appropriately.
@@ -58,7 +64,7 @@ export default () => {
       open: "/game",
       proxy: {
         // Serves static files from main Foundry server.
-        [`^(/${s_PACKAGE_ID}/(assets|lang|packs|style.css))`]:
+        [`^(/${s_PACKAGE_ID}/(fonts|assets|lang|languages|packs|styles|templates|style.css))`]:
           "http://localhost:30000",
 
         // All other paths besides package ID path are served from main Foundry server.
@@ -69,7 +75,7 @@ export default () => {
       },
     },
     build: {
-      outDir: __dirname,
+      outDir: normalizePath( path.resolve(__dirname, './dist')), // __dirname,
       emptyOutDir: false,
       sourcemap: s_SOURCEMAPS,
       brotliSize: true,
@@ -77,13 +83,55 @@ export default () => {
       target: ["es2022"],
       terserOptions: s_COMPRESS ? { ...terserConfig(), ecma: 2022 } : void 0,
       lib: {
-        entry: s_ENTRY_JAVASCRIPT ?  "./" + s_ENTRY_JAVASCRIPT : "./module.mjs",
+        entry: "./" + s_ENTRY_JAVASCRIPT,
         formats: ["es"],
         fileName: "module",
       },
     },
 
+    // package: {
+    //     // outDir: normalizePath(path.resolve(__dirname, './package')),
+    //     folderPath: normalizePath(path.resolve(__dirname, './dist')),
+    //     outPath: normalizePath(path.resolve(__dirname, './package')),
+    //     zipName: 'module.zip',
+    // }
+
     plugins: [
+    //   hbsPlugin(),
+    //   translationPlugin('./src/lang', './dist/lang'),
+       viteZip({
+        folderPath: normalizePath(path.resolve(__dirname, './dist')),
+        outPath: normalizePath(path.resolve(__dirname, './package')),
+        zipName: 'module.zip'
+      }),
+      viteStaticCopy({
+        targets: [
+          {
+            src: normalizePath(path.resolve(__dirname, './src/assets')) + '/[!.]*', // 1️
+            dest: normalizePath(path.resolve(__dirname, './dist/assets')), // 2️
+          },
+          {
+            src: normalizePath(path.resolve(__dirname, './src/templates')) + '/[!.]*', // 1️
+            dest: normalizePath(path.resolve(__dirname, './dist/templates')), // 2️
+          },
+          {
+            src: normalizePath(path.resolve(__dirname, './src/lang')) + '/[!.]*', // 1️
+            dest: normalizePath(path.resolve(__dirname, './dist/lang')), // 2️
+          },
+          {
+            src: normalizePath(path.resolve(__dirname, './src/languages')) + '/[!.]*', // 1️
+            dest: normalizePath(path.resolve(__dirname, './dist/language')), // 2️
+          },
+          {
+            src: normalizePath(path.resolve(__dirname, './src/styles')) + '/[!.]*', // 1️
+            dest: normalizePath(path.resolve(__dirname, './dist/styles')), // 2️
+          },
+          {
+            src: normalizePath(path.resolve(__dirname, './src/module.json')), // 1️
+            dest: normalizePath(path.resolve(__dirname, './dist')), // 2️
+          },
+        ],
+      }),
       svelte({
         compilerOptions: {
           // Provides a custom hash adding the string defined in `s_SVELTE_HASH_ID` to scoped Svelte styles;
