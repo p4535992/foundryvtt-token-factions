@@ -12,65 +12,65 @@
 // Import JavaScript modules
 
 // Import TypeScript modules
-import { registerSettings } from "./scripts/settings.js";
-import { initHooks, readyHooks, setupHooks } from "./scripts/module.js";
-import CONSTANTS from "./scripts/constants.js";
-import API from "./scripts/api.js";
-import { error } from "./scripts/lib/lib.js";
+import { registerSettings } from "./scripts/settings.mjs";
+import { initHooks, readyHooks, setupHooks } from "./scripts/module.mjs";
+import CONSTANTS from "./scripts/constants.mjs";
+import API from "./scripts/api.mjs";
+import { error } from "./scripts/lib/lib.mjs";
 
 /* ------------------------------------ */
 /* Initialize module					*/
 /* ------------------------------------ */
 Hooks.once("init", () => {
-	console.log(`${CONSTANTS.MODULE_NAME} | Initializing ${CONSTANTS.MODULE_NAME}`);
+  console.log(`${CONSTANTS.MODULE_NAME} | Initializing ${CONSTANTS.MODULE_NAME}`);
 
-	// Do anything once the module is ready
-	if (!game.modules.get("lib-wrapper")?.active && game.user?.isGM) {
-		let word = "install and activate";
-		if (game.modules.get("lib-wrapper")) word = "activate";
-		throw error(`Requires the 'libWrapper' module. Please ${word} it.`);
-	}
+  // Do anything once the module is ready
+  if (!game.modules.get("lib-wrapper")?.active && game.user?.isGM) {
+    let word = "install and activate";
+    if (game.modules.get("lib-wrapper")) word = "activate";
+    throw error(`Requires the 'libWrapper' module. Please ${word} it.`);
+  }
 
-	// Register custom module settings
-	registerSettings();
+  // Register custom module settings
+  registerSettings();
 
-	initHooks();
-	//readyHooks();
+  initHooks();
+  //readyHooks();
 
-	// Assign custom classes and constants here
+  // Assign custom classes and constants here
 
-	// Register custom module settings
-	//registerSettings();
-	//fetchParams();
+  // Register custom module settings
+  //registerSettings();
+  //fetchParams();
 
-	// Preload Handlebars templates
-	// await preloadTemplates();
-	// Register custom sheets (if any)
+  // Preload Handlebars templates
+  // await preloadTemplates();
+  // Register custom sheets (if any)
 });
 
 /* ------------------------------------ */
 /* Setup module							*/
 /* ------------------------------------ */
 Hooks.once("setup", function () {
-	// Do anything after initialization but before ready
-	//setupModules();
+  // Do anything after initialization but before ready
+  //setupModules();
 
-	setupHooks();
+  setupHooks();
 
-	//registerSettings();
+  //registerSettings();
 });
 
 /* ------------------------------------ */
 /* When ready							*/
 /* ------------------------------------ */
 Hooks.once("ready", () => {
-	// if (!game.modules.get("socketLib")?.active && game.user?.isGM) {
-	// 	let word = "install and activate";
-	// 	if (game.modules.get("socketLib")) word = "activate";
-	// 	throw error(`Requires the 'socketLib' module. Please ${word} it.`);
-	// }
-	// Do anything once the module is ready
-	readyHooks();
+  // if (!game.modules.get("socketLib")?.active && game.user?.isGM) {
+  // 	let word = "install and activate";
+  // 	if (game.modules.get("socketLib")) word = "activate";
+  // 	throw error(`Requires the 'socketLib' module. Please ${word} it.`);
+  // }
+  // Do anything once the module is ready
+  readyHooks();
 });
 
 // Add any additional hooks if necessary
@@ -80,8 +80,8 @@ Hooks.once("ready", () => {
  * @param api to set to game module.
  */
 export function setApi(api) {
-	const data = game.modules.get(CONSTANTS.MODULE_NAME);
-	data.api = api;
+  const data = game.modules.get(CONSTANTS.MODULE_NAME);
+  data.api = api;
 }
 
 /**
@@ -89,8 +89,8 @@ export function setApi(api) {
  * @returns Api from games module.
  */
 export function getApi() {
-	const data = game.modules.get(CONSTANTS.MODULE_NAME);
-	return data.api;
+  const data = game.modules.get(CONSTANTS.MODULE_NAME);
+  return data.api;
 }
 
 /**
@@ -98,8 +98,8 @@ export function getApi() {
  * @param socket to set to game module.
  */
 export function setSocket(socket) {
-	const data = game.modules.get(CONSTANTS.MODULE_NAME);
-	data.socket = socket;
+  const data = game.modules.get(CONSTANTS.MODULE_NAME);
+  data.socket = socket;
 }
 
 /*
@@ -107,6 +107,6 @@ export function setSocket(socket) {
  * @returns Socket from games module.
  */
 export function getSocket() {
-	const data = game.modules.get(CONSTANTS.MODULE_NAME);
-	return data.socket;
+  const data = game.modules.get(CONSTANTS.MODULE_NAME);
+  return data.socket;
 }

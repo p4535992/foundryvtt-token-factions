@@ -3,7 +3,7 @@
   "title": "Token Factions",
   "description": "Generate token bases based on token disposition or actor folder color.",
   "version": "0.3.11",
-  "main": "main.js",
+  "main": "main.mjs",
   "scripts": {
     "publish": "gulp publish --update",
     "package": "gulp package",
@@ -39,7 +39,7 @@
     "@types/yargs": "^17.0.2",
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
-    "@typhonjs-fvtt/eslint-config-foundry.js": "^0.8.0",
+    "@typhonjs-fvtt/eslint-config-foundry.mjs": "^0.8.0",
     "archiver": "^5.3.0",
     "babelify": "^10.0.0",
     "browserify": "^17.0.0",

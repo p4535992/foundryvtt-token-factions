@@ -8,7 +8,7 @@
   "author": "",
   "contributors": [],
   "version": "0.3.11",
-  "main": "main.js",
+  "main": "main.mjs",
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^6.3.0",
     "@typhonjs-fvtt/runtime": "^0.0.23",
@@ -19,7 +19,7 @@
   "devDependencies": {
     "@league-of-foundry-developers/foundry-vtt-types": "^9.238.1",
     "@typhonjs-config/eslint-config": "^0.3.0",
-    "@typhonjs-fvtt/eslint-config-foundry.js": "^0.8.0",
+    "@typhonjs-fvtt/eslint-config-foundry.mjs": "^0.8.0",
     "eslint": "^8",
     "svelte-dnd-action": "^0.9.18",
     "svelte-preprocess": "^5",
@@ -37,7 +37,7 @@
     "dev": "vite",
     "eslint": "eslint .",
     "prepare": "husky install",
-    "prettier-format": "prettier --config .prettierrc.js --write \"./src/**/*.{ts,js,json,scss,css}\""
+    "prettier-format": "prettier --config .prettierrc --write \"./src/**/*.{ts,js,mjs,json,scss,css}\""
   },
   "lint-staged": {
     "*.{js,css}": "prettier --write"
