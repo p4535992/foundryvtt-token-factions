@@ -59,7 +59,8 @@ jobs:
 
       # Create a zip file with all files required by the module to add to the release
       #- run: zip -r ./module.zip module.json LICENSE module.js module.js.map style.css templates/ languages/ packs/ assets/
-
+      - run: zip -r ./module.zip dist/*
+      
       - name: Update Release with Files
         id: create_version_release
         uses: ncipollo/release-action@v1
@@ -69,7 +70,7 @@ jobs:
           draft: false
           prerelease: false
           token: ${{ secrets.GITHUB_TOKEN }}
-          artifacts: './dist/module.json, ./package/module.zip'
+          artifacts: './src/module.json, ./module.zip'
           tag: ${{ github.event.release.tag_name }}
           body: ${{ github.event.release.body }}
 
