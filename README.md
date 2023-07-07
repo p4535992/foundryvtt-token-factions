@@ -25,7 +25,7 @@ Artwork and assets kindly provided by and used with permission of Caeora. [www.c
 
 **This is a keeping up to date of the idea of [Voldemalort](https://github.com/Voldemalort) and is project [Token Factions (original)](https://github.com/Voldemalort/token-factions) wishing him all the best possible**
 
-## Unfortunately I have some small problems (both level of the code and of personal life XD) and I will not be able to keep up with this module, if someone feels like taking charge of it let me know
+## NOTE: This module is under maintenance, I have no plans to update or add features. However, I will try to fix any bugs as possible. Any contribution is welcome.
 
 **Part of the code of this is module is inspired from the  wonderful work done by [kandashi](https://github.com/kandashi) with its [Border-Control](https://github.com/kandashi/Border-Control) and [Levels](https://github.com/theripper93/Levels) module.
 If you want to support more modules of this kind, I invite you to go and support his patreon.**
