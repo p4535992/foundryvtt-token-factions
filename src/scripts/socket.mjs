@@ -11,7 +11,7 @@ import { setSocket } from "../main.mjs";
 // 		return tokenFactionsSocket;
 // 	}
 // 	//@ts-ignore
-// 	tokenFactionsSocket = socketlib.registerModule(CONSTANTS.MODULE_NAME);
+// 	tokenFactionsSocket = socketlib.registerModule(CONSTANTS.MODULE_ID);
 
 // 	tokenFactionsSocket.register("clearGridFaction", (...args) => API.clearGridFactionArr(...args));
 

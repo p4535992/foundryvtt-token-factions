@@ -13,18 +13,18 @@ export const initHooks = async () => {
   // registerSocket();
 
   Hooks.on("renderSettingsConfig", (app, el, data) => {
-    const nC = game.settings.get(CONSTANTS.MODULE_NAME, "neutralColor");
-    const fC = game.settings.get(CONSTANTS.MODULE_NAME, "friendlyColor");
-    const hC = game.settings.get(CONSTANTS.MODULE_NAME, "hostileColor");
-    const cC = game.settings.get(CONSTANTS.MODULE_NAME, "controlledColor");
-    const pC = game.settings.get(CONSTANTS.MODULE_NAME, "partyColor");
-    const nCE = game.settings.get(CONSTANTS.MODULE_NAME, "neutralColorEx");
-    const fCE = game.settings.get(CONSTANTS.MODULE_NAME, "friendlyColorEx");
-    const hCE = game.settings.get(CONSTANTS.MODULE_NAME, "hostileColorEx");
-    const cCE = game.settings.get(CONSTANTS.MODULE_NAME, "controlledColorEx");
-    const pCE = game.settings.get(CONSTANTS.MODULE_NAME, "partyColorEx");
-    const afCE = game.settings.get(CONSTANTS.MODULE_NAME, "actorFolderColorEx");
-    const cdCE = game.settings.get(CONSTANTS.MODULE_NAME, "customDispositionColorEx");
+    const nC = game.settings.get(CONSTANTS.MODULE_ID, "neutralColor");
+    const fC = game.settings.get(CONSTANTS.MODULE_ID, "friendlyColor");
+    const hC = game.settings.get(CONSTANTS.MODULE_ID, "hostileColor");
+    const cC = game.settings.get(CONSTANTS.MODULE_ID, "controlledColor");
+    const pC = game.settings.get(CONSTANTS.MODULE_ID, "partyColor");
+    const nCE = game.settings.get(CONSTANTS.MODULE_ID, "neutralColorEx");
+    const fCE = game.settings.get(CONSTANTS.MODULE_ID, "friendlyColorEx");
+    const hCE = game.settings.get(CONSTANTS.MODULE_ID, "hostileColorEx");
+    const cCE = game.settings.get(CONSTANTS.MODULE_ID, "controlledColorEx");
+    const pCE = game.settings.get(CONSTANTS.MODULE_ID, "partyColorEx");
+    const afCE = game.settings.get(CONSTANTS.MODULE_ID, "actorFolderColorEx");
+    const cdCE = game.settings.get(CONSTANTS.MODULE_ID, "customDispositionColorEx");
 
     el.find('[name="token-factions.neutralColor"]')
       .parent()
@@ -66,7 +66,7 @@ export const initHooks = async () => {
       .append(`<input type="color" value="${cdCE}" data-edit="token-factions.customDispositionColorEx">`);
   });
 
-  if (game.settings.get(CONSTANTS.MODULE_NAME, "tokenFactionsEnabled")) {
+  if (game.settings.get(CONSTANTS.MODULE_ID, "tokenFactionsEnabled")) {
     // setup all the hooks
 
     Hooks.on("closeSettingsConfig", (token, data) => {
@@ -86,8 +86,8 @@ export const initHooks = async () => {
       // token?.refresh();
       if (
         hasProperty(data, "flags") &&
-        hasProperty(data.flags[CONSTANTS.MODULE_NAME], `${TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE}`) &&
-        getProperty(data.flags[CONSTANTS.MODULE_NAME], `${TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE}`)
+        hasProperty(data.flags[CONSTANTS.MODULE_ID], `${TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE}`) &&
+        getProperty(data.flags[CONSTANTS.MODULE_ID], `${TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE}`)
       ) {
         // DO NOTHING
       } else {
@@ -100,8 +100,8 @@ export const initHooks = async () => {
       // token?.refresh();
       if (
         hasProperty(data, "flags") &&
-        hasProperty(data.flags[CONSTANTS.MODULE_NAME], `${TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE}`) &&
-        getProperty(data.flags[CONSTANTS.MODULE_NAME], `${TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE}`)
+        hasProperty(data.flags[CONSTANTS.MODULE_ID], `${TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE}`) &&
+        getProperty(data.flags[CONSTANTS.MODULE_ID], `${TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE}`)
       ) {
         // DO NOTHING
       } else {
@@ -121,16 +121,16 @@ export const initHooks = async () => {
     // });
 
     //@ts-ignore
-    libWrapper.register(CONSTANTS.MODULE_NAME, "Token.prototype.refresh", TokenPrototypeRefreshHandler, "MIXED");
+    libWrapper.register(CONSTANTS.MODULE_ID, "Token.prototype.refresh", TokenPrototypeRefreshHandler, "MIXED");
 
     //@ts-ignore
-    libWrapper.register(CONSTANTS.MODULE_NAME, "Token.prototype.draw", TokenPrototypeDrawHandler, "MIXED");
+    libWrapper.register(CONSTANTS.MODULE_ID, "Token.prototype.draw", TokenPrototypeDrawHandler, "MIXED");
 
     //@ts-ignore
-    libWrapper.register(CONSTANTS.MODULE_NAME, "Token.prototype._onUpdate", TokenPrototypeOnUpdateHandler, "MIXED");
+    libWrapper.register(CONSTANTS.MODULE_ID, "Token.prototype._onUpdate", TokenPrototypeOnUpdateHandler, "MIXED");
 
     //@ts-ignore
-    libWrapper.register(CONSTANTS.MODULE_NAME, "Actor.prototype._onUpdate", ActorPrototypeOnUpdateHandler, "MIXED");
+    libWrapper.register(CONSTANTS.MODULE_ID, "Actor.prototype._onUpdate", ActorPrototypeOnUpdateHandler, "MIXED");
 
     Hooks.on("renderTokenHUD", (app, html, data) => {
       TokenFactions.AddBorderToggle(app, html, data);
@@ -160,8 +160,8 @@ export const initHooks = async () => {
     // });
 
     if (!TokenFactions.bevelGradient || !TokenFactions.bevelGradient.baseTexture) {
-      TokenFactions.bevelGradient = await loadTexture(`modules/${CONSTANTS.MODULE_NAME}/assets/bevel-gradient.jpg`);
-      TokenFactions.bevelTexture = await loadTexture(`modules/${CONSTANTS.MODULE_NAME}/assets/bevel-texture.png`);
+      TokenFactions.bevelGradient = await loadTexture(`modules/${CONSTANTS.MODULE_ID}/assets/bevel-gradient.jpg`);
+      TokenFactions.bevelTexture = await loadTexture(`modules/${CONSTANTS.MODULE_ID}/assets/bevel-texture.png`);
     }
   }
 };
@@ -198,8 +198,8 @@ export const TokenPrototypeDrawHandler = function (wrapped, ...args) {
 export const TokenPrototypeOnUpdateHandler = function (wrapped, ...args) {
   if (
     hasProperty(args[0], "flags") &&
-    hasProperty(args[0].flags[CONSTANTS.MODULE_NAME], `${TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE}`) &&
-    getProperty(args[0].flags[CONSTANTS.MODULE_NAME], `${TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE}`)
+    hasProperty(args[0].flags[CONSTANTS.MODULE_ID], `${TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE}`) &&
+    getProperty(args[0].flags[CONSTANTS.MODULE_ID], `${TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE}`)
   ) {
     // DO NOTHING
   } else {
@@ -212,8 +212,8 @@ export const TokenPrototypeOnUpdateHandler = function (wrapped, ...args) {
 export const ActorPrototypeOnUpdateHandler = function (wrapped, ...args) {
   if (
     hasProperty(args[0], "flags") &&
-    hasProperty(args[0].flags[CONSTANTS.MODULE_NAME], `${TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE}`) &&
-    getProperty(args[0].flags[CONSTANTS.MODULE_NAME], `${TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE}`)
+    hasProperty(args[0].flags[CONSTANTS.MODULE_ID], `${TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE}`) &&
+    getProperty(args[0].flags[CONSTANTS.MODULE_ID], `${TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE}`)
   ) {
     // DO NOTHING
   } else {

@@ -18,7 +18,7 @@ const API = {
       return;
     }
     //@ts-ignore
-    await token.document.setFlag(CONSTANTS.MODULE_NAME, TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE, true);
+    await token.document.setFlag(CONSTANTS.MODULE_ID, TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE, true);
   },
 
   async enableDrawBorderFactionsFromTokens(tokenIdsOrNames) {
@@ -36,7 +36,7 @@ const API = {
       return;
     }
     //@ts-ignore
-    await token.document.setFlag(CONSTANTS.MODULE_NAME, TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE, false);
+    await token.document.setFlag(CONSTANTS.MODULE_ID, TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE, false);
   },
 
   async retrieveBorderFactionsColorFromToken(tokenIdOrName) {
@@ -59,7 +59,7 @@ const API = {
     if (!borderColor.INT || Number.isNaN(borderColor.INT)) {
       return factionGraphicDefaultS;
     }
-    switch (game.settings.get(CONSTANTS.MODULE_NAME, "removeBorders")) {
+    switch (game.settings.get(CONSTANTS.MODULE_ID, "removeBorders")) {
       case "0": {
         break;
       }
@@ -78,11 +78,11 @@ const API = {
     //@ts-ignore
     let skipDraw;
     try {
-      skipDraw = token.document.getFlag(CONSTANTS.MODULE_NAME, TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE);
+      skipDraw = token.document.getFlag(CONSTANTS.MODULE_ID, TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE);
     } catch (e) {
       //@ts-ignore
-      await token.document.setFlag(CONSTANTS.MODULE_NAME, TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE, false);
-      skipDraw = token.document.getFlag(CONSTANTS.MODULE_NAME, TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE);
+      await token.document.setFlag(CONSTANTS.MODULE_ID, TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE, false);
+      skipDraw = token.document.getFlag(CONSTANTS.MODULE_ID, TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE);
     }
     //@ts-ignore
     if (skipDraw) {

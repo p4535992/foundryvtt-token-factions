@@ -45,28 +45,28 @@ export class TokenFactions {
 
   static async onInit() {
     TokenFactions.defaultColors = {
-      "party-member": game.settings.get(CONSTANTS.MODULE_NAME, "partyColor"), //'#33bc4e',
-      "party-npc": game.settings.get(CONSTANTS.MODULE_NAME, "partyColor"), //'#33bc4e',
-      "friendly-npc": game.settings.get(CONSTANTS.MODULE_NAME, "friendlyColor"), //'#43dfdf',
-      "neutral-npc": game.settings.get(CONSTANTS.MODULE_NAME, "neutralColor"), //'#f1d836',
-      "hostile-npc": game.settings.get(CONSTANTS.MODULE_NAME, "hostileColor"), //'#e72124',
+      "party-member": game.settings.get(CONSTANTS.MODULE_ID, "partyColor"), //'#33bc4e',
+      "party-npc": game.settings.get(CONSTANTS.MODULE_ID, "partyColor"), //'#33bc4e',
+      "friendly-npc": game.settings.get(CONSTANTS.MODULE_ID, "friendlyColor"), //'#43dfdf',
+      "neutral-npc": game.settings.get(CONSTANTS.MODULE_ID, "neutralColor"), //'#f1d836',
+      "hostile-npc": game.settings.get(CONSTANTS.MODULE_ID, "hostileColor"), //'#e72124',
 
-      "controlled-npc": game.settings.get(CONSTANTS.MODULE_NAME, "controlledColor"),
-      "neutral-external-npc": game.settings.get(CONSTANTS.MODULE_NAME, "neutralColorEx"),
-      "friendly-external-npc": game.settings.get(CONSTANTS.MODULE_NAME, "friendlyColorEx"),
-      "hostile-external-npc": game.settings.get(CONSTANTS.MODULE_NAME, "hostileColorEx"),
-      "controlled-external-npc": game.settings.get(CONSTANTS.MODULE_NAME, "controlledColorEx"),
-      "party-external-member": game.settings.get(CONSTANTS.MODULE_NAME, "partyColorEx"),
-      "party-external-npc": game.settings.get(CONSTANTS.MODULE_NAME, "partyColorEx"),
+      "controlled-npc": game.settings.get(CONSTANTS.MODULE_ID, "controlledColor"),
+      "neutral-external-npc": game.settings.get(CONSTANTS.MODULE_ID, "neutralColorEx"),
+      "friendly-external-npc": game.settings.get(CONSTANTS.MODULE_ID, "friendlyColorEx"),
+      "hostile-external-npc": game.settings.get(CONSTANTS.MODULE_ID, "hostileColorEx"),
+      "controlled-external-npc": game.settings.get(CONSTANTS.MODULE_ID, "controlledColorEx"),
+      "party-external-member": game.settings.get(CONSTANTS.MODULE_ID, "partyColorEx"),
+      "party-external-npc": game.settings.get(CONSTANTS.MODULE_ID, "partyColorEx"),
 
-      //"target-npc": game.settings.get(CONSTANTS.MODULE_NAME, "targetColor"),
-      //"target-external-npc": game.settings.get(CONSTANTS.MODULE_NAME, "targetColorEx")
+      //"target-npc": game.settings.get(CONSTANTS.MODULE_ID, "targetColor"),
+      //"target-external-npc": game.settings.get(CONSTANTS.MODULE_ID, "targetColorEx")
     };
 
     TokenFactions.dispositions = Object.keys(TokenFactions.defaultColors);
 
-    TokenFactions.bevelGradient = await loadTexture(`modules/${CONSTANTS.MODULE_NAME}/assets/bevel-gradient.jpg`);
-    TokenFactions.bevelTexture = await loadTexture(`modules/${CONSTANTS.MODULE_NAME}/assets/bevel-texture.png`);
+    TokenFactions.bevelGradient = await loadTexture(`modules/${CONSTANTS.MODULE_ID}/assets/bevel-gradient.jpg`);
+    TokenFactions.bevelTexture = await loadTexture(`modules/${CONSTANTS.MODULE_ID}/assets/bevel-texture.png`);
   }
 
   static renderTokenConfig = async function (config, html) {
@@ -78,26 +78,26 @@ export class TokenFactions {
       return;
     }
     const factionDisableValue = config.object.getFlag(
-      CONSTANTS.MODULE_NAME,
+      CONSTANTS.MODULE_ID,
       TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE
     )
       ? "checked"
       : "";
 
     const currentCustomColorTokenInt =
-      config.object.getFlag(CONSTANTS.MODULE_NAME, TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_COLOR_INT) ||
+      config.object.getFlag(CONSTANTS.MODULE_ID, TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_COLOR_INT) ||
       "#000000";
 
     const currentCustomColorTokenExt =
-      config.object.getFlag(CONSTANTS.MODULE_NAME, TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_COLOR_EXT) ||
+      config.object.getFlag(CONSTANTS.MODULE_ID, TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_COLOR_EXT) ||
       "#000000";
 
     const currentCustomColorTokenFrameOpacity =
-      config.object.getFlag(CONSTANTS.MODULE_NAME, TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_FRAME_OPACITY) ||
+      config.object.getFlag(CONSTANTS.MODULE_ID, TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_FRAME_OPACITY) ||
       0.5;
 
     const currentCustomColorTokenBaseOpacity =
-      config.object.getFlag(CONSTANTS.MODULE_NAME, TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_BASE_OPACITY) ||
+      config.object.getFlag(CONSTANTS.MODULE_ID, TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_BASE_OPACITY) ||
       0.5;
 
     // Expand the width
@@ -118,38 +118,38 @@ export class TokenFactions {
       <div class="form-group">
         <label>${i18n("token-factions.label.factionsCustomDisable")}</label>
         <input type="checkbox"
-          data-edit="flags.${CONSTANTS.MODULE_NAME}.${TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE}"
-          name="flags.${CONSTANTS.MODULE_NAME}.${TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE}"
+          data-edit="flags.${CONSTANTS.MODULE_ID}.${TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE}"
+          name="flags.${CONSTANTS.MODULE_ID}.${TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE}"
           data-dtype="Boolean" ${factionDisableValue}>
       </div>
       <div class="form-group">
         <label>${i18n("token-factions.label.factionsCustomColorTokenInt")}</label>
         <input type="color"
-          data-edit="flags.${CONSTANTS.MODULE_NAME}.${TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_COLOR_INT}"
-          name="flags.${CONSTANTS.MODULE_NAME}.${TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_COLOR_INT}"
+          data-edit="flags.${CONSTANTS.MODULE_ID}.${TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_COLOR_INT}"
+          name="flags.${CONSTANTS.MODULE_ID}.${TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_COLOR_INT}"
           data-dtype="String" value="${currentCustomColorTokenInt}"></input>
       </div>
       <div class="form-group">
         <label>${i18n("token-factions.label.factionsCustomColorTokenExt")}</label>
         <input type="color"
-          data-edit="flags.${CONSTANTS.MODULE_NAME}.${TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_COLOR_EXT}"
-          name="flags.${CONSTANTS.MODULE_NAME}.${TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_COLOR_EXT}"
+          data-edit="flags.${CONSTANTS.MODULE_ID}.${TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_COLOR_EXT}"
+          name="flags.${CONSTANTS.MODULE_ID}.${TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_COLOR_EXT}"
           data-dtype="String" value="${currentCustomColorTokenExt}"></input>
       </div>
       <div class="form-group">
         <label>${i18n("token-factions.label.factionsCustomColorTokenFrameOpacity")}</label>
         <input type="number"
           min="0" max="1" step="0.1"
-          data-edit="flags.${CONSTANTS.MODULE_NAME}.${TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_FRAME_OPACITY}"
-          name="flags.${CONSTANTS.MODULE_NAME}.${TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_FRAME_OPACITY}"
+          data-edit="flags.${CONSTANTS.MODULE_ID}.${TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_FRAME_OPACITY}"
+          name="flags.${CONSTANTS.MODULE_ID}.${TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_FRAME_OPACITY}"
           data-dtype="Number" value="${currentCustomColorTokenFrameOpacity}"></input>
       </div>
       <div class="form-group">
         <label>${i18n("token-factions.label.factionsCustomColorTokenBaseOpacity")}</label>
         <input type="number"
           min="0" max="1" step="0.1"
-          data-edit="flags.${CONSTANTS.MODULE_NAME}.${TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_BASE_OPACITY}"
-          name="flags.${CONSTANTS.MODULE_NAME}.${TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_BASE_OPACITY}"
+          data-edit="flags.${CONSTANTS.MODULE_ID}.${TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_BASE_OPACITY}"
+          name="flags.${CONSTANTS.MODULE_ID}.${TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_BASE_OPACITY}"
           data-dtype="Number" value="${currentCustomColorTokenBaseOpacity}"></input>
       </div>
     `;
@@ -177,7 +177,7 @@ export class TokenFactions {
 
   // static _applyFactions = async function (document | Actor, updateData): Promise<void> {
   // 	// Set the disable flag
-  // 	let propertyNameDisable = `flags.${CONSTANTS.MODULE_NAME}.${TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE}`;
+  // 	let propertyNameDisable = `flags.${CONSTANTS.MODULE_ID}.${TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE}`;
   // 	if (document instanceof Actor) {
   // 		propertyNameDisable = "token." + propertyNameDisable;
   // 	}
@@ -214,10 +214,10 @@ export class TokenFactions {
     /*
 		if (!TokenFactions.bevelGradient || !TokenFactions.bevelGradient.baseTexture) {
 			TokenFactions.bevelGradient = (
-				await loadTexture(`modules/${CONSTANTS.MODULE_NAME}/assets/bevel-gradient.jpg`)
+				await loadTexture(`modules/${CONSTANTS.MODULE_ID}/assets/bevel-gradient.jpg`)
 			);
 			TokenFactions.bevelTexture = (
-				await loadTexture(`modules/${CONSTANTS.MODULE_NAME}/assets/bevel-texture.png`)
+				await loadTexture(`modules/${CONSTANTS.MODULE_ID}/assets/bevel-texture.png`)
 			);
 		}
 		*/
@@ -432,7 +432,7 @@ export class TokenFactions {
     if (!game.user?.isGM) {
       return;
     }
-    if (!game.settings.get(CONSTANTS.MODULE_NAME, "hudEnable")) {
+    if (!game.settings.get(CONSTANTS.MODULE_ID, "hudEnable")) {
       return;
     }
     if (!app?.object?.document) {
@@ -440,7 +440,7 @@ export class TokenFactions {
     }
 
     const factionDisableFlag = app.object.document.getFlag(
-      CONSTANTS.MODULE_NAME,
+      CONSTANTS.MODULE_ID,
       TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE
     );
 
@@ -450,8 +450,8 @@ export class TokenFactions {
       title="Toggle Faction Border"> <i class="fas fa-angry"></i>
     </div>`;
 
-    const settingHudColClass = game.settings.get(CONSTANTS.MODULE_NAME, "hudColumn") ?? "right";
-    const settingHudTopBottomClass = game.settings.get(CONSTANTS.MODULE_NAME, "hudTopBottom") ?? "bottom";
+    const settingHudColClass = game.settings.get(CONSTANTS.MODULE_ID, "hudColumn") ?? "right";
+    const settingHudTopBottomClass = game.settings.get(CONSTANTS.MODULE_ID, "hudTopBottom") ?? "bottom";
 
     const buttonPos = "." + settingHudColClass.toLowerCase();
 
@@ -469,32 +469,32 @@ export class TokenFactions {
   static async ToggleBorder(event) {
     //@ts-ignore
     const borderIsDisabled = this.object.document.getFlag(
-      CONSTANTS.MODULE_NAME,
+      CONSTANTS.MODULE_ID,
       TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE
     );
 
     for (const token of canvas.tokens?.controlled) {
       //@ts-ignore
       await token.document.setFlag(
-        CONSTANTS.MODULE_NAME,
+        CONSTANTS.MODULE_ID,
         TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE,
         !borderIsDisabled
       );
       // if (borderIsDisabled) {
       // 	await token.document.unsetFlag(
-      // 		CONSTANTS.MODULE_NAME,
+      // 		CONSTANTS.MODULE_ID,
       // 		TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_COLOR_INT
       // 	);
       // 	await token.document.unsetFlag(
-      // 		CONSTANTS.MODULE_NAME,
+      // 		CONSTANTS.MODULE_ID,
       // 		TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_COLOR_EXT
       // 	);
       // 	await token.document.unsetFlag(
-      // 		CONSTANTS.MODULE_NAME,
+      // 		CONSTANTS.MODULE_ID,
       // 		TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_FRAME_OPACITY
       // 	);
       // 	await token.document.unsetFlag(
-      // 		CONSTANTS.MODULE_NAME,
+      // 		CONSTANTS.MODULE_ID,
       // 		TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_BASE_OPACITY
       // 	);
       // }
@@ -508,22 +508,22 @@ export class TokenFactions {
     const tokenTmp = this.object;
 
     const currentCustomColorTokenInt =
-      tokenTmp.document.getFlag(CONSTANTS.MODULE_NAME, TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_COLOR_INT) ||
+      tokenTmp.document.getFlag(CONSTANTS.MODULE_ID, TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_COLOR_INT) ||
       "#000000";
 
     const currentCustomColorTokenExt =
-      tokenTmp.document.getFlag(CONSTANTS.MODULE_NAME, TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_COLOR_EXT) ||
+      tokenTmp.document.getFlag(CONSTANTS.MODULE_ID, TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_COLOR_EXT) ||
       "#000000";
 
     const currentCustomColorTokenFrameOpacity =
       tokenTmp.document.getFlag(
-        CONSTANTS.MODULE_NAME,
+        CONSTANTS.MODULE_ID,
         TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_FRAME_OPACITY
       ) || 0.5;
 
     const currentCustomColorTokenBaseOpacity =
       tokenTmp.document.getFlag(
-        CONSTANTS.MODULE_NAME,
+        CONSTANTS.MODULE_ID,
         TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_BASE_OPACITY
       ) || 0.5;
 
@@ -578,22 +578,22 @@ export class TokenFactions {
             ).val();
             for (const token of canvas.tokens?.controlled) {
               token.document.setFlag(
-                CONSTANTS.MODULE_NAME,
+                CONSTANTS.MODULE_ID,
                 TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_COLOR_INT,
                 newCurrentCustomColorTokenInt
               );
               token.document.setFlag(
-                CONSTANTS.MODULE_NAME,
+                CONSTANTS.MODULE_ID,
                 TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_COLOR_EXT,
                 newCurrentCustomColorTokenExt
               );
               token.document.setFlag(
-                CONSTANTS.MODULE_NAME,
+                CONSTANTS.MODULE_ID,
                 TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_FRAME_OPACITY,
                 newCurrentCustomColorTokenFrameOpacity
               );
               token.document.setFlag(
-                CONSTANTS.MODULE_NAME,
+                CONSTANTS.MODULE_ID,
                 TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_BASE_OPACITY,
                 newCurrentCustomColorTokenBaseOpacity
               );
@@ -847,7 +847,7 @@ export class TokenFactions {
       TokenFactions.onInit();
     }
 
-    const colorFrom = game.settings.get(CONSTANTS.MODULE_NAME, "color-from");
+    const colorFrom = game.settings.get(CONSTANTS.MODULE_ID, "color-from");
     let color;
     let icon;
     if (colorFrom === "token-disposition") {
@@ -867,82 +867,82 @@ export class TokenFactions {
       // TODO PUT SOME NEW FLAG ON THE TOKEN
       const disposition = TokenFactions.dispositionKey(token);
       if (disposition) {
-        color = game.settings.get(CONSTANTS.MODULE_NAME, `custom-${disposition}-color`);
+        color = game.settings.get(CONSTANTS.MODULE_ID, `custom-${disposition}-color`);
       }
     }
 
     const currentCustomColorTokenInt = token.document.getFlag(
-      CONSTANTS.MODULE_NAME,
+      CONSTANTS.MODULE_ID,
       TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_COLOR_INT
     );
     const currentCustomColorTokenExt = token.document.getFlag(
-      CONSTANTS.MODULE_NAME,
+      CONSTANTS.MODULE_ID,
       TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_COLOR_EXT
     );
 
     const overrides = {
       CONTROLLED: {
-        INT: parseInt(String(game.settings.get(CONSTANTS.MODULE_NAME, "controlledColor")).substr(1), 16),
-        EX: parseInt(String(game.settings.get(CONSTANTS.MODULE_NAME, "controlledColorEx")).substr(1), 16),
+        INT: parseInt(String(game.settings.get(CONSTANTS.MODULE_ID, "controlledColor")).substr(1), 16),
+        EX: parseInt(String(game.settings.get(CONSTANTS.MODULE_ID, "controlledColorEx")).substr(1), 16),
         ICON: "",
         TEXTURE_INT: PIXI.Texture.EMPTY,
         TEXTURE_EX: PIXI.Texture.EMPTY,
-        INT_S: String(game.settings.get(CONSTANTS.MODULE_NAME, "controlledColor")),
-        EX_S: String(game.settings.get(CONSTANTS.MODULE_NAME, "controlledColorEx")),
+        INT_S: String(game.settings.get(CONSTANTS.MODULE_ID, "controlledColor")),
+        EX_S: String(game.settings.get(CONSTANTS.MODULE_ID, "controlledColorEx")),
       },
       FRIENDLY: {
-        INT: parseInt(String(game.settings.get(CONSTANTS.MODULE_NAME, "friendlyColor")).substr(1), 16),
-        EX: parseInt(String(game.settings.get(CONSTANTS.MODULE_NAME, "friendlyColorEx")).substr(1), 16),
+        INT: parseInt(String(game.settings.get(CONSTANTS.MODULE_ID, "friendlyColor")).substr(1), 16),
+        EX: parseInt(String(game.settings.get(CONSTANTS.MODULE_ID, "friendlyColorEx")).substr(1), 16),
         ICON: "",
         TEXTURE_INT: PIXI.Texture.EMPTY,
         TEXTURE_EX: PIXI.Texture.EMPTY,
-        INT_S: String(game.settings.get(CONSTANTS.MODULE_NAME, "friendlyColor")),
-        EX_S: String(game.settings.get(CONSTANTS.MODULE_NAME, "friendlyColorEx")),
+        INT_S: String(game.settings.get(CONSTANTS.MODULE_ID, "friendlyColor")),
+        EX_S: String(game.settings.get(CONSTANTS.MODULE_ID, "friendlyColorEx")),
       },
       NEUTRAL: {
-        INT: parseInt(String(game.settings.get(CONSTANTS.MODULE_NAME, "neutralColor")).substr(1), 16),
-        EX: parseInt(String(game.settings.get(CONSTANTS.MODULE_NAME, "neutralColorEx")).substr(1), 16),
+        INT: parseInt(String(game.settings.get(CONSTANTS.MODULE_ID, "neutralColor")).substr(1), 16),
+        EX: parseInt(String(game.settings.get(CONSTANTS.MODULE_ID, "neutralColorEx")).substr(1), 16),
         ICON: "",
         TEXTURE_INT: PIXI.Texture.EMPTY,
         TEXTURE_EX: PIXI.Texture.EMPTY,
-        INT_S: String(game.settings.get(CONSTANTS.MODULE_NAME, "neutralColor")),
-        EX_S: String(game.settings.get(CONSTANTS.MODULE_NAME, "neutralColorEx")),
+        INT_S: String(game.settings.get(CONSTANTS.MODULE_ID, "neutralColor")),
+        EX_S: String(game.settings.get(CONSTANTS.MODULE_ID, "neutralColorEx")),
       },
       HOSTILE: {
-        INT: parseInt(String(game.settings.get(CONSTANTS.MODULE_NAME, "hostileColor")).substr(1), 16),
-        EX: parseInt(String(game.settings.get(CONSTANTS.MODULE_NAME, "hostileColorEx")).substr(1), 16),
+        INT: parseInt(String(game.settings.get(CONSTANTS.MODULE_ID, "hostileColor")).substr(1), 16),
+        EX: parseInt(String(game.settings.get(CONSTANTS.MODULE_ID, "hostileColorEx")).substr(1), 16),
         ICON: "",
         TEXTURE_INT: PIXI.Texture.EMPTY,
         TEXTURE_EX: PIXI.Texture.EMPTY,
-        INT_S: String(game.settings.get(CONSTANTS.MODULE_NAME, "hostileColor")),
-        EX_S: String(game.settings.get(CONSTANTS.MODULE_NAME, "hostileColorEx")),
+        INT_S: String(game.settings.get(CONSTANTS.MODULE_ID, "hostileColor")),
+        EX_S: String(game.settings.get(CONSTANTS.MODULE_ID, "hostileColorEx")),
       },
       PARTY: {
-        INT: parseInt(String(game.settings.get(CONSTANTS.MODULE_NAME, "partyColor")).substr(1), 16),
-        EX: parseInt(String(game.settings.get(CONSTANTS.MODULE_NAME, "partyColorEx")).substr(1), 16),
+        INT: parseInt(String(game.settings.get(CONSTANTS.MODULE_ID, "partyColor")).substr(1), 16),
+        EX: parseInt(String(game.settings.get(CONSTANTS.MODULE_ID, "partyColorEx")).substr(1), 16),
         ICON: "",
         TEXTURE_INT: PIXI.Texture.EMPTY,
         TEXTURE_EX: PIXI.Texture.EMPTY,
-        INT_S: String(game.settings.get(CONSTANTS.MODULE_NAME, "partyColor")),
-        EX_S: String(game.settings.get(CONSTANTS.MODULE_NAME, "partyColorEx")),
+        INT_S: String(game.settings.get(CONSTANTS.MODULE_ID, "partyColor")),
+        EX_S: String(game.settings.get(CONSTANTS.MODULE_ID, "partyColorEx")),
       },
       ACTOR_FOLDER_COLOR: {
         INT: parseInt(String(color).substr(1), 16),
-        EX: parseInt(String(game.settings.get(CONSTANTS.MODULE_NAME, "actorFolderColorEx")).substr(1), 16),
+        EX: parseInt(String(game.settings.get(CONSTANTS.MODULE_ID, "actorFolderColorEx")).substr(1), 16),
         ICON: icon ? String(icon) : "",
         TEXTURE_INT: PIXI.Texture.EMPTY,
         TEXTURE_EX: PIXI.Texture.EMPTY,
         INT_S: String(color),
-        EX_S: String(game.settings.get(CONSTANTS.MODULE_NAME, "actorFolderColorEx")),
+        EX_S: String(game.settings.get(CONSTANTS.MODULE_ID, "actorFolderColorEx")),
       },
       CUSTOM_DISPOSITION: {
         INT: parseInt(String(color).substr(1), 16),
-        EX: parseInt(String(game.settings.get(CONSTANTS.MODULE_NAME, "customDispositionColorEx")).substr(1), 16),
+        EX: parseInt(String(game.settings.get(CONSTANTS.MODULE_ID, "customDispositionColorEx")).substr(1), 16),
         ICON: "",
         TEXTURE_INT: PIXI.Texture.EMPTY,
         TEXTURE_EX: PIXI.Texture.EMPTY,
         INT_S: String(color),
-        EX_S: String(game.settings.get(CONSTANTS.MODULE_NAME, "customDispositionColorEx")),
+        EX_S: String(game.settings.get(CONSTANTS.MODULE_ID, "customDispositionColorEx")),
       },
     };
 
@@ -1030,7 +1030,7 @@ export class TokenFactions {
     else if (token.removeChildren) {
       token.children.forEach((c) => {
         //@ts-ignore
-        if (c.source === CONSTANTS.MODULE_NAME) {
+        if (c.source === CONSTANTS.MODULE_ID) {
           c.destroy();
         }
       });
@@ -1043,7 +1043,7 @@ export class TokenFactions {
     if (!borderColor.INT || Number.isNaN(borderColor.INT)) {
       return;
     }
-    switch (game.settings.get(CONSTANTS.MODULE_NAME, "removeBorders")) {
+    switch (game.settings.get(CONSTANTS.MODULE_ID, "removeBorders")) {
       case "0":
         break;
       case "1":
@@ -1060,43 +1060,43 @@ export class TokenFactions {
     let skipDraw;
     try {
       //skipDraw = token.document.getFlag(
-      //	CONSTANTS.MODULE_NAME,
+      //	CONSTANTS.MODULE_ID,
       //	TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE
       //);
       skipDraw = getProperty(
         token.document,
-        `flags.${CONSTANTS.MODULE_NAME}.${TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE}`
+        `flags.${CONSTANTS.MODULE_ID}.${TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE}`
       );
     } catch (e) {
       //@ts-ignore
-      token.document.setFlag(CONSTANTS.MODULE_NAME, TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE, false);
-      skipDraw = token.document.getFlag(CONSTANTS.MODULE_NAME, TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE);
+      token.document.setFlag(CONSTANTS.MODULE_ID, TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE, false);
+      skipDraw = token.document.getFlag(CONSTANTS.MODULE_ID, TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE);
     }
     //@ts-ignore
     if (skipDraw) {
       return;
     }
 
-    const frameStyle = String(game.settings.get(CONSTANTS.MODULE_NAME, "frame-style"));
+    const frameStyle = String(game.settings.get(CONSTANTS.MODULE_ID, "frame-style"));
 
     if (frameStyle == TokenFactions.TOKEN_FACTIONS_FRAME_STYLE.FLAT) {
       // frameStyle === 'flat'
-      const fillTexture = game.settings.get(CONSTANTS.MODULE_NAME, "fillTexture");
+      const fillTexture = game.settings.get(CONSTANTS.MODULE_ID, "fillTexture");
       TokenFactions._drawBorder(token, borderColor, container, fillTexture);
     } else if (frameStyle == TokenFactions.TOKEN_FACTIONS_FRAME_STYLE.BELEVELED) {
       // frameStyle === 'bevelled'
-      const fillTexture = game.settings.get(CONSTANTS.MODULE_NAME, "fillTexture");
-      const frameWidth = canvas.grid?.grid?.w * (game.settings.get(CONSTANTS.MODULE_NAME, "borderWidth") / 100);
+      const fillTexture = game.settings.get(CONSTANTS.MODULE_ID, "fillTexture");
+      const frameWidth = canvas.grid?.grid?.w * (game.settings.get(CONSTANTS.MODULE_ID, "borderWidth") / 100);
 
       // BASE CONFIG
-      let t = game.settings.get(CONSTANTS.MODULE_NAME, "borderWidth") || CONFIG.Canvas.objectBorderThickness;
-      const p = game.settings.get(CONSTANTS.MODULE_NAME, "borderOffset");
+      let t = game.settings.get(CONSTANTS.MODULE_ID, "borderWidth") || CONFIG.Canvas.objectBorderThickness;
+      const p = game.settings.get(CONSTANTS.MODULE_ID, "borderOffset");
       //@ts-ignore
-      if (game.settings.get(CONSTANTS.MODULE_NAME, "permanentBorder") && token._controlled) {
+      if (game.settings.get(CONSTANTS.MODULE_ID, "permanentBorder") && token._controlled) {
         t = t * 2;
       }
-      const sB = game.settings.get(CONSTANTS.MODULE_NAME, "scaleBorder");
-      const bS = game.settings.get(CONSTANTS.MODULE_NAME, "borderGridScale");
+      const sB = game.settings.get(CONSTANTS.MODULE_ID, "scaleBorder");
+      const bS = game.settings.get(CONSTANTS.MODULE_ID, "borderGridScale");
       const nBS = bS ? canvas.dimensions?.size / 100 : 1;
       //@ts-ignore
       const sX = sB ? token.document.texture.scaleX : 1;
@@ -1105,15 +1105,15 @@ export class TokenFactions {
       const sW = sB ? (token.w - token.w * sX) / 2 : 0;
       const sH = sB ? (token.h - token.h * sY) / 2 : 0;
 
-      let frameOpacity = game.settings.get(CONSTANTS.MODULE_NAME, "frame-opacity") || 0.5;
-      let baseOpacity = game.settings.get(CONSTANTS.MODULE_NAME, "base-opacity") || 0.5;
+      let frameOpacity = game.settings.get(CONSTANTS.MODULE_ID, "frame-opacity") || 0.5;
+      let baseOpacity = game.settings.get(CONSTANTS.MODULE_ID, "base-opacity") || 0.5;
 
       const customFrameOpacity = token.document.getFlag(
-        CONSTANTS.MODULE_NAME,
+        CONSTANTS.MODULE_ID,
         TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_FRAME_OPACITY
       );
       const customBaseOpacity = token.document.getFlag(
-        CONSTANTS.MODULE_NAME,
+        CONSTANTS.MODULE_ID,
         TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_BASE_OPACITY
       );
 
@@ -1195,7 +1195,7 @@ export class TokenFactions {
       ringTexture.mask = ringTextureMask;
 
       /*
-      const fillTexture = game.settings.get(CONSTANTS.MODULE_NAME, 'fillTexture');
+      const fillTexture = game.settings.get(CONSTANTS.MODULE_ID, 'fillTexture');
       if (fillTexture) {
         // TODO FILL TEXTURE
       }
@@ -1270,7 +1270,7 @@ export class TokenFactions {
       */
       //}else if(frameStyle == TOKEN_FACTIONS_FRAME_STYLE.BORDER){
     } else {
-      const fillTexture = game.settings.get(CONSTANTS.MODULE_NAME, "fillTexture");
+      const fillTexture = game.settings.get(CONSTANTS.MODULE_ID, "fillTexture");
       TokenFactions._drawBorder(token, borderColor, container, fillTexture);
     }
     return container;
@@ -1290,7 +1290,7 @@ export class TokenFactions {
     //@ts-ignore
     else if (token.addChild) {
       //@ts-ignore
-      factionBorder.source = CONSTANTS.MODULE_NAME;
+      factionBorder.source = CONSTANTS.MODULE_ID;
       token.addChild(factionBorder);
     }
 
@@ -1302,14 +1302,14 @@ export class TokenFactions {
     //@ts-ignore
     // factionBorder.zIndex = container.zIndex;
 
-    let t = game.settings.get(CONSTANTS.MODULE_NAME, "borderWidth") || CONFIG.Canvas.objectBorderThickness;
-    const p = game.settings.get(CONSTANTS.MODULE_NAME, "borderOffset");
+    let t = game.settings.get(CONSTANTS.MODULE_ID, "borderWidth") || CONFIG.Canvas.objectBorderThickness;
+    const p = game.settings.get(CONSTANTS.MODULE_ID, "borderOffset");
     //@ts-ignore
-    if (game.settings.get(CONSTANTS.MODULE_NAME, "permanentBorder") && token._controlled) {
+    if (game.settings.get(CONSTANTS.MODULE_ID, "permanentBorder") && token._controlled) {
       t = t * 2;
     }
-    const sB = game.settings.get(CONSTANTS.MODULE_NAME, "scaleBorder");
-    const bS = game.settings.get(CONSTANTS.MODULE_NAME, "borderGridScale");
+    const sB = game.settings.get(CONSTANTS.MODULE_ID, "scaleBorder");
+    const bS = game.settings.get(CONSTANTS.MODULE_ID, "borderGridScale");
     const nBS = bS ? canvas.dimensions?.size / 100 : 1;
     //@ts-ignore
     const sX = sB ? token.document.texture.scaleX : 1;
@@ -1323,15 +1323,15 @@ export class TokenFactions {
     // const sW = sB ? (token.w - token.w * s) / 2 : 0;
     // const sH = sB ? (token.h - token.h * s) / 2 : 0;
 
-    let frameOpacity = game.settings.get(CONSTANTS.MODULE_NAME, "frame-opacity") || 0.5;
-    let baseOpacity = game.settings.get(CONSTANTS.MODULE_NAME, "base-opacity") || 0.5;
+    let frameOpacity = game.settings.get(CONSTANTS.MODULE_ID, "frame-opacity") || 0.5;
+    let baseOpacity = game.settings.get(CONSTANTS.MODULE_ID, "base-opacity") || 0.5;
 
     const customFrameOpacity = token.document.getFlag(
-      CONSTANTS.MODULE_NAME,
+      CONSTANTS.MODULE_ID,
       TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_FRAME_OPACITY
     );
     const customBaseOpacity = token.document.getFlag(
-      CONSTANTS.MODULE_NAME,
+      CONSTANTS.MODULE_ID,
       TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_BASE_OPACITY
     );
 
@@ -1351,8 +1351,8 @@ export class TokenFactions {
     const gt = CONST.GRID_TYPES;
     const hexTypes = [gt.HEXEVENQ, gt.HEXEVENR, gt.HEXODDQ, gt.HEXODDR];
 
-    if (game.settings.get(CONSTANTS.MODULE_NAME, "circleBorders")) {
-      // const p = game.settings.get(CONSTANTS.MODULE_NAME, "borderOffset");
+    if (game.settings.get(CONSTANTS.MODULE_ID, "circleBorders")) {
+      // const p = game.settings.get(CONSTANTS.MODULE_ID, "borderOffset");
       const h = Math.round(t / 2);
       const o = Math.round(h / 2);
 
@@ -1398,7 +1398,7 @@ export class TokenFactions {
     }
     //@ts-ignore
     else if (hexTypes.includes(canvas.grid?.type) && token.width === 1 && token.height === 1) {
-      // const p = game.settings.get(CONSTANTS.MODULE_NAME, "borderOffset");
+      // const p = game.settings.get(CONSTANTS.MODULE_ID, "borderOffset");
       const q = Math.round(p / 2);
       //@ts-ignore
       const polygon = canvas.grid?.grid?.getPolygon(
@@ -1449,7 +1449,7 @@ export class TokenFactions {
 
     // Otherwise Draw Square border
     else {
-      // const p = game.settings.get(CONSTANTS.MODULE_NAME, "borderOffset");
+      // const p = game.settings.get(CONSTANTS.MODULE_ID, "borderOffset");
       const q = Math.round(p / 2);
       const h = Math.round(t / 2);
       const o = Math.round(h / 2);
