@@ -1,4 +1,4 @@
-### 0.4-1-2-3
+### 0.4-1-2-3-4
 
 - Release for v11
 
@@ -70,7 +70,7 @@
 
 ### v0.2.17
 
-- Some bug fix courtesy of @dev7355608 
+- Some bug fix courtesy of @dev7355608
 
 ### v0.2.16
 
@@ -92,11 +92,11 @@
 
 - Added grid scale border setting (always from border control module)
 - Changed all scope settings from cleint to world so only the gm can modify these
-- 
+-
 ### v0.2.11
 
 - Try to fix [Throw error & crash module: scaleBorder not registered setting ](https://github.com/p4535992/token-factions/issues/1)
-  
+
 ### v02.10
 
 - Added permanent and scale border settings
@@ -113,7 +113,7 @@
 ### v0.2.6 (ON DEVELOPING)
 
 - Some minor update
-- 
+-
 ### v0.2.5 (ON DEVELOPING)
 
 - beta version for anyone fwnat to take on this project

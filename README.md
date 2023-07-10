@@ -1,8 +1,8 @@
-# Tokens Faction 
+# Tokens Faction
 
-![Latest Release Download Count](https://img.shields.io/github/downloads/p4535992/foundryvtt-token-factions/latest/module.zip?color=2b82fc&label=DOWNLOADS&style=for-the-badge) 
+![Latest Release Download Count](https://img.shields.io/github/downloads/p4535992/foundryvtt-token-factions/latest/module.zip?color=2b82fc&label=DOWNLOADS&style=for-the-badge)
 
-[![Forge Installs](https://img.shields.io/badge/dynamic/json?label=Forge%20Installs&query=package.installs&suffix=%25&url=https%3A%2F%2Fforge-vtt.com%2Fapi%2Fbazaar%2Fpackage%2Ftoken-factions&colorB=006400&style=for-the-badge)](https://forge-vtt.com/bazaar#package=token-factions) 
+[![Forge Installs](https://img.shields.io/badge/dynamic/json?label=Forge%20Installs&query=package.installs&suffix=%25&url=https%3A%2F%2Fforge-vtt.com%2Fapi%2Fbazaar%2Fpackage%2Ftoken-factions&colorB=006400&style=for-the-badge)](https://forge-vtt.com/bazaar#package=token-factions)
 
 ![Foundry Core Compatible Version](https://img.shields.io/badge/dynamic/json.svg?url=https%3A%2F%2Fraw.githubusercontent.com%2Fp4535992%2Ffoundryvtt-token-factions%2Fmaster%2Fsrc%2Fmodule.json&label=Foundry%20Version&query=$.compatibility.verified&colorB=orange&style=for-the-badge)
 
@@ -103,7 +103,7 @@ You can override this setting on a per-token basis on a token's Image tab if you
 
 ### Frame Render Style
 
-#### [FOR NOW IS THE ONLY AVAIABLE OPTION] Default: Flat 
+#### [FOR NOW IS THE ONLY AVAIABLE OPTION] Default: Flat
 
 This option renders the frame in a flat color.
 
@@ -203,43 +203,23 @@ A method to enable the draw border factions on a token founded by id or name
 ```bash
 npm install
 ```
+
 ## npm build scripts
 
 ### build
 
-will build the code and copy all necessary assets into the dist folder and make a symlink to install the result into your foundry data; create a
-`foundryconfig.json` file with your Foundry Data path.
-
-```json
-{
-  "dataPath": "~/.local/share/FoundryVTT/"
-}
-```
-
 `build` will build and set up a symlink between `dist` and your `dataPath`.
 
 ```bash
-npm run-script build
+npm run build
 ```
 
-### NOTE:
+### build-watch
 
-You don't need to build the `foundryconfig.json` file you can just copy the content of the `dist` folder on the module folder under `modules` of Foundry
-
-### build:watch
-
-`build:watch` will build and watch for changes, rebuilding automatically.
+`build-watch` will build and watch for changes, rebuilding automatically.
 
 ```bash
-npm run-script build:watch
-```
-
-### clean
-
-`clean` will remove all contents in the dist folder (but keeps the link from build:install).
-
-```bash
-npm run-script clean
+npm run build-watch
 ```
 
 ### prettier-format
@@ -248,14 +228,6 @@ npm run-script clean
 
 ```bash
 npm run-script prettier-format
-```
-
-### package
-
-`package` generates a zip file containing the contents of the dist folder generated previously with the `build` command. Useful for those who want to manually load the module or want to create their own release
-
-```bash
-npm run-script package
 ```
 
 ## [Changelog](./changelog.md)
