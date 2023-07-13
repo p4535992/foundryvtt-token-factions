@@ -105,7 +105,7 @@ export const initHooks = async () => {
       ) {
         // DO NOTHING
       } else {
-        TokenFactions.updateTokenFaction(actor);
+        TokenFactions.updateTokenFaction(tokenDocument);
       }
     });
 

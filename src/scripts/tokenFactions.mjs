@@ -97,8 +97,7 @@ export class TokenFactions {
       0.5;
 
     const currentCustomColorTokenBaseOpacity =
-      config.object.getFlag(CONSTANTS.MODULE_ID, TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_BASE_OPACITY) ||
-      0.5;
+      config.object.getFlag(CONSTANTS.MODULE_ID, TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_BASE_OPACITY) || 0.5;
 
     // Expand the width
     config.position.width = 540;
@@ -516,16 +515,12 @@ export class TokenFactions {
       "#000000";
 
     const currentCustomColorTokenFrameOpacity =
-      tokenTmp.document.getFlag(
-        CONSTANTS.MODULE_ID,
-        TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_FRAME_OPACITY
-      ) || 0.5;
+      tokenTmp.document.getFlag(CONSTANTS.MODULE_ID, TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_FRAME_OPACITY) ||
+      0.5;
 
     const currentCustomColorTokenBaseOpacity =
-      tokenTmp.document.getFlag(
-        CONSTANTS.MODULE_ID,
-        TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_BASE_OPACITY
-      ) || 0.5;
+      tokenTmp.document.getFlag(CONSTANTS.MODULE_ID, TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_BASE_OPACITY) ||
+      0.5;
 
     const dialogContent = `
       <div class="form-group">

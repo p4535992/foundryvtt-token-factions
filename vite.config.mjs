@@ -150,7 +150,7 @@ export default () => {
           {
             src: normalizePath(path.resolve(__dirname, './src/module.json')), // 1️
             dest: normalizePath(path.resolve(__dirname, `./dist/${s_MODULE_ID}/`)), // 2️
-          },
+          }
         ],
       }),
       svelte({
