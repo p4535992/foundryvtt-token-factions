@@ -13,10 +13,10 @@
     "@fortawesome/fontawesome-svg-core": "^6.4.0",
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
-    "@typhonjs-fvtt/runtime": "^0.1.0",
-    "@typhonjs-fvtt/svelte-standard": "^0.1.0",
+    "@typhonjs-fvtt/runtime": "^0.0.23",
+    "@typhonjs-fvtt/svelte-standard": "^0.0.23",
     "@vitejs/plugin-vue": "^4.2.3",
-    "svelte": "^4.0.0",
+    "svelte": "^3.57.0",
     "svelte-virtual-scroll-list": "^1.1.0"
   },
   "devDependencies": {
