@@ -23,7 +23,7 @@ import { run } from 'vite-plugin-run'
 // the dev server.
 const s_MODULE_ID = "token-factions";
 const s_PACKAGE_ID = "modules/"+s_MODULE_ID;
-const s_ENTRY_JAVASCRIPT = "main.mjs";
+const s_ENTRY_JAVASCRIPT = "module.js";
 
 // A short additional string to add to Svelte CSS hash values to make yours unique. This reduces the amount of
 // duplicated framework CSS overlap between many TRL packages enabled on Foundry VTT at the same time. 'ese' is chosen
@@ -79,8 +79,8 @@ export default () => {
     // static resources / project.
     server: {
       port: 29999,
-      // open: "/game",
-      open: false,
+      open: "/game",
+      // open: false,
       proxy: {
         // Serves static files from main Foundry server.
         [`^(/${s_PACKAGE_ID}/(fonts|assets|lang|languages|packs|styles|templates|style.css))`]:
@@ -103,7 +103,7 @@ export default () => {
       target: ['es2022', 'chrome100'],
       terserOptions: s_COMPRESS ? { ...terserConfig(), ecma: 2022 } : void 0,
       lib: {
-        entry: "./" + s_ENTRY_JAVASCRIPT, // TODO "./module.js"
+        entry: "./" + s_ENTRY_JAVASCRIPT, // "./module.js"
         formats: ["es"],
         fileName: "module",
       },

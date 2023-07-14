@@ -1,4 +1,4 @@
-import { advancedLosTestInLos, debug, getOwnedTokens, i18n } from "./lib/lib.mjs";
+import { advancedLosTestInLos, debug, error, getOwnedTokens, i18n } from "./lib/lib.mjs";
 import { FactionGraphic } from "./TokenFactionsModels.mjs";
 import CONSTANTS from "./constants.mjs";
 
@@ -97,8 +97,7 @@ export class TokenFactions {
       0.5;
 
     const currentCustomColorTokenBaseOpacity =
-      config.object.getFlag(CONSTANTS.MODULE_ID, TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_BASE_OPACITY) ||
-      0.5;
+      config.object.getFlag(CONSTANTS.MODULE_ID, TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_BASE_OPACITY) || 0.5;
 
     // Expand the width
     config.position.width = 540;
@@ -251,121 +250,23 @@ export class TokenFactions {
       return token;
     }
     token.sortableChildren = true;
-    /*
-		const isPlayerOwned = token.document.isOwner;
-		// When i hidden this hide for everyone except owner and gm
-		if (token.document.hidden) {
-			if (!game.user?.isGM && !isPlayerOwned) {
-				TokenFactions.clearGridFaction(token.document.id);
-				// tokenFactionsSocket.executeAsGM("clearGridFaction", token.document.id);
-				return;
-			}
-		}
-		// or if a token is not visible
-		//@ts-ignore
-		if (token.document.object) {
-			const someoneIsSelected = canvas.tokens?.controlled?.length > 0;
-			if (!game.user?.isGM && !isPlayerOwned) {
-				let isVisible = token.isVisible;
-				if (!isVisible) {
-					TokenFactions.clearGridFaction(token.document.id);
-					// tokenFactionsSocket.executeAsGM("clearGridFaction", tokenData.id);
-					return;
-				}
-			}
-			// else if (game.user?.isGM && someoneIsSelected) {
-			// 	let isVisible = false;
-			// 	const tokensToClear = <string[]>[];
-			// 	for (const ownedToken of canvas.tokens?.placeables) {
-			// 		if (ownedToken.id === token.id) {
-			// 			continue;
-			// 		}
-			// 		//@ts-ignore
-			// 		if(ownedToken.controlled){
-			// 			continue;
-			// 		}
-			// 		const sourceCenter = {
-			// 			x: ownedToken.center.x,
-			// 			y: ownedToken.center.y,
-			// 			//@ts-ignore
-			// 			z: ownedToken.losHeight,
-			// 		};
-			// 		const tolerance = Math.min(ownedToken.w, ownedToken.h) / 4; // this is the same of levels
-			// 		const isVisibleX =
-			// 			//@ts-ignore
-			// 			canvas.effects.visibility.testVisibility(sourceCenter, { tolerance: tolerance, object: token });
-			// 		if (isVisibleX) {
-			// 			isVisible = true;
-			// 			break;
-			// 		} else {
-			// 			tokensToClear.push(ownedToken.id);
-			// 		}
-			// 	}
-			// 	// }
-			// 	if (!isVisible) {
-			// 		for(const id of tokensToClear){
-			// 			TokenFactions.clearGridFaction(id);
-			// 		}
-			// 		// tokenFactionsSocket.executeAsGM("clearGridFaction", tokenData.id);
-			// 		return;
-			// 	}
-			// }
-		}
-		*/
-    // OLD FVTT 9
-    /*
-		//@ts-ignore
-		if (!token.faction || token.faction.destroyed) {
-			//@ts-ignore
-			token.faction = token.addChildAt(new PIXI.Container(), 0);
-		}
-		token.sortableChildren = true;
-		// token.sortDirty = true;
-		*/
-    // FVTT 10 WITH GRID
-    /*
-		//@ts-ignore
-		if (!canvas.grid.faction) {
-			//@ts-ignore
-			canvas.grid.faction = {};
-		}
-		//@ts-ignore
-		if (!canvas.grid.faction[token.id]) {
-			//@ts-ignore
-			canvas.grid.faction[token.id] = new PIXI.Container();
-			//@ts-ignore
-			canvas.grid.addChild(canvas.grid.faction[token.id]);
-		}
-		//@ts-ignore
-		if (!canvas.grid.faction[token.id].geometry) {
-			//@ts-ignore
-			canvas.grid.removeChild(canvas.grid.faction[token.id]);
-			//@ts-ignore
-			canvas.grid.faction[token.id] = new PIXI.Container();
-			//@ts-ignore
-			canvas.grid.addChild(canvas.grid.faction[token.id]);
-		}
-		//@ts-ignore
-		let factionBorderContainer = canvas.grid.faction[token.id];
-		// factionBorder.sortableChildren = true;
-		// factionBorder.clear();
-		*/
 
-    //@ts-ignore
-    if (!token.faction || token.faction.destroyed) {
-      //@ts-ignore
-      token.faction = token.addChildAt(new PIXI.Container(), 0);
-    }
-    //@ts-ignore
-    token.faction.removeChildren().forEach((c) => c.destroy());
     //@ts-ignore
     let factionBorderContainer = token.faction;
 
     //@ts-ignore
-    factionBorderContainer = TokenFactions._drawBorderFaction(token, factionBorderContainer);
+    if (!token.faction || token.faction.destroyed) {
+      //@ts-ignore
+      // token.faction = token.addChildAt(new PIXI.Container(), 0);
+      token.faction ??= canvas.grid.faction.addChild(new PIXI.Container());
+      factionBorderContainer = token.faction.addChild(new PIXI.Graphics());
+    }
     //@ts-ignore
-    // token.addChildAt(factionBorderContainer, 0);
-    // TokenFactions.clearGridFaction(token.id);
+    token.faction.removeChildren().forEach((c) => c.destroy());
+
+    //@ts-ignore
+    factionBorderContainer = TokenFactions._drawBorderFaction(token, factionBorderContainer);
+
     //@ts-ignore
     if (token.mesh) {
       //@ts-ignore
@@ -474,30 +375,35 @@ export class TokenFactions {
     );
 
     for (const token of canvas.tokens?.controlled) {
-      //@ts-ignore
-      await token.document.setFlag(
-        CONSTANTS.MODULE_ID,
-        TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE,
-        !borderIsDisabled
-      );
-      // if (borderIsDisabled) {
-      // 	await token.document.unsetFlag(
-      // 		CONSTANTS.MODULE_ID,
-      // 		TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_COLOR_INT
-      // 	);
-      // 	await token.document.unsetFlag(
-      // 		CONSTANTS.MODULE_ID,
-      // 		TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_COLOR_EXT
-      // 	);
-      // 	await token.document.unsetFlag(
-      // 		CONSTANTS.MODULE_ID,
-      // 		TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_FRAME_OPACITY
-      // 	);
-      // 	await token.document.unsetFlag(
-      // 		CONSTANTS.MODULE_ID,
-      // 		TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_BASE_OPACITY
-      // 	);
-      // }
+      try {
+        //@ts-ignore
+        await token.document.setFlag(
+          CONSTANTS.MODULE_ID,
+          TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE,
+          !borderIsDisabled
+        );
+        // if (borderIsDisabled) {
+        // 	await token.document.unsetFlag(
+        // 		CONSTANTS.MODULE_ID,
+        // 		TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_COLOR_INT
+        // 	);
+        // 	await token.document.unsetFlag(
+        // 		CONSTANTS.MODULE_ID,
+        // 		TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_COLOR_EXT
+        // 	);
+        // 	await token.document.unsetFlag(
+        // 		CONSTANTS.MODULE_ID,
+        // 		TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_FRAME_OPACITY
+        // 	);
+        // 	await token.document.unsetFlag(
+        // 		CONSTANTS.MODULE_ID,
+        // 		TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_BASE_OPACITY
+        // 	);
+        // }
+        token.refresh();
+      } catch (e) {
+        error(e);
+      }
     }
 
     event.currentTarget.classList.toggle("active", !borderIsDisabled);
@@ -516,16 +422,12 @@ export class TokenFactions {
       "#000000";
 
     const currentCustomColorTokenFrameOpacity =
-      tokenTmp.document.getFlag(
-        CONSTANTS.MODULE_ID,
-        TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_FRAME_OPACITY
-      ) || 0.5;
+      tokenTmp.document.getFlag(CONSTANTS.MODULE_ID, TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_FRAME_OPACITY) ||
+      0.5;
 
     const currentCustomColorTokenBaseOpacity =
-      tokenTmp.document.getFlag(
-        CONSTANTS.MODULE_ID,
-        TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_BASE_OPACITY
-      ) || 0.5;
+      tokenTmp.document.getFlag(CONSTANTS.MODULE_ID, TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_BASE_OPACITY) ||
+      0.5;
 
     const dialogContent = `
       <div class="form-group">
@@ -739,48 +641,21 @@ export class TokenFactions {
         return;
       }
       token.sortableChildren = true;
-      // FVTT 10 WITH GRID
-      /*
-			//@ts-ignore
-			if (!canvas.grid.faction) {
-				//@ts-ignore
-				canvas.grid.faction = {};
-			}
-			//@ts-ignore
-			if (!canvas.grid.faction[token.id]) {
-				//@ts-ignore
-				canvas.grid.faction[token.id] = new PIXI.Container();
-				//@ts-ignore
-				canvas.grid.addChild(canvas.grid.faction[token.id]);
-			}
-			//@ts-ignore
-			if (!canvas.grid.faction[token.id].geometry) {
-				//@ts-ignore
-				canvas.grid.removeChild(canvas.grid.faction[token.id]);
-				//@ts-ignore
-				canvas.grid.faction[token.id] = new PIXI.Container();
-				//@ts-ignore
-				canvas.grid.addChild(canvas.grid.faction[token.id]);
-			}
-			//@ts-ignore
-			let factionBorderContainer = canvas.grid.faction[token.id];
-			*/
 
+      let factionBorderContainer = token.faction;
       //@ts-ignore
       if (!token.faction || token.faction.destroyed) {
         //@ts-ignore
-        token.faction = token.addChildAt(new PIXI.Container(), 0);
+        // token.faction = token.addChildAt(new PIXI.Container(), 0);
+        token.faction ??= canvas.grid.faction.addChild(new PIXI.Container());
+        factionBorderContainer = token.faction.addChild(new PIXI.Graphics());
       }
       //@ts-ignore
       token.faction.removeChildren().forEach((c) => c.destroy());
-      //@ts-ignore
-      let factionBorderContainer = token.faction;
 
       //@ts-ignore
       factionBorderContainer = TokenFactions._drawBorderFaction(token, factionBorderContainer);
-      //@ts-ignore
-      // token.addChildAt(factionBorderContainer, 0);
-      // TokenFactions.clearGridFaction(token.id);
+
       //@ts-ignore
       if (token.mesh) {
         //@ts-ignore
@@ -1026,15 +901,6 @@ export class TokenFactions {
       container.children.forEach((c) => c.clear());
       // container.removeChildren().forEach(c => c.destroy());
     }
-    //@ts-ignore
-    else if (token.removeChildren) {
-      token.children.forEach((c) => {
-        //@ts-ignore
-        if (c.source === CONSTANTS.MODULE_ID) {
-          c.destroy();
-        }
-      });
-    }
 
     const borderColor = TokenFactions.colorBorderFaction(token);
     if (!borderColor) {
@@ -1278,7 +1144,7 @@ export class TokenFactions {
 
   static _drawBorder(token, borderColor, container, fillTexture) {
     // //@ts-ignore
-    // const factionBorder = container.addChild(new PIXI.Graphics());
+    /*
     const factionBorder = new PIXI.Graphics();
 
     // If we cannot create an faction as a child of the token through factions field,
@@ -1287,20 +1153,17 @@ export class TokenFactions {
     if (container.addChild) {
       container.addChild(factionBorder);
     }
-    //@ts-ignore
     else if (token.addChild) {
-      //@ts-ignore
       factionBorder.source = CONSTANTS.MODULE_ID;
       token.addChild(factionBorder);
     }
 
-    //@ts-ignore
     if (canvas.interface.reverseMaskfilter) {
-      //@ts-ignore
       factionBorder.filters = [canvas.interface.reverseMaskfilter];
     }
-    //@ts-ignore
-    // factionBorder.zIndex = container.zIndex;
+    */
+    token.faction ??= canvas.grid.faction.addChild(new PIXI.Container());
+    const factionBorder = token.faction.addChild(new PIXI.Graphics());
 
     let t = game.settings.get(CONSTANTS.MODULE_ID, "borderWidth") || CONFIG.Canvas.objectBorderThickness;
     const p = game.settings.get(CONSTANTS.MODULE_ID, "borderOffset");

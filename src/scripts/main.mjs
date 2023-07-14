@@ -1,12 +1,11 @@
 import { warn, error, debug, i18n, advancedLosTestInLos, getOwnedTokens } from "./lib/lib.mjs";
 import { TokenFactions } from "./tokenFactions.mjs";
 import CONSTANTS from "./constants.mjs";
-import { setApi } from "../main.mjs";
+import { setApi } from "../module.js";
 import API from "./api.mjs";
 // import { registerSocket, tokenFactionsSocket } from "./socket";
 
 export const initHooks = async () => {
-  warn("Init Hooks processing");
   TokenFactions.onInit();
 
   // Hooks.once("socketlib.ready", registerSocket);
@@ -105,12 +104,12 @@ export const initHooks = async () => {
       ) {
         // DO NOTHING
       } else {
-        TokenFactions.updateTokenFaction(actor);
+        TokenFactions.updateTokenFaction(tokenDocument);
       }
     });
 
-    Hooks.on("updateFolder", (folder, data) => {
-      TokenFactions.updateTokenDataFaction(actor);
+    Hooks.on("updateFolder", (tokenData, data) => {
+      TokenFactions.updateTokenDataFaction(tokenData);
     });
 
     // Hooks.on('preUpdateActor', (actor, updateData) => {
@@ -149,15 +148,35 @@ export const initHooks = async () => {
     // 	});
     // });
 
-    // Hooks.on("refreshToken", (token, options) => {
-    // 	TokenFactions.updateTokenDataFaction(token.document);
-    // });
+    Hooks.on("refreshToken", (token, options) => {
+      if (token.faction) {
+        const { x, y } = token.document;
+        token.faction.position.set(x, y);
+      }
+    });
 
     // canvas.tokens?.placeables.forEach((t) => {
     // 	if (!t.owner) {
     // 		t.cursor = "default";
     // 	}
     // });
+
+    Hooks.on("deleteToken", async (tokenDocument, data, updateData) => {
+      const isPlayerOwned = tokenDocument.isOwner;
+      if (!game.user?.isGM && !isPlayerOwned) {
+        return;
+      }
+      // TokenFactions.clearGridFaction(tokenDocument.id);
+      token.faction?.destroy();
+    });
+
+    Hooks.on("destroyToken", (token) => {
+      token.faction?.destroy();
+    });
+
+    Hooks.on("drawGridLayer", (layer) => {
+      layer.faction = layer.addChildAt(new PIXI.Container(), layer.getChildIndex(layer.borders));
+    });
 
     if (!TokenFactions.bevelGradient || !TokenFactions.bevelGradient.baseTexture) {
       TokenFactions.bevelGradient = await loadTexture(`modules/${CONSTANTS.MODULE_ID}/assets/bevel-gradient.jpg`);
@@ -172,14 +191,6 @@ export const setupHooks = async () => {
 
 export const readyHooks = () => {
   // DO NOTHING
-  Hooks.on("deleteToken", async (tokenDocument, data, updateData) => {
-    const isPlayerOwned = tokenDocument.isOwner;
-    if (!game.user?.isGM && !isPlayerOwned) {
-      return;
-    }
-    TokenFactions.clearGridFaction(tokenDocument.id);
-    // tokenFactionsSocket.executeAsGM("clearGridFaction", tokenDocument.id);
-  });
 };
 
 export const TokenPrototypeRefreshHandler = function (wrapped, ...args) {
