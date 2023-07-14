@@ -204,6 +204,14 @@ A method to enable the draw border factions on a token founded by id or name
 npm install
 ```
 
+### dev
+
+`dev` will let you develop you own code with hot reloading on the browser
+
+```bash
+npm run dev
+```
+
 ## npm build scripts
 
 ### build
