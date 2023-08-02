@@ -166,7 +166,6 @@ export const initHooks = async () => {
       if (!game.user?.isGM && !isPlayerOwned) {
         return;
       }
-      // TokenFactions.clearGridFaction(tokenDocument.id);
       token.faction?.destroy();
     });
 
