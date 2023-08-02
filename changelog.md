@@ -1,4 +1,8 @@
-### 0.4-1-2-3-4-5-6
+### 0.4.8
+
+. Bug fix: https://github.com/p4535992/foundryvtt-token-factions/issues/25
+
+### 0.4-1-2-3-4-5-6-7
 
 - Release for v11
 

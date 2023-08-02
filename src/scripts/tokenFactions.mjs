@@ -212,37 +212,45 @@ export class TokenFactions {
     }
     token.sortableChildren = true;
 
-    if (token.faction?.removeChildren ) {
-        token.faction.removeChildren().forEach(c => c.destroy());
-     }
+    if (token.faction?.removeChildren) {
+      token.faction.removeChildren().forEach((c) => c.destroy());
+    }
 
-     let showFactionOnToken = false;
+    let showFactionOnToken = false;
+    /*
+    if (!token.document?.distance) {
+      showFactionOnToken = false;
+    } else if (
+      !token.document.permission ||
+      token.document.permission === "all" ||
+      (token.document.permission === "gm" && game.user.isGM)
+    ) {
+      showFactionOnToken = true;
+    } else if (!!token.document?.actor?.testUserPermission(game.user, token.document.permission.toUpperCase())) {
+      showFactionOnToken = true;
+    }
+    */
+    if (token.document?.visible) {
+      showFactionOnToken = true;
+    } 
 
-     if (!token.document?.distance) {
-       showFactionOnToken = false;
-     }
-     else if (!token.document.permission || token.document.permission === 'all' || (token.document.permission === 'gm' && game.user.isGM)) {
-       showFactionOnToken = true;
-     }
-     else if (!!token.document?.actor?.testUserPermission(game.user, token.document.permission.toUpperCase())) {
-       showFactionOnToken = true;
-     }
+    if (!showFactionOnToken) {
+      debug(`Cannot show faction on token '${token.document.name}'`);
+      return;
+    }
 
-     if(!showFactionOnToken) {
-       debug(`Cannot show faction on token '${token.document.name}'`);
-       return;
-     }
-
-    let  gfx;
-    if (!token.faction || token.faction.destroyed) {
+    let gfx;
+    // if (!token.faction || token.faction.destroyed) {
       // FVTT10
       // token.faction = token.addChildAt(new PIXI.Container(), 0);
       // FVTT11
+      if(!canvas.grid.faction) {
+        canvas.grid.faction = canvas.grid.addChildAt(new PIXI.Container(), canvas.grid.getChildIndex(canvas.grid.borders));
+      }
       token.faction ??= canvas.grid.faction.addChild(new PIXI.Container());
       gfx = token.faction.addChild(new PIXI.Graphics());
-    }
+    // }
     //token.faction.removeChildren().forEach((c) => c.destroy());
-
 
     TokenFactions._drawBorderFaction(token, gfx);
 
@@ -348,7 +356,6 @@ export class TokenFactions {
   }
 
   static async ToggleBorder(event) {
-
     const borderIsDisabled = this.object.document.getFlag(
       CONSTANTS.MODULE_ID,
       TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE
@@ -356,7 +363,6 @@ export class TokenFactions {
 
     for (const token of canvas.tokens?.controlled) {
       try {
-
         await token.document.setFlag(
           CONSTANTS.MODULE_ID,
           TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE,
@@ -372,7 +378,6 @@ export class TokenFactions {
   }
 
   static async ToggleCustomBorder(event) {
-
     const tokenTmp = this.object;
 
     const currentCustomColorTokenInt =
@@ -539,9 +544,9 @@ export class TokenFactions {
   // ADDED
 
   static async updateTokensAll() {
-    canvas.tokens?.placeables.forEach((tokenDoc) => {
-      TokenFactions._updateTokensBorder(tokenDoc.document);
-    });
+    for(const tk of canvas.tokens?.placeables) {
+      TokenFactions._updateTokensBorder(tk.document);
+    }
   }
 
   static async _updateTokensBorder(tokenData) {
@@ -604,37 +609,45 @@ export class TokenFactions {
       }
       token.sortableChildren = true;
 
-      if (token.faction?.removeChildren ) {
-         token.faction.removeChildren().forEach(c => c.destroy());
+      if (token.faction?.removeChildren) {
+        token.faction.removeChildren().forEach((c) => c.destroy());
       }
 
       let showFactionOnToken = false;
-
+      /*
       if (!token.document?.distance) {
         showFactionOnToken = false;
-      }
-      else if (!token.document.permission || token.document.permission === 'all' || (token.document.permission === 'gm' && game.user.isGM)) {
+      } else if (
+        !token.document.permission ||
+        token.document.permission === "all" ||
+        (token.document.permission === "gm" && game.user.isGM)
+      ) {
+        showFactionOnToken = true;
+      } else if (!!token.document?.actor?.testUserPermission(game.user, token.document.permission.toUpperCase())) {
         showFactionOnToken = true;
       }
-      else if (!!token.document?.actor?.testUserPermission(game.user, token.document.permission.toUpperCase())) {
+      */
+      if (token.document?.visible) {
         showFactionOnToken = true;
       }
 
-      if(!showFactionOnToken) {
+      if (!showFactionOnToken) {
         debug(`Cannot show faction on token '${token.document.name}'`);
         return;
       }
 
       let gfx;
-      if (!token.faction || token.faction.destroyed) {
+      // if (!token.faction || token.faction.destroyed) {
         // FVTT10
         // token.faction = token.addChildAt(new PIXI.Container(), 0);
         // FVTT11
+        if(!canvas.grid.faction) {
+          canvas.grid.faction = canvas.grid.addChildAt(new PIXI.Container(), canvas.grid.getChildIndex(canvas.grid.borders));
+        }
         token.faction ??= canvas.grid.faction.addChild(new PIXI.Container());
         gfx = token.faction.addChild(new PIXI.Graphics());
-      }
+      // }
       //token.faction.removeChildren().forEach((c) => c.destroy());
-
 
       TokenFactions._drawBorderFaction(token, gfx);
 
@@ -715,7 +728,6 @@ export class TokenFactions {
       }
     } else if (colorFrom === "actor-folder-color") {
       if (token.actor && token.actor.folder && token.actor.folder) {
-
         color = token.actor.folder.color;
 
         icon = token.actor.folder.icon;
@@ -823,14 +835,11 @@ export class TokenFactions {
     } else if (colorFrom === "token-disposition") {
       const disPath = CONST.TOKEN_DISPOSITIONS;
 
-
       const d = parseInt(token.document.disposition);
 
       if (!game.user?.isGM && token.owner) {
         borderColor = overrides.CONTROLLED;
-      }
-
-      else if (token.actor?.hasPlayerOwner) {
+      } else if (token.actor?.hasPlayerOwner) {
         borderColor = overrides.PARTY;
       } else if (d === disPath.FRIENDLY) {
         borderColor = overrides.FRIENDLY;
@@ -850,7 +859,6 @@ export class TokenFactions {
   }
 
   static _drawBorderFaction(token, gfx) {
-
     // if (!gfx && token.faction) {
 
     //   gfx = token.faction;
@@ -864,7 +872,6 @@ export class TokenFactions {
       return;
     }
     if (token.x === 0 && token.y === 0) {
-
       if (token.document.x === 0 && token.document.y === 0) {
         debug(`No token is founded or passed`);
         return;
@@ -896,7 +903,6 @@ export class TokenFactions {
       case "0":
         break;
       case "1":
-
         if (!token.owner) {
           return;
         }
@@ -905,7 +911,6 @@ export class TokenFactions {
         return;
     }
 
-
     let skipDraw;
     try {
       skipDraw = getProperty(
@@ -913,7 +918,6 @@ export class TokenFactions {
         `flags.${CONSTANTS.MODULE_ID}.${TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE}`
       );
     } catch (e) {
-
       token.document.setFlag(CONSTANTS.MODULE_ID, TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE, false);
       skipDraw = token.document.getFlag(CONSTANTS.MODULE_ID, TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE);
     }
@@ -939,7 +943,7 @@ export class TokenFactions {
       let t = game.settings.get(CONSTANTS.MODULE_ID, "borderWidth") || CONFIG.Canvas.objectBorderThickness;
       const p = game.settings.get(CONSTANTS.MODULE_ID, "borderOffset");
 
-      if (game.settings.get(CONSTANTS.MODULE_ID, "permanentBorder") && token._controlled) {
+      if (game.settings.get(CONSTANTS.MODULE_ID, "permanentBorder") && token.controlled) {
         t = t * 2;
       }
       const sB = game.settings.get(CONSTANTS.MODULE_ID, "scaleBorder");
@@ -1024,7 +1028,6 @@ export class TokenFactions {
         .beginFill(Color.from(0xffffff), 0.0)
         .drawCircle(token.w / 2, token.h / 2, token.w / 2)
         .endFill();
-
 
       token.faction.addChild(outerRing);
 
@@ -1152,7 +1155,7 @@ export class TokenFactions {
     let t = game.settings.get(CONSTANTS.MODULE_ID, "borderWidth") || CONFIG.Canvas.objectBorderThickness;
     const p = game.settings.get(CONSTANTS.MODULE_ID, "borderOffset");
 
-    if (game.settings.get(CONSTANTS.MODULE_ID, "permanentBorder") && token._controlled) {
+    if (game.settings.get(CONSTANTS.MODULE_ID, "permanentBorder") && token.controlled) {
       t = t * 2;
     }
     const sB = game.settings.get(CONSTANTS.MODULE_ID, "scaleBorder");
@@ -1204,7 +1207,6 @@ export class TokenFactions {
       const o = Math.round(h / 2);
 
       if (fillTexture) {
-
         factionBorder
 
           .beginFill(Color.from(borderColor.EX), baseOpacity)
@@ -1215,7 +1217,6 @@ export class TokenFactions {
           .endFill();
         // .lineStyle(t*nBS, borderColor.EX, 0.8)
         // .drawCircle(token.w / 2, token.h / 2, (token.w / 2) * s + t + p);
-
 
         factionBorder
 
@@ -1236,15 +1237,12 @@ export class TokenFactions {
         // .drawCircle(token.x + token.w / 2, token.y + token.h / 2, (token.w / 2) * sX + t + p);
         .drawCircle(token.w / 2, token.h / 2, (token.w / 2) * s + t + p);
 
-
       factionBorder
 
         .lineStyle(h * nBS, Color.from(borderColor.INT), 1.0)
         // .drawCircle(token.x + token.w / 2, token.y + token.h / 2, (token.w / 2) * sX + h + t / 2 + p);
         .drawCircle(token.w / 2, token.h / 2, (token.w / 2) * s + h + t / 2 + p);
-    }
-
-    else if (hexTypes.includes(canvas.grid?.type) && token.width === 1 && token.height === 1) {
+    } else if (hexTypes.includes(canvas.grid?.type) && token.width === 1 && token.height === 1) {
       // const p = game.settings.get(CONSTANTS.MODULE_ID, "borderOffset");
       const q = Math.round(p / 2);
 
@@ -1263,7 +1261,6 @@ export class TokenFactions {
       // );
 
       if (fillTexture) {
-
         factionBorder
 
           .beginFill(Color.from(borderColor.EX), baseOpacity)
@@ -1273,7 +1270,6 @@ export class TokenFactions {
           .endFill();
         // .lineStyle(t*nBS, borderColor.EX, 0.8)
         // .drawPolygon(polygon);
-
 
         factionBorder
 
@@ -1290,7 +1286,6 @@ export class TokenFactions {
 
       factionBorder.lineStyle(t * nBS, borderColor.EX, 0.8).drawPolygon(polygon);
 
-
       factionBorder.lineStyle((t * nBS) / 2, Color.from(borderColor.INT), 1.0).drawPolygon(polygon);
     }
 
@@ -1302,7 +1297,6 @@ export class TokenFactions {
       const o = Math.round(h / 2);
 
       if (fillTexture) {
-
         factionBorder
 
           .beginFill(Color.from(borderColor.EX), baseOpacity)
@@ -1313,7 +1307,6 @@ export class TokenFactions {
           .endFill();
         // .lineStyle(t*nBS, borderColor.EX, 0.8)
         // .drawRoundedRect(-o - q + sW, -o - q + sH, (token.w + h) * s + p, (token.h + h) * s + p, 3);
-
 
         factionBorder
 
@@ -1334,7 +1327,6 @@ export class TokenFactions {
         // .drawRoundedRect(token.x, token.y, token.w, token.h, 3);
         .drawRoundedRect(-o - q + sW, -o - q + sH, (token.w + h) * s + p, (token.h + h) * s + p, 3);
 
-
       factionBorder
 
         .lineStyle(h * nBS, Color.from(borderColor.INT), 1.0)
@@ -1346,9 +1338,7 @@ export class TokenFactions {
   static clearAllGridFaction() {
     const tokens = canvas.tokens?.placeables;
     for (const token of tokens) {
-
       if (token.faction) {
-
         token.faction.removeChildren().forEach((c) => c.destroy());
       }
       TokenFactions.clearGridFaction(token.id);

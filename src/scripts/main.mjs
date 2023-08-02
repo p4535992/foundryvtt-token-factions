@@ -104,7 +104,10 @@ export const initHooks = async () => {
       ) {
         // DO NOTHING
       } else {
-        TokenFactions.updateTokenFaction(tokenDocument);
+        if(!tokenDocument?.object?.faction) {
+          TokenFactions.updateTokenFaction(tokenDocument);
+        }
+        
       }
     });
 
@@ -119,18 +122,40 @@ export const initHooks = async () => {
     //   TokenFactions._applyFactions(tokenDocument,updateData);
     // });
 
-
     libWrapper.register(CONSTANTS.MODULE_ID, "Token.prototype.refresh", TokenPrototypeRefreshHandler, "MIXED");
 
+    // libWrapper.register(CONSTANTS.MODULE_ID, "Token.prototype.draw", TokenPrototypeDrawHandler, "MIXED");
 
-    libWrapper.register(CONSTANTS.MODULE_ID, "Token.prototype.draw", TokenPrototypeDrawHandler, "MIXED");
-
+    Hooks.on('drawToken', (token, data) => {
+      if (!token.document?.visible && token.faction) {
+        if (token.faction?.removeChildren) {
+          token.faction.removeChildren().forEach((c) => c.destroy());
+        }
+      } else {
+        if(!token.faction) {
+          TokenFactions.updateTokenDataFaction(token.document);
+        }
+      }
+    });
 
     libWrapper.register(CONSTANTS.MODULE_ID, "Token.prototype._onUpdate", TokenPrototypeOnUpdateHandler, "MIXED");
 
-
     libWrapper.register(CONSTANTS.MODULE_ID, "Actor.prototype._onUpdate", ActorPrototypeOnUpdateHandler, "MIXED");
 
+    // Detection mode patching
+    libWrapper.register(CONSTANTS.MODULE_ID, 'DetectionModeBasicSight.prototype.testVisibility', 
+      DetectionModeBasicSightPrototypeTestVisibilityHandler, 
+      "MIXED", 
+      { perf_mode: libWrapper.PERF_FAST }
+    );
+
+    libWrapper.register(
+      CONSTANTS.MODULE_ID,  'DetectionModeInvisibility.prototype.testVisibility',
+      DetectionModeInvisibilityPrototypeTestVisibilityHandler,
+      'MIXED',
+      { perf_mode: libWrapper.PERF_FAST }
+    );
+    
     Hooks.on("renderTokenHUD", (app, html, data) => {
       TokenFactions.AddBorderToggle(app, html, data);
     });
@@ -153,6 +178,19 @@ export const initHooks = async () => {
         const { x, y } = token.document;
         token.faction.position.set(x, y);
       }
+      if(!token.controlled) {
+        for(const tk of canvas.tokens?.placeables) {
+          if(tk.id === token.id) {
+            continue;
+          }
+          if(!tk.faction){
+            TokenFactions.updateTokenDataFaction(tk.document);
+          }
+          else if(!tk.faction.children || tk.faction.children?.length <= 0) {
+            TokenFactions.updateTokenDataFaction(tk.document);
+          }
+        }
+      }
     });
 
     // canvas.tokens?.placeables.forEach((t) => {
@@ -166,7 +204,6 @@ export const initHooks = async () => {
       if (!game.user?.isGM && !isPlayerOwned) {
         return;
       }
-      token.faction?.destroy();
     });
 
     Hooks.on("destroyToken", (token) => {
@@ -198,12 +235,12 @@ export const TokenPrototypeRefreshHandler = function (wrapped, ...args) {
   return wrapped(...args);
 };
 
-export const TokenPrototypeDrawHandler = function (wrapped, ...args) {
-  const token = this;
-  TokenFactions.updateTokenDataFaction(token.document);
-  // this.drawFactions();
-  return wrapped(...args);
-};
+// export const TokenPrototypeDrawHandler = function (wrapped, ...args) {
+//   const token = this;
+//   TokenFactions.updateTokenDataFaction(token.document);
+//   // this.drawFactions();
+//   return wrapped(...args);
+// };
 
 export const TokenPrototypeOnUpdateHandler = function (wrapped, ...args) {
   if (
@@ -214,7 +251,9 @@ export const TokenPrototypeOnUpdateHandler = function (wrapped, ...args) {
     // DO NOTHING
   } else {
     const token = this;
-    TokenFactions.updateTokenDataFaction(token.document);
+    if(!token.faction) {
+      TokenFactions.updateTokenDataFaction(token.document);
+    }
   }
   return wrapped(...args);
 };
@@ -228,11 +267,62 @@ export const ActorPrototypeOnUpdateHandler = function (wrapped, ...args) {
     // DO NOTHING
   } else {
     const actor = this;
-
-    TokenFactions.updateTokenDataFaction(actor.prototypeToken.document);
+    if(!actor.prototypeToken.faction) {
+      TokenFactions.updateTokenDataFaction(actor.prototypeToken.document);
+    }
   }
   return wrapped(...args);
 };
+
+export const DetectionModeInvisibilityPrototypeTestVisibilityHandler = function (wrapped, ...args) {
+  const [visionSource, mode, config] = args;
+  const sourceTokenDocument = visionSource.object.document;
+  const sourceTokenDocumentBasic = sourceTokenDocument.detectionModes.find(m => m.id === DetectionMode.BASIC_MODE_ID);
+  if(sourceTokenDocumentBasic) {
+    const targetToken = config.object;
+    const result = wrapped(visionSource, mode, config);
+    if(!result) {
+      if (targetToken.faction?.removeChildren) {
+        targetToken.faction.removeChildren().forEach((c) => c.destroy());
+      }
+    } else {
+      TokenFactions.updateTokenDataFaction(targetToken.document);
+    }
+  }
+}
+
+export const DetectionModeBasicSightPrototypeTestVisibilityHandler = function (wrapped, ...args) {
+  const [visionSource, mode, config] = args;
+  const sourceTokenDocument = visionSource.object.document;
+  const sourceTokenDocumentBasic = sourceTokenDocument.detectionModes.find(m => m.id === DetectionMode.BASIC_MODE_ID);
+  if(sourceTokenDocumentBasic) {
+    const targetToken = config.object;
+    const result = wrapped(visionSource, mode, config);
+    if(!result) {
+      if (targetToken.faction?.removeChildren) {
+        targetToken.faction.removeChildren().forEach((c) => c.destroy());
+      }
+    } else {
+      TokenFactions.updateTokenDataFaction(targetToken.document);
+    }
+  }
+  /*
+  const sourceTokenDocument = visionSource.object.document;
+  const sourceTokenDocumentBasic = sourceTokenDocument.detectionModes.find(m => m.id === DetectionMode.BASIC_MODE_ID);
+  if(sourceTokenDocumentBasic) {
+    const targetToken = config.object?.actor;
+    const targetTokenDisposition = config.object.document?.disposition;
+    const modes = CONFIG.Canvas.detectionModes;
+    // const result = modes.basicSight.testVisibility(visionSource, sourceTokenDocumentBasic, config);
+    if(!result) {
+      if (targetToken.faction?.removeChildren) {
+        targetToken.faction.removeChildren().forEach((c) => c.destroy());
+      }
+    }
+  }
+  */
+  return wrapped(...args);
+}
 
 // export const TokenPrototypeRefreshBorderHandler = function (wrapped, ...args) {
 //
@@ -248,7 +338,6 @@ export const ActorPrototypeOnUpdateHandler = function (wrapped, ...args) {
 //   return TokenFactions.updateTokenDataFaction(token.document);
 //   //return wrapped(args);
 // };
-
 
 // Token.prototype.drawFactions = function () {
 //   const token = this as Token;

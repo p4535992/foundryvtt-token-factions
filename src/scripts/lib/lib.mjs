@@ -282,9 +282,7 @@ function shouldIgnoreWall(wall, collisionType) {
  * @returns {Boolean} returns the collision point if a collision is detected, flase if it's not
  **/
 function testCollision(p0, p1, type = "sight") {
-
   if (canvas?.scene?.flags["levels-3d-preview"]?.object3dSight) {
-
     if (!game.Levels3DPreview?._active) return true;
 
     return game.Levels3DPreview.interactionManager.computeSightCollision(p0, p1);
@@ -360,7 +358,6 @@ function testCollision(p0, p1, type = "sight") {
   }
   //Get wall heights flags, avoid infinity, use arbitrary large number instead
   function getWallHeightRange3Dcollision(wall) {
-
     let { top, bottom } = getWallBounds(wall); // WallHeight
     if (bottom == -Infinity) bottom = -1e9;
     if (top == Infinity) top = 1e9;

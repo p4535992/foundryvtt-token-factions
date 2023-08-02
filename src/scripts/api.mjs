@@ -64,7 +64,6 @@ const API = {
         break;
       }
       case "1": {
-
         if (!token.owner) {
           return factionGraphicDefaultS;
         }
@@ -75,12 +74,10 @@ const API = {
       }
     }
 
-
     let skipDraw;
     try {
       skipDraw = token.document.getFlag(CONSTANTS.MODULE_ID, TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE);
     } catch (e) {
-
       await token.document.setFlag(CONSTANTS.MODULE_ID, TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE, false);
       skipDraw = token.document.getFlag(CONSTANTS.MODULE_ID, TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE);
     }

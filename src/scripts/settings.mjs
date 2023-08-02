@@ -380,7 +380,6 @@ export const registerSettings = function () {
 
 class ResetSettingsDialog extends FormApplication {
   constructor(...args) {
-
     super(...args);
 
     return new Dialog({
