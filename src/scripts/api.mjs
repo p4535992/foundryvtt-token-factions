@@ -17,7 +17,7 @@ const API = {
       warn(`No token is been found with reference '${tokenIdOrName}'`, true);
       return;
     }
-    //@ts-ignore
+
     await token.document.setFlag(CONSTANTS.MODULE_ID, TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE, true);
   },
 
@@ -35,7 +35,7 @@ const API = {
       warn(`No token is been found with reference '${tokenIdOrName}'`, true);
       return;
     }
-    //@ts-ignore
+
     await token.document.setFlag(CONSTANTS.MODULE_ID, TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE, false);
   },
 
@@ -64,7 +64,7 @@ const API = {
         break;
       }
       case "1": {
-        //@ts-ignore
+
         if (!token.owner) {
           return factionGraphicDefaultS;
         }
@@ -75,16 +75,16 @@ const API = {
       }
     }
 
-    //@ts-ignore
+
     let skipDraw;
     try {
       skipDraw = token.document.getFlag(CONSTANTS.MODULE_ID, TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE);
     } catch (e) {
-      //@ts-ignore
+
       await token.document.setFlag(CONSTANTS.MODULE_ID, TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE, false);
       skipDraw = token.document.getFlag(CONSTANTS.MODULE_ID, TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE);
     }
-    //@ts-ignore
+
     if (skipDraw) {
       return factionGraphicDefaultS;
     }

@@ -170,7 +170,7 @@ function advancedLosTestVisibility(sourceToken, token, source) {
 
 export function advancedLosTestInLos(sourceToken, token) {
   const tol = 4;
-  //@ts-ignore
+
   if (CONFIG.Levels && CONFIG.Levels.settings.get("preciseTokenVisibility") === false)
     return checkCollision(sourceToken, token, "sight");
   const targetLOSH = token.losHeight;
@@ -187,7 +187,7 @@ export function advancedLosTestInLos(sourceToken, token) {
     { x: token.x + tol, y: token.y + token.h - tol, z: targetLOSH },
     { x: token.x + token.w - tol, y: token.y + token.h - tol, z: targetLOSH },
   ];
-  //@ts-ignore
+
   if (CONFIG.Levels && CONFIG.Levels.settings.get("exactTokenVisibility")) {
     const exactPoints = [
       {
@@ -282,11 +282,11 @@ function shouldIgnoreWall(wall, collisionType) {
  * @returns {Boolean} returns the collision point if a collision is detected, flase if it's not
  **/
 function testCollision(p0, p1, type = "sight") {
-  //@ts-ignore
+
   if (canvas?.scene?.flags["levels-3d-preview"]?.object3dSight) {
-    //@ts-ignore
+
     if (!game.Levels3DPreview?._active) return true;
-    //@ts-ignore
+
     return game.Levels3DPreview.interactionManager.computeSightCollision(p0, p1);
   }
   //Declare points adjusted with token height to use in the loop
@@ -303,7 +303,7 @@ function testCollision(p0, p1, type = "sight") {
   }
 
   //Check the background for collisions
-  //@ts-ignore
+
   const bgElevation = canvas?.scene?.flags?.levels?.backgroundElevation ?? 0;
   const zIntersectionPointBG = getPointForPlane(bgElevation);
   if ((z0 < bgElevation && bgElevation < z1) || (z1 < bgElevation && bgElevation < z0)) {
@@ -315,7 +315,7 @@ function testCollision(p0, p1, type = "sight") {
   }
 
   //Loop through all the planes and check for both ceiling and floor collision on each tile
-  //@ts-ignore
+
   for (let tile of canvas.tiles?.placeables) {
     if (tile.document.flags?.levels?.noCollision) continue;
     const bottom = tile.document.flags?.levels?.rangeBottom ?? -Infinity;
@@ -360,7 +360,7 @@ function testCollision(p0, p1, type = "sight") {
   }
   //Get wall heights flags, avoid infinity, use arbitrary large number instead
   function getWallHeightRange3Dcollision(wall) {
-    //@ts-ignore
+
     let { top, bottom } = getWallBounds(wall); // WallHeight
     if (bottom == -Infinity) bottom = -1e9;
     if (top == Infinity) top = 1e9;
@@ -375,27 +375,27 @@ function testCollision(p0, p1, type = "sight") {
     const rectW = Math.abs(x1 - x0);
     const rectH = Math.abs(y1 - y0);
     const rect = new PIXI.Rectangle(rectX, rectY, rectW, rectH);
-    //@ts-ignore
+
     const walls = canvas.walls.quadtree.getObjects(rect);
     let terrainWalls = 0;
     for (let wall of walls) {
       if (shouldIgnoreWall(wall, TYPE)) continue;
-      //@ts-ignore
+
       let isTerrain = TYPE === 0 && wall.document.sight === CONST.WALL_SENSE_TYPES.LIMITED;
 
       //declare points in 3d space of the rectangle created by the wall
       const wallBotTop = getWallHeightRange3Dcollision(wall);
-      //@ts-ignore
+
       const wx1 = wall.document.c[0];
-      //@ts-ignore
+
       const wx2 = wall.document.c[2];
-      //@ts-ignore
+
       const wx3 = wall.document.c[2];
-      //@ts-ignore
+
       const wy1 = wall.document.c[1];
-      //@ts-ignore
+
       const wy2 = wall.document.c[3];
-      //@ts-ignore
+
       const wy3 = wall.document.c[3];
       const wz1 = wallBotTop[0];
       const wz2 = wallBotTop[0];
@@ -420,7 +420,7 @@ function testCollision(p0, p1, type = "sight") {
         // Directional walls where the ray angle is not in the same hemisphere
         const rayAngle = Math.atan2(y1 - y0, x1 - x0);
         const angleBounds = [rayAngle - Math.PI / 2, rayAngle + Math.PI / 2];
-        //@ts-ignore
+
         if (!wall.isDirectionBetweenAngles(...angleBounds)) continue;
       }
 

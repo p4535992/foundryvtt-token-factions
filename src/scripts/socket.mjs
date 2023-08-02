@@ -10,7 +10,7 @@ import { setSocket } from "../main.mjs";
 // 	if (tokenFactionsSocket) {
 // 		return tokenFactionsSocket;
 // 	}
-// 	//@ts-ignore
+//
 // 	tokenFactionsSocket = socketlib.registerModule(CONSTANTS.MODULE_ID);
 
 // 	tokenFactionsSocket.register("clearGridFaction", (...args) => API.clearGridFactionArr(...args));

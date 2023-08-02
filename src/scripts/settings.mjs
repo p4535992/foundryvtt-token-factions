@@ -46,7 +46,7 @@ export const registerSettings = function () {
     config: true,
     default: 0.5,
     type: Number,
-    //@ts-ignore
+
     range: {
       min: 0,
       max: 1,
@@ -115,7 +115,7 @@ export const registerSettings = function () {
   //   config: true,
   //   default: 7.5,
   //   type: Number,
-  //   //@ts-ignore
+  //
   //   range: {
   //     min: 0,
   //     max: 10,
@@ -131,7 +131,7 @@ export const registerSettings = function () {
     config: true,
     default: 1,
     type: Number,
-    //@ts-ignore
+
     range: {
       min: 0,
       max: 1,
@@ -380,9 +380,9 @@ export const registerSettings = function () {
 
 class ResetSettingsDialog extends FormApplication {
   constructor(...args) {
-    //@ts-ignore
+
     super(...args);
-    //@ts-ignore
+
     return new Dialog({
       title: game.i18n.localize(`${CONSTANTS.MODULE_ID}.dialogs.resetsettings.title`),
       content:

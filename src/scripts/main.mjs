@@ -119,16 +119,16 @@ export const initHooks = async () => {
     //   TokenFactions._applyFactions(tokenDocument,updateData);
     // });
 
-    //@ts-ignore
+
     libWrapper.register(CONSTANTS.MODULE_ID, "Token.prototype.refresh", TokenPrototypeRefreshHandler, "MIXED");
 
-    //@ts-ignore
+
     libWrapper.register(CONSTANTS.MODULE_ID, "Token.prototype.draw", TokenPrototypeDrawHandler, "MIXED");
 
-    //@ts-ignore
+
     libWrapper.register(CONSTANTS.MODULE_ID, "Token.prototype._onUpdate", TokenPrototypeOnUpdateHandler, "MIXED");
 
-    //@ts-ignore
+
     libWrapper.register(CONSTANTS.MODULE_ID, "Actor.prototype._onUpdate", ActorPrototypeOnUpdateHandler, "MIXED");
 
     Hooks.on("renderTokenHUD", (app, html, data) => {
@@ -229,28 +229,28 @@ export const ActorPrototypeOnUpdateHandler = function (wrapped, ...args) {
     // DO NOTHING
   } else {
     const actor = this;
-    //@ts-ignore
+
     TokenFactions.updateTokenDataFaction(actor.prototypeToken.document);
   }
   return wrapped(...args);
 };
 
 // export const TokenPrototypeRefreshBorderHandler = function (wrapped, ...args) {
-//   //@ts-ignore
+//
 //   const token: Token = this as Token;
-//   //@ts-ignore
+//
 //   TokenFactions.updateTokenDataFaction(token.document);
 //   return wrapped(args);
 // };
 
 // export const TokenPrototypeGetBorderColorHandler = function (wrapped, ...args) {
-//   //@ts-ignore
+//
 //   const token: Token = this as Token;
 //   return TokenFactions.updateTokenDataFaction(token.document);
 //   //return wrapped(args);
 // };
 
-//@ts-ignore
+
 // Token.prototype.drawFactions = function () {
 //   const token = this as Token;
 //   TokenFactions.updateTokenDataFaction(token.document);
