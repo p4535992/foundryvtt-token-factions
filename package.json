@@ -10,7 +10,8 @@
 	"author": "",
 	"contributors": [],
 	"imports": {
-		"#runtime/*": "@typhonjs-fvtt/runtime/*"
+		"#runtime/*": "@typhonjs-fvtt/runtime/*",
+		"#standard/*": "@typhonjs-fvtt/svelte-standard/*"
 	},
 	"dependencies": {
 		"@fortawesome/fontawesome-svg-core": "^6.4.0",
@@ -45,9 +46,7 @@
 		"dev": "vite",
 		"eslint": "eslint .",
 		"prepare": "husky install",
-		"prettier-format": "prettier --config .prettierrc --write \"./src/**/*.{ts,js,mjs,json,scss,css}\"",
-		"sass": "sass ./src/styles:./dist/tidy5e-sheet/css --no-source-map --style expanded ",
-		"prefix": "postcss dist/tidy5e-sheet/styles/**/*.css  --use autoprefixer -d dist/tidy5e-sheet/styles-prefixed "
+		"prettier-format": "prettier --config .prettierrc --write \"./src/**/*.{js,mjs,json,scss,css}\""
 	},
 	"lint-staged": {
 		"*.{js,css}": "prettier --write"

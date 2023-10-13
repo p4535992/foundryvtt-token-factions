@@ -104,10 +104,9 @@ export const initHooks = async () => {
       ) {
         // DO NOTHING
       } else {
-        if(!tokenDocument?.object?.faction) {
+        if (!tokenDocument?.object?.faction) {
           TokenFactions.updateTokenFaction(tokenDocument);
         }
-        
       }
     });
 
@@ -126,13 +125,13 @@ export const initHooks = async () => {
 
     // libWrapper.register(CONSTANTS.MODULE_ID, "Token.prototype.draw", TokenPrototypeDrawHandler, "MIXED");
 
-    Hooks.on('drawToken', (token, data) => {
-      if (!token.document?.visible && token.faction) {
+    Hooks.on("drawToken", (token, data) => {
+      if (!token.visible && token.faction) {
         if (token.faction?.removeChildren) {
           token.faction.removeChildren().forEach((c) => c.destroy());
         }
       } else {
-        if(!token.faction) {
+        if (!token.faction) {
           TokenFactions.updateTokenDataFaction(token.document);
         }
       }
@@ -143,19 +142,22 @@ export const initHooks = async () => {
     libWrapper.register(CONSTANTS.MODULE_ID, "Actor.prototype._onUpdate", ActorPrototypeOnUpdateHandler, "MIXED");
 
     // Detection mode patching
-    libWrapper.register(CONSTANTS.MODULE_ID, 'DetectionModeBasicSight.prototype.testVisibility', 
-      DetectionModeBasicSightPrototypeTestVisibilityHandler, 
-      "MIXED", 
+    libWrapper.register(
+      CONSTANTS.MODULE_ID,
+      "DetectionModeBasicSight.prototype.testVisibility",
+      DetectionModeBasicSightPrototypeTestVisibilityHandler,
+      "MIXED",
       { perf_mode: libWrapper.PERF_FAST }
     );
 
     libWrapper.register(
-      CONSTANTS.MODULE_ID,  'DetectionModeInvisibility.prototype.testVisibility',
+      CONSTANTS.MODULE_ID,
+      "DetectionModeInvisibility.prototype.testVisibility",
       DetectionModeInvisibilityPrototypeTestVisibilityHandler,
-      'MIXED',
+      "MIXED",
       { perf_mode: libWrapper.PERF_FAST }
     );
-    
+
     Hooks.on("renderTokenHUD", (app, html, data) => {
       TokenFactions.AddBorderToggle(app, html, data);
     });
@@ -178,15 +180,14 @@ export const initHooks = async () => {
         const { x, y } = token.document;
         token.faction.position.set(x, y);
       }
-      if(!token.controlled) {
-        for(const tk of canvas.tokens?.placeables) {
-          if(tk.id === token.id) {
+      if (!token.controlled) {
+        for (const tk of canvas.tokens?.placeables) {
+          if (tk.id === token.id) {
             continue;
           }
-          if(!tk.faction){
+          if (!tk.faction) {
             TokenFactions.updateTokenDataFaction(tk.document);
-          }
-          else if(!tk.faction.children || tk.faction.children?.length <= 0) {
+          } else if (!tk.faction.children || tk.faction.children?.length <= 0) {
             TokenFactions.updateTokenDataFaction(tk.document);
           }
         }
@@ -251,7 +252,7 @@ export const TokenPrototypeOnUpdateHandler = function (wrapped, ...args) {
     // DO NOTHING
   } else {
     const token = this;
-    if(!token.faction) {
+    if (!token.faction) {
       TokenFactions.updateTokenDataFaction(token.document);
     }
   }
@@ -267,7 +268,7 @@ export const ActorPrototypeOnUpdateHandler = function (wrapped, ...args) {
     // DO NOTHING
   } else {
     const actor = this;
-    if(!actor.prototypeToken.faction) {
+    if (!actor.prototypeToken.faction) {
       TokenFactions.updateTokenDataFaction(actor.prototypeToken.document);
     }
   }
@@ -277,11 +278,11 @@ export const ActorPrototypeOnUpdateHandler = function (wrapped, ...args) {
 export const DetectionModeInvisibilityPrototypeTestVisibilityHandler = function (wrapped, ...args) {
   const [visionSource, mode, config] = args;
   const sourceTokenDocument = visionSource.object.document;
-  const sourceTokenDocumentBasic = sourceTokenDocument.detectionModes.find(m => m.id === DetectionMode.BASIC_MODE_ID);
-  if(sourceTokenDocumentBasic) {
+  const sourceTokenDocumentBasic = sourceTokenDocument.detectionModes.find((m) => m.id === DetectionMode.BASIC_MODE_ID);
+  if (sourceTokenDocumentBasic) {
     const targetToken = config.object;
     const result = wrapped(visionSource, mode, config);
-    if(!result) {
+    if (!result) {
       if (targetToken.faction?.removeChildren) {
         targetToken.faction.removeChildren().forEach((c) => c.destroy());
       }
@@ -289,16 +290,16 @@ export const DetectionModeInvisibilityPrototypeTestVisibilityHandler = function 
       TokenFactions.updateTokenDataFaction(targetToken.document);
     }
   }
-}
+};
 
 export const DetectionModeBasicSightPrototypeTestVisibilityHandler = function (wrapped, ...args) {
   const [visionSource, mode, config] = args;
   const sourceTokenDocument = visionSource.object.document;
-  const sourceTokenDocumentBasic = sourceTokenDocument.detectionModes.find(m => m.id === DetectionMode.BASIC_MODE_ID);
-  if(sourceTokenDocumentBasic) {
+  const sourceTokenDocumentBasic = sourceTokenDocument.detectionModes.find((m) => m.id === DetectionMode.BASIC_MODE_ID);
+  if (sourceTokenDocumentBasic) {
     const targetToken = config.object;
     const result = wrapped(visionSource, mode, config);
-    if(!result) {
+    if (!result) {
       if (targetToken.faction?.removeChildren) {
         targetToken.faction.removeChildren().forEach((c) => c.destroy());
       }
@@ -322,7 +323,7 @@ export const DetectionModeBasicSightPrototypeTestVisibilityHandler = function (w
   }
   */
   return wrapped(...args);
-}
+};
 
 // export const TokenPrototypeRefreshBorderHandler = function (wrapped, ...args) {
 //

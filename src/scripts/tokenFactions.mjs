@@ -230,9 +230,9 @@ export class TokenFactions {
       showFactionOnToken = true;
     }
     */
-    if (token.document?.visible) {
+    if (token.visible) {
       showFactionOnToken = true;
-    } 
+    }
 
     if (!showFactionOnToken) {
       debug(`Cannot show faction on token '${token.document.name}'`);
@@ -241,14 +241,17 @@ export class TokenFactions {
 
     let gfx;
     // if (!token.faction || token.faction.destroyed) {
-      // FVTT10
-      // token.faction = token.addChildAt(new PIXI.Container(), 0);
-      // FVTT11
-      if(!canvas.grid.faction) {
-        canvas.grid.faction = canvas.grid.addChildAt(new PIXI.Container(), canvas.grid.getChildIndex(canvas.grid.borders));
-      }
-      token.faction ??= canvas.grid.faction.addChild(new PIXI.Container());
-      gfx = token.faction.addChild(new PIXI.Graphics());
+    // FVTT10
+    // token.faction = token.addChildAt(new PIXI.Container(), 0);
+    // FVTT11
+    if (!canvas.grid.faction) {
+      canvas.grid.faction = canvas.grid.addChildAt(
+        new PIXI.Container(),
+        canvas.grid.getChildIndex(canvas.grid.borders)
+      );
+    }
+    token.faction ??= canvas.grid.faction.addChild(new PIXI.Container());
+    gfx = token.faction.addChild(new PIXI.Graphics());
     // }
     //token.faction.removeChildren().forEach((c) => c.destroy());
 
@@ -544,7 +547,7 @@ export class TokenFactions {
   // ADDED
 
   static async updateTokensAll() {
-    for(const tk of canvas.tokens?.placeables) {
+    for (const tk of canvas.tokens?.placeables) {
       TokenFactions._updateTokensBorder(tk.document);
     }
   }
@@ -627,7 +630,7 @@ export class TokenFactions {
         showFactionOnToken = true;
       }
       */
-      if (token.document?.visible) {
+      if (token.visible) {
         showFactionOnToken = true;
       }
 
@@ -638,14 +641,17 @@ export class TokenFactions {
 
       let gfx;
       // if (!token.faction || token.faction.destroyed) {
-        // FVTT10
-        // token.faction = token.addChildAt(new PIXI.Container(), 0);
-        // FVTT11
-        if(!canvas.grid.faction) {
-          canvas.grid.faction = canvas.grid.addChildAt(new PIXI.Container(), canvas.grid.getChildIndex(canvas.grid.borders));
-        }
-        token.faction ??= canvas.grid.faction.addChild(new PIXI.Container());
-        gfx = token.faction.addChild(new PIXI.Graphics());
+      // FVTT10
+      // token.faction = token.addChildAt(new PIXI.Container(), 0);
+      // FVTT11
+      if (!canvas.grid.faction) {
+        canvas.grid.faction = canvas.grid.addChildAt(
+          new PIXI.Container(),
+          canvas.grid.getChildIndex(canvas.grid.borders)
+        );
+      }
+      token.faction ??= canvas.grid.faction.addChild(new PIXI.Container());
+      gfx = token.faction.addChild(new PIXI.Graphics());
       // }
       //token.faction.removeChildren().forEach((c) => c.destroy());
 

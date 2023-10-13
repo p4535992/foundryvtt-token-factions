@@ -1,3 +1,7 @@
+### 0.4.9 
+
+- Try to fix: with suggestion from Freeze023
+
 ### 0.4.8
 
 . Bug fix: https://github.com/p4535992/foundryvtt-token-factions/issues/25
