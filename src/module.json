@@ -1,91 +1,100 @@
 {
-  "id": "token-factions",
-  "title": "Token Factions",
-  "description": "Generate token bases based on token disposition or actor folder color.",
-  "version": "0.4.9",
-  "library": "false",
-  "authors": [
-    {
-      "name": "Voldemalort",
-      "email": "voldemalort@gmail.com",
-      "discord": "Voldemalort#9415",
-      "reddit": "u/voldemalort"
-    },
-    {
-      "name": "p4535992",
-      "url": "https://github.com/p4535992",
-      "discord": "",
-      "twitter": "",
-      "patreon": "",
-      "github": "p4535992",
-      "ko-fi": "",
-      "reddit": "",
-      "email": ""
-    }
-  ],
-  "type": "module",
-  "socket": true,
-  "includes": [
-    "./assets/**",
-    "./lang/**",
-    "./languages/**",
-    "./scripts/**",
-    "./styles/**",
-    "./templates/**",
-    "./module.json",
-    "./README.md",
-    "./icons/**",
-    "./packs/**"
-  ],
-  "media": [
-    {
-      "type": "icon",
-      "location": ""
-    },
-    {
-      "type": "cover",
-      "location": ""
-    },
-    {
-      "type": "screenshot",
-      "location": ""
-    }
-  ],
-  "languages": [
-    {
-      "lang": "en",
-      "name": "English",
-      "path": "languages/en.json"
-    }
-  ],
-  "packs": [],
-  "systems": [],
-  "scripts": [],
-  "esmodules": ["module.js"],
-  "styles": ["styles/style.css"],
-  "compatibility": {
-    "minimum": 11,
-    "verified": 11,
-    "maximum": 11
-  },
-  "manifestPlusVersion": "1.2.1",
-  "url": "https://github.com/p4535992/foundryvtt-token-factions",
-  "manifest": "https://github.com/p4535992/foundryvtt-token-factions/releases/download/0.4.9/module.json",
-  "download": "https://github.com/p4535992/foundryvtt-token-factions/releases/download/0.4.9/module.zip",
-  "readme": "https://github.com/p4535992/foundryvtt-token-factions/blob/0.4.9/README.md",
-  "changelog": "https://github.com/p4535992/foundryvtt-token-factions/blob/0.4.9/CHANGELOG.md",
-  "bugs": "https://github.com/p4535992/foundryvtt-token-factions/issues",
-  "allowBugReporter": true,
-  "relationships": {
-    "systems": [],
-    "requires": [
-      {
-        "id": "lib-wrapper",
-        "type": "module",
-        "manifest": "https://github.com/ruipin/fvtt-lib-wrapper/releases/latest/download/module.json",
-        "compatibility": {}
-      }
-    ],
-    "conflicts": []
-  }
+	"id": "token-factions",
+	"title": "Token Factions",
+	"description": "Generate token bases based on token disposition or actor folder color.",
+	"version": "0.4.9",
+	"library": "false",
+	"authors": [
+		{
+			"name": "Voldemalort",
+			"email": "voldemalort@gmail.com",
+			"discord": "Voldemalort#9415",
+			"reddit": "u/voldemalort"
+		},
+		{
+			"name": "p4535992",
+			"url": "https://github.com/p4535992",
+			"discord": "",
+			"twitter": "",
+			"patreon": "",
+			"github": "p4535992",
+			"ko-fi": "",
+			"reddit": "",
+			"email": ""
+		}
+	],
+	"type": "module",
+	"socket": true,
+	"includes": [
+		"./assets/**",
+		"./lang/**",
+		"./languages/**",
+		"./scripts/**",
+		"./styles/**",
+		"./templates/**",
+		"./module.json",
+		"./README.md",
+		"./icons/**",
+		"./packs/**"
+	],
+	"media": [
+		{
+			"type": "icon",
+			"location": ""
+		},
+		{
+			"type": "cover",
+			"location": ""
+		},
+		{
+			"type": "screenshot",
+			"location": ""
+		}
+	],
+	"languages": [
+		{
+			"lang": "en",
+			"name": "English",
+			"path": "languages/en.json"
+		},
+		{
+			"lang": "de",
+			"name": "Deutsch",
+			"path": "languages/de.json"
+		}
+	],
+	"packs": [],
+	"systems": [],
+	"scripts": [],
+	"esmodules": [
+		"module.js"
+	],
+	"styles": [
+		"styles/style.css"
+	],
+	"compatibility": {
+		"minimum": 11,
+		"verified": 11,
+		"maximum": 11
+	},
+	"manifestPlusVersion": "1.2.1",
+	"url": "https://github.com/p4535992/foundryvtt-token-factions",
+	"manifest": "https://github.com/p4535992/foundryvtt-token-factions/releases/download/0.4.9/module.json",
+	"download": "https://github.com/p4535992/foundryvtt-token-factions/releases/download/0.4.9/module.zip",
+	"readme": "https://github.com/p4535992/foundryvtt-token-factions/blob/0.4.9/README.md",
+	"changelog": "https://github.com/p4535992/foundryvtt-token-factions/blob/0.4.9/CHANGELOG.md",
+	"bugs": "https://github.com/p4535992/foundryvtt-token-factions/issues",
+	"allowBugReporter": true,
+	"relationships": {
+		"systems": [],
+		"requires": [
+			{
+				"id": "lib-wrapper",
+				"type": "module",
+				"manifest": "https://github.com/ruipin/fvtt-lib-wrapper/releases/latest/download/module.json",
+				"compatibility": {}
+			}
+		],
+		"conflicts": []
+	}
 }
