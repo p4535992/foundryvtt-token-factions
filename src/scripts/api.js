@@ -1,5 +1,6 @@
 import CONSTANTS from "./constants.js";
-import { error, isStringEquals, warn } from "./lib/lib.js";
+import Logger from "./lib/Logger.js";
+import { isStringEquals } from "./lib/lib.js";
 import { TokenFactions } from "./tokenFactions.js";
 
 const API = {
@@ -14,7 +15,7 @@ const API = {
       return isStringEquals(t.id, tokenIdOrName) || isStringEquals(t.name, tokenIdOrName);
     });
     if (!token) {
-      warn(`No token is been found with reference '${tokenIdOrName}'`, true);
+      Logger.warn(`No token is been found with reference '${tokenIdOrName}'`, true);
       return;
     }
 
@@ -32,7 +33,7 @@ const API = {
       return isStringEquals(t.id, tokenIdOrName) || isStringEquals(t.name, tokenIdOrName);
     });
     if (!token) {
-      warn(`No token is been found with reference '${tokenIdOrName}'`, true);
+      Logger.warn(`No token is been found with reference '${tokenIdOrName}'`, true);
       return;
     }
 
@@ -47,7 +48,7 @@ const API = {
     const factionGraphicDefaultS = "#000000";
 
     if (!token) {
-      warn(`No token is been found with reference '${tokenIdOrName}'`, true);
+      Logger.warn(`No token is been found with reference '${tokenIdOrName}'`, true);
       return factionGraphicDefaultS;
     }
 
@@ -98,7 +99,7 @@ const API = {
 
   clearGridFactionArr(...inAttributes) {
     if (!Array.isArray(inAttributes)) {
-      throw error("clearGridFactionArr | inAttributes must be of type array");
+      throw Logger.error("clearGridFactionArr | inAttributes must be of type array");
     }
     const [tokenId] = inAttributes;
     this.clearGridFaction(tokenId);

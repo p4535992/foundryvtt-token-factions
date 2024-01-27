@@ -1,11 +1,10 @@
 import CONSTANTS from "./constants.js";
 import API from "./api.js";
-import { debug } from "./lib/lib.js";
 
 // export let tokenFactionsSocket;
 
 // export function registerSocket() {
-// 	debug("Registered tokenFactionsSocket");
+// 	Logger.debug("Registered tokenFactionsSocket");
 // 	if (tokenFactionsSocket) {
 // 		return tokenFactionsSocket;
 // 	}

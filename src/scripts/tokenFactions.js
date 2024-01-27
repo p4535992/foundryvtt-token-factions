@@ -1,6 +1,6 @@
-import { advancedLosTestInLos, debug, error, getOwnedTokens, i18n } from "./lib/lib.js";
 import { FactionGraphic } from "./TokenFactionsModels.js";
 import CONSTANTS from "./constants.js";
+import Logger from "./lib/Logger.js";
 
 export class TokenFactions {
   static TOKEN_FACTIONS_FLAGS = {
@@ -108,35 +108,35 @@ export class TokenFactions {
       $(`
 			<a class="item" data-tab="factions">
         <i class="fas fa-user-circle"></i>
-				${i18n("token-factions.label.factions")}
+				${Logger.i18n("token-factions.label.factions")}
 			</a>
 		`)
     );
 
     const formConfig = `
       <div class="form-group">
-        <label>${i18n("token-factions.label.factionsCustomDisable")}</label>
+        <label>${Logger.i18n("token-factions.label.factionsCustomDisable")}</label>
         <input type="checkbox"
           data-edit="flags.${CONSTANTS.MODULE_ID}.${TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE}"
           name="flags.${CONSTANTS.MODULE_ID}.${TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE}"
           data-dtype="Boolean" ${factionDisableValue}>
       </div>
       <div class="form-group">
-        <label>${i18n("token-factions.label.factionsCustomColorTokenInt")}</label>
+        <label>${Logger.i18n("token-factions.label.factionsCustomColorTokenInt")}</label>
         <input type="color"
           data-edit="flags.${CONSTANTS.MODULE_ID}.${TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_COLOR_INT}"
           name="flags.${CONSTANTS.MODULE_ID}.${TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_COLOR_INT}"
           data-dtype="String" value="${currentCustomColorTokenInt}"></input>
       </div>
       <div class="form-group">
-        <label>${i18n("token-factions.label.factionsCustomColorTokenExt")}</label>
+        <label>${Logger.i18n("token-factions.label.factionsCustomColorTokenExt")}</label>
         <input type="color"
           data-edit="flags.${CONSTANTS.MODULE_ID}.${TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_COLOR_EXT}"
           name="flags.${CONSTANTS.MODULE_ID}.${TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_COLOR_EXT}"
           data-dtype="String" value="${currentCustomColorTokenExt}"></input>
       </div>
       <div class="form-group">
-        <label>${i18n("token-factions.label.factionsCustomColorTokenFrameOpacity")}</label>
+        <label>${Logger.i18n("token-factions.label.factionsCustomColorTokenFrameOpacity")}</label>
         <input type="number"
           min="0" max="1" step="0.1"
           data-edit="flags.${CONSTANTS.MODULE_ID}.${TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_FRAME_OPACITY}"
@@ -144,7 +144,7 @@ export class TokenFactions {
           data-dtype="Number" value="${currentCustomColorTokenFrameOpacity}"></input>
       </div>
       <div class="form-group">
-        <label>${i18n("token-factions.label.factionsCustomColorTokenBaseOpacity")}</label>
+        <label>${Logger.i18n("token-factions.label.factionsCustomColorTokenBaseOpacity")}</label>
         <input type="number"
           min="0" max="1" step="0.1"
           data-edit="flags.${CONSTANTS.MODULE_ID}.${TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_BASE_OPACITY}"
@@ -235,7 +235,7 @@ export class TokenFactions {
     }
 
     if (!showFactionOnToken) {
-      debug(`Cannot show faction on token '${token.document.name}'`);
+      Logger.debug(`Cannot show faction on token '${token.document.name}'`);
       return;
     }
 
@@ -373,7 +373,7 @@ export class TokenFactions {
         );
         token.refresh();
       } catch (e) {
-        error(e);
+        Logger.error(e);
       }
     }
 
@@ -401,26 +401,26 @@ export class TokenFactions {
 
     const dialogContent = `
       <div class="form-group">
-        <label>${i18n("token-factions.label.factionsCustomColorTokenInt")}</label>
+        <label>${Logger.i18n("token-factions.label.factionsCustomColorTokenInt")}</label>
         <input type="color"
           value="${currentCustomColorTokenInt}"
           data-edit="token-factions.currentCustomColorTokenInt"></input>
       </div>
       <div class="form-group">
-        <label>${i18n("token-factions.label.factionsCustomColorTokenExt")}</label>
+        <label>${Logger.i18n("token-factions.label.factionsCustomColorTokenExt")}</label>
         <input type="color"
           value="${currentCustomColorTokenExt}"
           data-edit="token-factions.currentCustomColorTokenExt"></input>
       </div>
       <div class="form-group">
-        <label>${i18n("token-factions.label.factionsCustomColorTokenFrameOpacity")}</label>
+        <label>${Logger.i18n("token-factions.label.factionsCustomColorTokenFrameOpacity")}</label>
         <input type="number"
           min="0" max="1" step="0.1"
           value="${currentCustomColorTokenFrameOpacity}"
           data-edit="token-factions.currentCustomColorTokenFrameOpacity"></input>
       </div>
       <div class="form-group">
-        <label>${i18n("token-factions.label.factionsCustomColorTokenBaseOpacity")}</label>
+        <label>${Logger.i18n("token-factions.label.factionsCustomColorTokenBaseOpacity")}</label>
         <input type="number"
           min="0" max="1" step="0.1"
           value="${currentCustomColorTokenBaseOpacity}"
@@ -429,11 +429,11 @@ export class TokenFactions {
       `;
 
     const d = new Dialog({
-      title: i18n("token-factions.label.chooseCustomColorToken"),
+      title: Logger.i18n("token-factions.label.chooseCustomColorToken"),
       content: dialogContent,
       buttons: {
         yes: {
-          label: i18n("token-factions.label.applyCustomColor"),
+          label: Logger.i18n("token-factions.label.applyCustomColor"),
 
           callback: async (html) => {
             const newCurrentCustomColorTokenInt = $(
@@ -473,7 +473,7 @@ export class TokenFactions {
           },
         },
         no: {
-          label: i18n("token-factions.label.doNothing"),
+          label: Logger.i18n("token-factions.label.doNothing"),
           callback: (html) => {
             // Do nothing
           },
@@ -494,7 +494,9 @@ export class TokenFactions {
   }
 
   static _rgbToHex(A) {
-    if (A[0] === undefined || A[1] === undefined || A[2] === undefined) console.error("RGB color invalid");
+    if (A[0] === undefined || A[1] === undefined || A[2] === undefined) {
+      Logger.error("RGB color invalid");
+    }
     return (
       "#" +
       TokenFactions._componentToHex(A[0]) +
@@ -635,7 +637,7 @@ export class TokenFactions {
       }
 
       if (!showFactionOnToken) {
-        debug(`Cannot show faction on token '${token.document.name}'`);
+        Logger.debug(`Cannot show faction on token '${token.document.name}'`);
         return;
       }
 
@@ -870,16 +872,16 @@ export class TokenFactions {
     //   gfx = token.faction;
     // }
     if (!gfx) {
-      debug(`No gfx is founded or passed`);
+      Logger.debug(`No gfx is founded or passed`);
       return;
     }
     if (!token) {
-      debug(`No token is founded or passed`);
+      Logger.debug(`No token is founded or passed`);
       return;
     }
     if (token.x === 0 && token.y === 0) {
       if (token.document.x === 0 && token.document.y === 0) {
-        debug(`No token is founded or passed`);
+        Logger.debug(`No token is founded or passed`);
         return;
       }
     }

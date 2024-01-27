@@ -16,7 +16,7 @@ import { registerSettings } from "./scripts/settings.js";
 import { initHooks, readyHooks, setupHooks } from "./scripts/main.js";
 import CONSTANTS from "./scripts/constants.js";
 import API from "./scripts/api.js";
-import { error } from "./scripts/lib/lib.js";
+import Logger from "./scripts/lib/Logger.js";
 
 /* ------------------------------------ */
 /* Initialize module					*/
@@ -28,7 +28,7 @@ Hooks.once("init", () => {
   if (!game.modules.get("lib-wrapper")?.active && game.user?.isGM) {
     let word = "install and activate";
     if (game.modules.get("lib-wrapper")) word = "activate";
-    throw error(`Requires the 'libWrapper' module. Please ${word} it.`);
+    throw Logger.error(`Requires the 'libWrapper' module. Please ${word} it.`);
   }
 
   // Register custom module settings

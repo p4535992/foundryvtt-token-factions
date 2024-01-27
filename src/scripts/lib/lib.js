@@ -1,4 +1,5 @@
 import CONSTANTS from "../constants.js";
+import Logger from "./Logger.js";
 
 // =============================
 // Module Generic function
@@ -16,7 +17,7 @@ export function cleanUpString(stringToCleanUp) {
   // regex expression to match all non-alphanumeric characters in string
   const regex = /[^A-Za-z0-9]/g;
   if (stringToCleanUp) {
-    return i18n(stringToCleanUp).replace(regex, "").toLowerCase();
+    return Logger.i18n(stringToCleanUp).replace(regex, "").toLowerCase();
   } else {
     return stringToCleanUp;
   }
