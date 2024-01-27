@@ -83,8 +83,8 @@ export const initHooks = async () => {
       // token?.refresh();
       if (
         hasProperty(data, "flags") &&
-        hasProperty(data.flags[CONSTANTS.MODULE_ID], `${TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE}`) &&
-        getProperty(data.flags[CONSTANTS.MODULE_ID], `${TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE}`)
+        hasProperty(data.flags[CONSTANTS.MODULE_ID], `${CONSTANTS.FLAGS.FACTION_DISABLE}`) &&
+        getProperty(data.flags[CONSTANTS.MODULE_ID], `${CONSTANTS.FLAGS.FACTION_DISABLE}`)
       ) {
         // DO NOTHING
       } else {
@@ -97,8 +97,8 @@ export const initHooks = async () => {
       // token?.refresh();
       if (
         hasProperty(data, "flags") &&
-        hasProperty(data.flags[CONSTANTS.MODULE_ID], `${TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE}`) &&
-        getProperty(data.flags[CONSTANTS.MODULE_ID], `${TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE}`)
+        hasProperty(data.flags[CONSTANTS.MODULE_ID], `${CONSTANTS.FLAGS.FACTION_DISABLE}`) &&
+        getProperty(data.flags[CONSTANTS.MODULE_ID], `${CONSTANTS.FLAGS.FACTION_DISABLE}`)
       ) {
         // DO NOTHING
       } else {
@@ -244,8 +244,8 @@ export const TokenPrototypeRefreshHandler = function (wrapped, ...args) {
 export const TokenPrototypeOnUpdateHandler = function (wrapped, ...args) {
   if (
     hasProperty(args[0], "flags") &&
-    hasProperty(args[0].flags[CONSTANTS.MODULE_ID], `${TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE}`) &&
-    getProperty(args[0].flags[CONSTANTS.MODULE_ID], `${TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE}`)
+    hasProperty(args[0].flags[CONSTANTS.MODULE_ID], `${CONSTANTS.FLAGS.FACTION_DISABLE}`) &&
+    getProperty(args[0].flags[CONSTANTS.MODULE_ID], `${CONSTANTS.FLAGS.FACTION_DISABLE}`)
   ) {
     // DO NOTHING
   } else {
@@ -260,8 +260,8 @@ export const TokenPrototypeOnUpdateHandler = function (wrapped, ...args) {
 export const ActorPrototypeOnUpdateHandler = function (wrapped, ...args) {
   if (
     hasProperty(args[0], "flags") &&
-    hasProperty(args[0].flags[CONSTANTS.MODULE_ID], `${TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE}`) &&
-    getProperty(args[0].flags[CONSTANTS.MODULE_ID], `${TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE}`)
+    hasProperty(args[0].flags[CONSTANTS.MODULE_ID], `${CONSTANTS.FLAGS.FACTION_DISABLE}`) &&
+    getProperty(args[0].flags[CONSTANTS.MODULE_ID], `${CONSTANTS.FLAGS.FACTION_DISABLE}`)
   ) {
     // DO NOTHING
   } else {

@@ -19,7 +19,7 @@ const API = {
       return;
     }
 
-    await token.document.setFlag(CONSTANTS.MODULE_ID, TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE, true);
+    await token.document.setFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.FACTION_DISABLE, true);
   },
 
   async enableDrawBorderFactionsFromTokens(tokenIdsOrNames) {
@@ -37,7 +37,7 @@ const API = {
       return;
     }
 
-    await token.document.setFlag(CONSTANTS.MODULE_ID, TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE, false);
+    await token.document.setFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.FACTION_DISABLE, false);
   },
 
   async retrieveBorderFactionsColorFromToken(tokenIdOrName) {
@@ -77,10 +77,10 @@ const API = {
 
     let skipDraw;
     try {
-      skipDraw = token.document.getFlag(CONSTANTS.MODULE_ID, TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE);
+      skipDraw = token.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.FACTION_DISABLE);
     } catch (e) {
-      await token.document.setFlag(CONSTANTS.MODULE_ID, TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE, false);
-      skipDraw = token.document.getFlag(CONSTANTS.MODULE_ID, TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE);
+      await token.document.setFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.FACTION_DISABLE, false);
+      skipDraw = token.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.FACTION_DISABLE);
     }
 
     if (skipDraw) {

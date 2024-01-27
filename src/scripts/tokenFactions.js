@@ -3,16 +3,6 @@ import CONSTANTS from "./constants.js";
 import Logger from "./lib/Logger.js";
 
 export class TokenFactions {
-  static TOKEN_FACTIONS_FLAGS = {
-    FACTION_DRAW_FRAME: "factionDrawFrame", //'draw-frame',
-    FACTION_DISABLE: "factionDisable", // 'disable'
-    // FACTION_NO_BORDER: 'factionNoBorder', // noBorder
-    FACTION_CUSTOM_COLOR_INT: "factionCustomColorInt",
-    FACTION_CUSTOM_COLOR_EXT: "factionCustomColorExt",
-    FACTION_CUSTOM_FRAME_OPACITY: "factionCustomFrameOpacity",
-    FACTION_CUSTOM_BASE_OPACITY: "factionCustomBaseOpacity",
-  };
-
   static TOKEN_FACTIONS_FRAME_STYLE = {
     FLAT: "flat",
     BELEVELED: "beveled",
@@ -77,27 +67,21 @@ export class TokenFactions {
     if (!html) {
       return;
     }
-    const factionDisableValue = config.object.getFlag(
-      CONSTANTS.MODULE_ID,
-      TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE
-    )
+    const factionDisableValue = config.object.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.FACTION_DISABLE)
       ? "checked"
       : "";
 
     const currentCustomColorTokenInt =
-      config.object.getFlag(CONSTANTS.MODULE_ID, TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_COLOR_INT) ||
-      "#000000";
+      config.object.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.FACTION_CUSTOM_COLOR_INT) || "#000000";
 
     const currentCustomColorTokenExt =
-      config.object.getFlag(CONSTANTS.MODULE_ID, TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_COLOR_EXT) ||
-      "#000000";
+      config.object.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.FACTION_CUSTOM_COLOR_EXT) || "#000000";
 
     const currentCustomColorTokenFrameOpacity =
-      config.object.getFlag(CONSTANTS.MODULE_ID, TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_FRAME_OPACITY) ||
-      0.5;
+      config.object.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.FACTION_CUSTOM_FRAME_OPACITY) || 0.5;
 
     const currentCustomColorTokenBaseOpacity =
-      config.object.getFlag(CONSTANTS.MODULE_ID, TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_BASE_OPACITY) || 0.5;
+      config.object.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.FACTION_CUSTOM_BASE_OPACITY) || 0.5;
 
     // Expand the width
     config.position.width = 540;
@@ -117,38 +101,38 @@ export class TokenFactions {
       <div class="form-group">
         <label>${Logger.i18n("token-factions.label.factionsCustomDisable")}</label>
         <input type="checkbox"
-          data-edit="flags.${CONSTANTS.MODULE_ID}.${TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE}"
-          name="flags.${CONSTANTS.MODULE_ID}.${TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE}"
+          data-edit="flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.FACTION_DISABLE}"
+          name="flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.FACTION_DISABLE}"
           data-dtype="Boolean" ${factionDisableValue}>
       </div>
       <div class="form-group">
         <label>${Logger.i18n("token-factions.label.factionsCustomColorTokenInt")}</label>
         <input type="color"
-          data-edit="flags.${CONSTANTS.MODULE_ID}.${TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_COLOR_INT}"
-          name="flags.${CONSTANTS.MODULE_ID}.${TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_COLOR_INT}"
+          data-edit="flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.FACTION_CUSTOM_COLOR_INT}"
+          name="flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.FACTION_CUSTOM_COLOR_INT}"
           data-dtype="String" value="${currentCustomColorTokenInt}"></input>
       </div>
       <div class="form-group">
         <label>${Logger.i18n("token-factions.label.factionsCustomColorTokenExt")}</label>
         <input type="color"
-          data-edit="flags.${CONSTANTS.MODULE_ID}.${TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_COLOR_EXT}"
-          name="flags.${CONSTANTS.MODULE_ID}.${TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_COLOR_EXT}"
+          data-edit="flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.FACTION_CUSTOM_COLOR_EXT}"
+          name="flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.FACTION_CUSTOM_COLOR_EXT}"
           data-dtype="String" value="${currentCustomColorTokenExt}"></input>
       </div>
       <div class="form-group">
         <label>${Logger.i18n("token-factions.label.factionsCustomColorTokenFrameOpacity")}</label>
         <input type="number"
           min="0" max="1" step="0.1"
-          data-edit="flags.${CONSTANTS.MODULE_ID}.${TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_FRAME_OPACITY}"
-          name="flags.${CONSTANTS.MODULE_ID}.${TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_FRAME_OPACITY}"
+          data-edit="flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.FACTION_CUSTOM_FRAME_OPACITY}"
+          name="flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.FACTION_CUSTOM_FRAME_OPACITY}"
           data-dtype="Number" value="${currentCustomColorTokenFrameOpacity}"></input>
       </div>
       <div class="form-group">
         <label>${Logger.i18n("token-factions.label.factionsCustomColorTokenBaseOpacity")}</label>
         <input type="number"
           min="0" max="1" step="0.1"
-          data-edit="flags.${CONSTANTS.MODULE_ID}.${TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_BASE_OPACITY}"
-          name="flags.${CONSTANTS.MODULE_ID}.${TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_BASE_OPACITY}"
+          data-edit="flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.FACTION_CUSTOM_BASE_OPACITY}"
+          name="flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.FACTION_CUSTOM_BASE_OPACITY}"
           data-dtype="Number" value="${currentCustomColorTokenBaseOpacity}"></input>
       </div>
     `;
@@ -331,10 +315,7 @@ export class TokenFactions {
       return;
     }
 
-    const factionDisableFlag = app.object.document.getFlag(
-      CONSTANTS.MODULE_ID,
-      TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE
-    );
+    const factionDisableFlag = app.object.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.FACTION_DISABLE);
 
     const borderButton = `
     <div class="control-icon factionBorder
@@ -359,18 +340,11 @@ export class TokenFactions {
   }
 
   static async ToggleBorder(event) {
-    const borderIsDisabled = this.object.document.getFlag(
-      CONSTANTS.MODULE_ID,
-      TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE
-    );
+    const borderIsDisabled = this.object.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.FACTION_DISABLE);
 
     for (const token of canvas.tokens?.controlled) {
       try {
-        await token.document.setFlag(
-          CONSTANTS.MODULE_ID,
-          TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE,
-          !borderIsDisabled
-        );
+        await token.document.setFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.FACTION_DISABLE, !borderIsDisabled);
         token.refresh();
       } catch (e) {
         Logger.error(e);
@@ -384,20 +358,16 @@ export class TokenFactions {
     const tokenTmp = this.object;
 
     const currentCustomColorTokenInt =
-      tokenTmp.document.getFlag(CONSTANTS.MODULE_ID, TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_COLOR_INT) ||
-      "#000000";
+      tokenTmp.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.FACTION_CUSTOM_COLOR_INT) || "#000000";
 
     const currentCustomColorTokenExt =
-      tokenTmp.document.getFlag(CONSTANTS.MODULE_ID, TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_COLOR_EXT) ||
-      "#000000";
+      tokenTmp.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.FACTION_CUSTOM_COLOR_EXT) || "#000000";
 
     const currentCustomColorTokenFrameOpacity =
-      tokenTmp.document.getFlag(CONSTANTS.MODULE_ID, TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_FRAME_OPACITY) ||
-      0.5;
+      tokenTmp.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.FACTION_CUSTOM_FRAME_OPACITY) || 0.5;
 
     const currentCustomColorTokenBaseOpacity =
-      tokenTmp.document.getFlag(CONSTANTS.MODULE_ID, TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_BASE_OPACITY) ||
-      0.5;
+      tokenTmp.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.FACTION_CUSTOM_BASE_OPACITY) || 0.5;
 
     const dialogContent = `
       <div class="form-group">
@@ -451,22 +421,22 @@ export class TokenFactions {
             for (const token of canvas.tokens?.controlled) {
               token.document.setFlag(
                 CONSTANTS.MODULE_ID,
-                TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_COLOR_INT,
+                CONSTANTS.FLAGS.FACTION_CUSTOM_COLOR_INT,
                 newCurrentCustomColorTokenInt
               );
               token.document.setFlag(
                 CONSTANTS.MODULE_ID,
-                TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_COLOR_EXT,
+                CONSTANTS.FLAGS.FACTION_CUSTOM_COLOR_EXT,
                 newCurrentCustomColorTokenExt
               );
               token.document.setFlag(
                 CONSTANTS.MODULE_ID,
-                TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_FRAME_OPACITY,
+                CONSTANTS.FLAGS.FACTION_CUSTOM_FRAME_OPACITY,
                 newCurrentCustomColorTokenFrameOpacity
               );
               token.document.setFlag(
                 CONSTANTS.MODULE_ID,
-                TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_BASE_OPACITY,
+                CONSTANTS.FLAGS.FACTION_CUSTOM_BASE_OPACITY,
                 newCurrentCustomColorTokenBaseOpacity
               );
             }
@@ -751,11 +721,11 @@ export class TokenFactions {
 
     const currentCustomColorTokenInt = token.document.getFlag(
       CONSTANTS.MODULE_ID,
-      TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_COLOR_INT
+      CONSTANTS.FLAGS.FACTION_CUSTOM_COLOR_INT
     );
     const currentCustomColorTokenExt = token.document.getFlag(
       CONSTANTS.MODULE_ID,
-      TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_COLOR_EXT
+      CONSTANTS.FLAGS.FACTION_CUSTOM_COLOR_EXT
     );
 
     const overrides = {
@@ -921,13 +891,10 @@ export class TokenFactions {
 
     let skipDraw;
     try {
-      skipDraw = getProperty(
-        token.document,
-        `flags.${CONSTANTS.MODULE_ID}.${TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE}`
-      );
+      skipDraw = getProperty(token.document, `flags.${CONSTANTS.MODULE_ID}.${CONSTANTS.FLAGS.FACTION_DISABLE}`);
     } catch (e) {
-      token.document.setFlag(CONSTANTS.MODULE_ID, TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE, false);
-      skipDraw = token.document.getFlag(CONSTANTS.MODULE_ID, TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_DISABLE);
+      token.document.setFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.FACTION_DISABLE, false);
+      skipDraw = token.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.FACTION_DISABLE);
     }
 
     if (skipDraw) {
@@ -969,11 +936,11 @@ export class TokenFactions {
 
       const customFrameOpacity = token.document.getFlag(
         CONSTANTS.MODULE_ID,
-        TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_FRAME_OPACITY
+        CONSTANTS.FLAGS.FACTION_CUSTOM_FRAME_OPACITY
       );
       const customBaseOpacity = token.document.getFlag(
         CONSTANTS.MODULE_ID,
-        TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_BASE_OPACITY
+        CONSTANTS.FLAGS.FACTION_CUSTOM_BASE_OPACITY
       );
 
       if (customFrameOpacity && customFrameOpacity != 0.5) {
@@ -1186,12 +1153,9 @@ export class TokenFactions {
 
     const customFrameOpacity = token.document.getFlag(
       CONSTANTS.MODULE_ID,
-      TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_FRAME_OPACITY
+      CONSTANTS.FLAGS.FACTION_CUSTOM_FRAME_OPACITY
     );
-    const customBaseOpacity = token.document.getFlag(
-      CONSTANTS.MODULE_ID,
-      TokenFactions.TOKEN_FACTIONS_FLAGS.FACTION_CUSTOM_BASE_OPACITY
-    );
+    const customBaseOpacity = token.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.FACTION_CUSTOM_BASE_OPACITY);
 
     if (customFrameOpacity && customFrameOpacity != 0.5) {
       frameOpacity = customFrameOpacity;
