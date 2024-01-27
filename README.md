@@ -246,13 +246,10 @@ Any issues, bugs, or feature requests are always welcome to be reported directly
 
 ## License
 
+- **[injectConfig](https://github.com/theripper93/injectConfig)**: [MIT](https://github.com/theripper93/injectConfig/blob/main/LICENSE)
+- **[Border-Control](https://github.com/kandashi/Border-Control)**: [MIT](https://github.com/kandashi/Border-Control/blob/master/LICENSE)
+
 This package is under an [MIT license](LICENSE) and the [Foundry Virtual Tabletop Limited License Agreement for module development](https://foundryvtt.com/article/license/).
-
-## Acknowledgements
-
-Bootstrapped with League of Extraordinary FoundryVTT Developers  [foundry-vtt-types](https://github.com/League-of-Foundry-Developers/foundry-vtt-types).
-
-Mad props to the 'League of Extraordinary FoundryVTT Developers' community which helped me figure out a lot.
 
 ## Credit
 
@@ -261,4 +258,4 @@ Thanks to anyone who helps me with this code! I appreciate the user community's 
 - [Token Factions (original)](https://github.com/Voldemalort/token-factions) ty to [Voldemalort](https://github.com/Voldemalort)
 - [Token Factions (fork)](https://github.com/erithtotl/token-factions) ty to [erithtotl](https://github.com/erithtotl)
 - [Border-Control](https://github.com/kandashi/Border-Control) ty to [kandashi](https://github.com/kandashi)
-
+- Ty to [theripper93](https://github.com/theripper93) for the module [injectConfig](https://github.com/theripper93/injectConfig)

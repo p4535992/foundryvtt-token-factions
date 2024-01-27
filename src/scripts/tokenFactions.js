@@ -1,6 +1,8 @@
 import { FactionGraphic } from "./TokenFactionsModels.js";
 import CONSTANTS from "./constants.js";
 import Logger from "./lib/Logger.js";
+import { injectConfig } from "./lib/injectConfig.js";
+import { isRealNumber } from "./lib/lib.js";
 
 export class TokenFactions {
   static TOKEN_FACTIONS_FRAME_STYLE = {
@@ -60,6 +62,8 @@ export class TokenFactions {
   }
 
   static renderTokenConfig = async function (config, html) {
+    TokenFactions.renderTokenConfigHandler(config, html);
+    /*
     const tokenDocument = config.object;
     if (!game.user?.isGM) {
       return;
@@ -156,7 +160,65 @@ export class TokenFactions {
     //   .parent()
     //   .find('.tab[data-tab="factions"] input[type="color"][data-edit]')
     //   .change(config._onChangeInput.bind(config));
+    */
   };
+
+  /**
+   * Handler called when token configuration window is opened. Injects custom form html and deals
+   * with updating token.
+   * @category GMOnly
+   * @function
+   * @async
+   * @param {TokenConfig} tokenConfig
+   * @param {JQuery} html
+   */
+  static async renderTokenConfigHandler(tokenConfig, html) {
+    // if (!tokenConfig.token.hasPlayerOwner) {
+    //   return;
+    // }
+    if (!html) {
+      return;
+    }
+
+    injectConfig.inject(
+      tokenConfig,
+      html,
+      {
+        moduleId: CONSTANTS.MODULE_ID,
+        tab: {
+          name: CONSTANTS.MODULE_ID,
+          label: Logger.i18n("token-factions.label.factions"),
+          icon: "fas fa-user-circle",
+        },
+      },
+      tokenConfig.object
+    );
+
+    const posTab = html.find(`.tab[data-tab="${CONSTANTS.MODULE_ID}"]`);
+    const tokenFlags = tokenConfig.options.sheetConfig
+      ? tokenConfig.object.flags
+        ? tokenConfig.object.flags[CONSTANTS.MODULE_ID] || {}
+        : {}
+      : tokenConfig.token.flags
+      ? tokenConfig.token.flags[CONSTANTS.MODULE_ID] || {}
+      : {};
+
+    const data = {
+      hasPlayerOwner: tokenConfig.token.hasPlayerOwner,
+      factionDisable: tokenFlags[CONSTANTS.FLAGS.FACTION_DISABLE] ? "checked" : "",
+      currentCustomColorTokenInt: tokenFlags[CONSTANTS.FLAGS.FACTION_CUSTOM_COLOR_INT] || "#000000",
+      currentCustomColorTokenExt: tokenFlags[CONSTANTS.FLAGS.FACTION_CUSTOM_COLOR_EXT] || "#000000",
+      currentCustomColorTokenFrameOpacity: isRealNumber(tokenFlags[CONSTANTS.FLAGS.FACTION_CUSTOM_FRAME_OPACITY])
+        ? tokenFlags[CONSTANTS.FLAGS.FACTION_CUSTOM_FRAME_OPACITY]
+        : 0.5,
+      currentCustomColorTokenBaseOpacity: isRealNumber(tokenFlags[CONSTANTS.FLAGS.FACTION_CUSTOM_BASE_OPACITY])
+        ? tokenFlags[CONSTANTS.FLAGS.FACTION_CUSTOM_BASE_OPACITY]
+        : 0.5,
+    };
+
+    const insertHTML = await renderTemplate(`modules/${CONSTANTS.MODULE_ID}/templates/token-config.html`, data);
+    posTab.append(insertHTML);
+  }
 
   static updateTokenDataFaction(tokenData) {
     let tokens;

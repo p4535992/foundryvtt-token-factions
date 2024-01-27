@@ -1,0 +1,37 @@
+<div class="form-group">
+    <label>{{localize "token-factions.label.factionsCustomDisable"}}</label>
+    <input type="checkbox"
+        data-edit="flags.token-factions.factionDisable"
+        name="flags.token-factions.factionDisable"
+        data-dtype="Boolean" {{factionDisableValue}}>
+</div>
+<div class="form-group">
+    <label>{{localize "token-factions.label.factionsCustomColorTokenInt"}}</label>
+    <input type="color"
+        data-edit="flags.token-factions.factionCustomColorInt"
+        name="flags.token-factions.factionCustomColorInt"
+        data-dtype="String" value="{{currentCustomColorTokenInt}}"></input>
+</div>
+<div class="form-group">
+    <label>{{localize "token-factions.label.factionsCustomColorTokenExt"}}</label>
+    <input type="color"
+        data-edit="flags.token-factions.factionCustomColorExt"
+        name="flags.token-factions.factionCustomColorExt"
+        data-dtype="String" value="{{currentCustomColorTokenExt}}"></input>
+</div>
+<div class="form-group">
+    <label>{{localize "token-factions.label.factionsCustomColorTokenFrameOpacity"}}</label>
+    <input type="number"
+        min="0" max="1" step="0.1"
+        data-edit="flags.token-factions.factionCustomFrameOpacity"
+        name="flags.token-factions.factionCustomFrameOpacity"
+        data-dtype="Number" value="{{currentCustomColorTokenFrameOpacity}}"></input>
+</div>
+<div class="form-group">
+<label>{{localize "token-factions.label.factionsCustomColorTokenBaseOpacity"}}</label>
+    <input type="number"
+        min="0" max="1" step="0.1"
+        data-edit="flags.token-factions.factionCustomBaseOpacity"
+        name="flags.token-factions.factionCustomBaseOpacity"
+        data-dtype="Number" value="{{currentCustomColorTokenBaseOpacity}}"></input>
+</div>
