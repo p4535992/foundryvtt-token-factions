@@ -1,6 +1,6 @@
-import CONSTANTS from "./constants.mjs";
-import { error, isStringEquals, warn } from "./lib/lib.mjs";
-import { TokenFactions } from "./tokenFactions.mjs";
+import CONSTANTS from "./constants.js";
+import { error, isStringEquals, warn } from "./lib/lib.js";
+import { TokenFactions } from "./tokenFactions.js";
 
 const API = {
   async disableDrawBorderFactionsFromTokens(tokenIdsOrNames) {

@@ -1,7 +1,6 @@
-import CONSTANTS from "./constants.mjs";
-import API from "./api.mjs";
-import { debug } from "./lib/lib.mjs";
-import { setSocket } from "../main.mjs";
+import CONSTANTS from "./constants.js";
+import API from "./api.js";
+import { debug } from "./lib/lib.js";
 
 // export let tokenFactionsSocket;
 
@@ -15,6 +14,6 @@ import { setSocket } from "../main.mjs";
 
 // 	tokenFactionsSocket.register("clearGridFaction", (...args) => API.clearGridFactionArr(...args));
 
-// 	setSocket(tokenFactionsSocket);
+//  game.modules.get(CONSTANTS.MODULE_ID).socket = tokenFactionsSocket;
 // 	return tokenFactionsSocket;
 // }

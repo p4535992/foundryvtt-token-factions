@@ -1,6 +1,6 @@
-import { advancedLosTestInLos, debug, error, getOwnedTokens, i18n } from "./lib/lib.mjs";
-import { FactionGraphic } from "./TokenFactionsModels.mjs";
-import CONSTANTS from "./constants.mjs";
+import { advancedLosTestInLos, debug, error, getOwnedTokens, i18n } from "./lib/lib.js";
+import { FactionGraphic } from "./TokenFactionsModels.js";
+import CONSTANTS from "./constants.js";
 
 export class TokenFactions {
   static TOKEN_FACTIONS_FLAGS = {

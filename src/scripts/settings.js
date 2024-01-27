@@ -1,5 +1,5 @@
-import { debug, log, warn, i18n } from "./lib/lib.mjs";
-import CONSTANTS from "./constants.mjs";
+import { debug, log, warn, i18n } from "./lib/lib.js";
+import CONSTANTS from "./constants.js";
 
 export const registerSettings = function () {
   game.settings.registerMenu(CONSTANTS.MODULE_ID, "resetAllSettings", {

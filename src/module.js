@@ -12,11 +12,11 @@
 // Import JavaScript modules
 
 // Import TypeScript modules
-import { registerSettings } from "./scripts/settings.mjs";
-import { initHooks, readyHooks, setupHooks } from "./scripts/main.mjs";
-import CONSTANTS from "./scripts/constants.mjs";
-import API from "./scripts/api.mjs";
-import { error } from "./scripts/lib/lib.mjs";
+import { registerSettings } from "./scripts/settings.js";
+import { initHooks, readyHooks, setupHooks } from "./scripts/main.js";
+import CONSTANTS from "./scripts/constants.js";
+import API from "./scripts/api.js";
+import { error } from "./scripts/lib/lib.js";
 
 /* ------------------------------------ */
 /* Initialize module					*/
@@ -74,39 +74,3 @@ Hooks.once("ready", () => {
 });
 
 // Add any additional hooks if necessary
-
-/**
- * Initialization helper, to set API.
- * @param api to set to game module.
- */
-export function setApi(api) {
-  const data = game.modules.get(CONSTANTS.MODULE_ID);
-  data.api = api;
-}
-
-/**
- * Returns the set API.
- * @returns Api from games module.
- */
-export function getApi() {
-  const data = game.modules.get(CONSTANTS.MODULE_ID);
-  return data.api;
-}
-
-/**
- * Initialization helper, to set Socket.
- * @param socket to set to game module.
- */
-export function setSocket(socket) {
-  const data = game.modules.get(CONSTANTS.MODULE_ID);
-  data.socket = socket;
-}
-
-/*
- * Returns the set socket.
- * @returns Socket from games module.
- */
-export function getSocket() {
-  const data = game.modules.get(CONSTANTS.MODULE_ID);
-  return data.socket;
-}

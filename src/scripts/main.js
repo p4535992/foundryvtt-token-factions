@@ -1,8 +1,7 @@
-import { warn, error, debug, i18n, advancedLosTestInLos, getOwnedTokens } from "./lib/lib.mjs";
-import { TokenFactions } from "./tokenFactions.mjs";
-import CONSTANTS from "./constants.mjs";
-import { setApi } from "../module.js";
-import API from "./api.mjs";
+import { warn, error, debug, i18n, advancedLosTestInLos, getOwnedTokens } from "./lib/lib.js";
+import { TokenFactions } from "./tokenFactions.js";
+import CONSTANTS from "./constants.js";
+import API from "./api.js";
 // import { registerSocket, tokenFactionsSocket } from "./socket";
 
 export const initHooks = async () => {
@@ -223,7 +222,7 @@ export const initHooks = async () => {
 };
 
 export const setupHooks = async () => {
-  setApi(API);
+  game.modules.get(CONSTANTS.MODULE_ID).api = API;
 };
 
 export const readyHooks = () => {
