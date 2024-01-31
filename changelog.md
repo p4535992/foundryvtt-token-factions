@@ -1,3 +1,8 @@
+### 0.5.1
+
+- Bug fix: https://github.com/p4535992/foundryvtt-token-factions/issues/30 ty to @strongpauly 
+- Apply PR: https://github.com/p4535992/foundryvtt-token-factions/pull/31 ty to @strongpauly 
+
 ### 0.5.0 
 
 - Rewrite some code
