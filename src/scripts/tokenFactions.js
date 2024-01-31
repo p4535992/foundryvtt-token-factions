@@ -1276,7 +1276,7 @@ export class TokenFactions {
         .lineStyle(h * nBS, Color.from(borderColor.INT), 1.0)
         // .drawCircle(token.x + token.w / 2, token.y + token.h / 2, (token.w / 2) * sX + h + t / 2 + p);
         .drawCircle(token.w / 2, token.h / 2, (token.w / 2) * s + h + t / 2 + p);
-    } else if (hexTypes.includes(canvas.grid?.type)) {
+    } else if (canvas.grid.isHex || hexTypes.includes(canvas.grid?.type)) {
       // && token.document.width === 1 && token.document.height === 1) {
       // const p = game.settings.get(CONSTANTS.MODULE_ID, "borderOffset");
       const q = Math.round(p / 2);
