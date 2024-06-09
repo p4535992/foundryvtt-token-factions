@@ -1,3 +1,7 @@
+### 0.5.2
+
+- Update manifest for v12
+
 ### 0.5.1
 
 - Bug fix: https://github.com/p4535992/foundryvtt-token-factions/issues/30 ty to @strongpauly 
