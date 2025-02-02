@@ -1,7 +1,8 @@
 import CONSTANTS from "./constants.js";
+import Logger from "./lib/Logger.js";
 
 export const registerSettings = function () {
-  game.settings.registerMenu(CONSTANTS.MODULE_ID, "resetAllSettings", {
+  game.settings.registerMenu(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.RESET, {
     name: `${CONSTANTS.MODULE_ID}.setting.reset.name`,
     hint: `${CONSTANTS.MODULE_ID}.setting.reset.hint`,
     icon: "fas fa-coins",
@@ -9,43 +10,30 @@ export const registerSettings = function () {
     restricted: true,
   });
 
-  // =====================================================================
-
   // ==========================
   // TOKEN FACTIONS
   // ==========================
 
-  game.settings.register(CONSTANTS.MODULE_ID, "tokenFactionsEnabled", {
-    name: CONSTANTS.MODULE_ID + ".setting.tokenFactionsEnabled.name",
-    hint: CONSTANTS.MODULE_ID + ".setting.tokenFactionsEnabled.hint",
-    default: true,
-    type: Boolean,
+  game.settings.register(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.COLOR_FROM, {
+    name: `${CONSTANTS.MODULE_ID}.setting.${CONSTANTS.SETTINGS.COLOR_FROM}.name`,
+    hint: `${CONSTANTS.MODULE_ID}.setting.${CONSTANTS.SETTINGS.COLOR_FROM}.hint`,
     scope: "world",
     config: true,
-  });
-
-  game.settings.register(CONSTANTS.MODULE_ID, "color-from", {
-    name: CONSTANTS.MODULE_ID + ".setting.color-from.name",
-    hint: CONSTANTS.MODULE_ID + ".setting.color-from.hint",
-    scope: "world",
-    config: true,
-    default: "token-disposition",
+    default: CONSTANTS.DEFAULTS.COLOR_FROM,
     type: String,
     choices: {
-      "token-disposition": CONSTANTS.MODULE_ID + ".setting.color-from.opt.token-disposition",
-      "actor-folder-color": CONSTANTS.MODULE_ID + ".setting.color-from.opt.actor-folder-color",
-      // "custom-disposition": CONSTANTS.MODULE_ID + ".setting.color-from.opt.custom-disposition"
+      "token-disposition": `${CONSTANTS.MODULE_ID}.setting.color-from.opt.token-disposition`,
+      "actor-folder-color": `${CONSTANTS.MODULE_ID}.setting.color-from.opt.actor-folder-color`,
     },
   });
 
-  game.settings.register(CONSTANTS.MODULE_ID, "base-opacity", {
-    name: CONSTANTS.MODULE_ID + ".setting.base-opacity.name",
-    hint: CONSTANTS.MODULE_ID + ".setting.base-opacity.hint",
+  game.settings.register(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.BASE_OPACITY, {
+    name: `${CONSTANTS.MODULE_ID}.setting.${CONSTANTS.SETTINGS.BASE_OPACITY}.name`,
+    hint: `${CONSTANTS.MODULE_ID}.setting.${CONSTANTS.SETTINGS.BASE_OPACITY}.hint`,
     scope: "world",
     config: true,
-    default: 0.5,
+    default: CONSTANTS.DEFAULTS.BASE_OPACITY,
     type: Number,
-
     range: {
       min: 0,
       max: 1,
@@ -53,84 +41,39 @@ export const registerSettings = function () {
     },
   });
 
-  game.settings.register(CONSTANTS.MODULE_ID, "fillTexture", {
-    name: CONSTANTS.MODULE_ID + ".setting.fillTexture.name",
-    hint: CONSTANTS.MODULE_ID + ".setting.fillTexture.hint",
+  game.settings.register(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.FILL_TEXTURE, {
+    name: `${CONSTANTS.MODULE_ID}.setting.${CONSTANTS.SETTINGS.FILL_TEXTURE}.name`,
+    hint: `${CONSTANTS.MODULE_ID}.setting.${CONSTANTS.SETTINGS.FILL_TEXTURE}.hint`,
     scope: "world",
     type: Boolean,
-    default: true,
+    default: CONSTANTS.DEFAULTS.FILL_TEXTURE,
     config: true,
   });
-
-  // game.settings.register(CONSTANTS.MODULE_ID, 'overrideBorderGraphic', {
-  //   name: CONSTANTS.MODULE_ID + '.setting.overrideBorderGraphic.name',
-  //   hint: CONSTANTS.MODULE_ID + '.setting.overrideBorderGraphic.hint',
-  //   scope: 'world',
-  //   type: Boolean,
-  //   default: false,
-  //   config: true,
-  // });
 
   // ===============================
   // SUB FEATURE STANDARD
   // ===============================
 
-  // game.settings.register(CONSTANTS.MODULE_ID, 'pixiFactionsEnabled', {
-  //   name: CONSTANTS.MODULE_ID + '.setting.pixiFactionsEnabled.name',
-  //   hint: CONSTANTS.MODULE_ID + '.setting.pixiFactionsEnabled.hint',
-  //   scope: 'world',
-  //   type: Boolean,
-  //   default: false,
-  //   config: true,
-  // });
-
-  // game.settings.register(CONSTANTS.MODULE_ID, 'draw-frames-by-default', {
-  //   name: CONSTANTS.MODULE_ID + '.setting.draw-frames-by-default.name',
-  //   hint: CONSTANTS.MODULE_ID + '.setting.draw-frames-by-default.hint',
-  //   scope: 'world',
-  //   config: true,
-  //   default: true,
-  //   type: Boolean,
-  // });
-
-  game.settings.register(CONSTANTS.MODULE_ID, "frame-style", {
-    name: CONSTANTS.MODULE_ID + ".setting.frame-style.name",
-    hint: CONSTANTS.MODULE_ID + ".setting.frame-style.hint",
+  game.settings.register(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.FRAME_STYLE, {
+    name: `${CONSTANTS.MODULE_ID}.setting.${CONSTANTS.SETTINGS.FRAME_STYLE}.name`,
+    hint: `${CONSTANTS.MODULE_ID}.setting.${CONSTANTS.SETTINGS.FRAME_STYLE}.hint`,
     scope: "world",
     config: true,
-    default: "flat",
+    default: CONSTANTS.DEFAULTS.FRAME_STYLE,
     type: String,
     choices: {
-      flat: CONSTANTS.MODULE_ID + ".setting.frame-style.opt.flat",
-      beveled: CONSTANTS.MODULE_ID + ".setting.frame-style.opt.beveled",
-      // border: CONSTANTS.MODULE_ID + '.setting.frame-style.opt.border',
+      flat: `${CONSTANTS.MODULE_ID}.setting.frame-style.opt.flat`,
+      beveled: `${CONSTANTS.MODULE_ID}.setting.frame-style.opt.beveled`,
     },
   });
 
-  // game.settings.register(CONSTANTS.MODULE_ID, 'frame-width', {
-  //   name: CONSTANTS.MODULE_ID + '.setting.frame-width.name',
-  //   hint: CONSTANTS.MODULE_ID + '.setting.frame-width.hint',
-  //   scope: 'world',
-  //   config: true,
-  //   default: 7.5,
-  //   type: Number,
-  //
-  //   range: {
-  //     min: 0,
-  //     max: 10,
-  //     step: 0.5,
-  //   },
-  // });
-
-  // TODO MOVE THIS FOR BOTH THE FEATURE ????
-  game.settings.register(CONSTANTS.MODULE_ID, "frame-opacity", {
-    name: CONSTANTS.MODULE_ID + ".setting.frame-opacity.name",
-    hint: CONSTANTS.MODULE_ID + ".setting.frame-opacity.hint",
+  game.settings.register(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.FRAME_OPACITY, {
+    name: `${CONSTANTS.MODULE_ID}.setting.${CONSTANTS.SETTINGS.FRAME_OPACITY}.name`,
+    hint: `${CONSTANTS.MODULE_ID}.setting.${CONSTANTS.SETTINGS.FRAME_OPACITY}.hint`,
     scope: "world",
     config: true,
-    default: 1,
+    default: CONSTANTS.DEFAULTS.FRAME_OPACITY,
     type: Number,
-
     range: {
       min: 0,
       max: 1,
@@ -142,18 +85,9 @@ export const registerSettings = function () {
   // SUB FEATURE ALTERNATIVE BORDER
   // ===============================
 
-  // game.settings.register(CONSTANTS.MODULE_ID, 'borderFactionsEnabled', {
-  //   name: CONSTANTS.MODULE_ID + '.setting.borderFactionsEnabled.name',
-  //   hint: CONSTANTS.MODULE_ID + '.setting.borderFactionsEnabled.hint',
-  //   scope: 'world',
-  //   type: Boolean,
-  //   default: true,
-  //   config: true,
-  // });
-
-  game.settings.register(CONSTANTS.MODULE_ID, "removeBorders", {
-    name: CONSTANTS.MODULE_ID + ".setting.removeBorders.name",
-    hint: CONSTANTS.MODULE_ID + ".setting.removeBorders.hint",
+  game.settings.register(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.REMOVE_BORDERS, {
+    name: `${CONSTANTS.MODULE_ID}.setting.${CONSTANTS.SETTINGS.REMOVE_BORDERS}.name`,
+    hint: `${CONSTANTS.MODULE_ID}.setting.${CONSTANTS.SETTINGS.REMOVE_BORDERS}.hint`,
     scope: "world",
     type: String,
     choices: {
@@ -161,81 +95,81 @@ export const registerSettings = function () {
       1: "Non Owned",
       2: "All",
     },
-    default: "0",
+    default: CONSTANTS.DEFAULTS.REMOVE_BORDERS,
     config: true,
   });
 
-  game.settings.register(CONSTANTS.MODULE_ID, "permanentBorder", {
-    name: CONSTANTS.MODULE_ID + ".setting.permanentBorder.name",
-    hint: CONSTANTS.MODULE_ID + ".setting.permanentBorder.hint",
-    default: false,
+  game.settings.register(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.PERMANENT_BORDER, {
+    name: `${CONSTANTS.MODULE_ID}.setting.${CONSTANTS.SETTINGS.PERMANENT_BORDER}.name`,
+    hint: `${CONSTANTS.MODULE_ID}.setting.${CONSTANTS.SETTINGS.PERMANENT_BORDER}.hint`,
+    default: CONSTANTS.DEFAULTS.PERMANENT_BORDER,
     type: Boolean,
     scope: "world",
     config: true,
   });
 
-  game.settings.register(CONSTANTS.MODULE_ID, "borderWidth", {
-    name: CONSTANTS.MODULE_ID + ".setting.borderWidth.name",
-    hint: CONSTANTS.MODULE_ID + ".setting.borderWidth.hint",
+  game.settings.register(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.BORDER_WIDTH, {
+    name: `${CONSTANTS.MODULE_ID}.setting.${CONSTANTS.SETTINGS.BORDER_WIDTH}.name`,
+    hint: `${CONSTANTS.MODULE_ID}.setting.${CONSTANTS.SETTINGS.BORDER_WIDTH}.hint`,
     scope: "world",
     type: Number,
-    default: 4,
+    default: CONSTANTS.DEFAULTS.BORDER_WIDTH,
     config: true,
   });
 
-  game.settings.register(CONSTANTS.MODULE_ID, "borderGridScale", {
-    name: CONSTANTS.MODULE_ID + ".setting.borderGridScale.name",
-    hint: CONSTANTS.MODULE_ID + ".setting.borderGridScale.hint",
+  game.settings.register(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.BORDER_GRID_SCALE, {
+    name: `${CONSTANTS.MODULE_ID}.setting.${CONSTANTS.SETTINGS.BORDER_GRID_SCALE}.name`,
+    hint: `${CONSTANTS.MODULE_ID}.setting.${CONSTANTS.SETTINGS.BORDER_GRID_SCALE}.hint`,
     scope: "world",
     type: Boolean,
-    default: false,
+    default: CONSTANTS.DEFAULTS.BORDER_GRID_SCALE,
     config: true,
   });
 
-  game.settings.register(CONSTANTS.MODULE_ID, "borderOffset", {
-    name: CONSTANTS.MODULE_ID + ".setting.borderOffset.name",
-    hint: CONSTANTS.MODULE_ID + ".setting.borderOffset.hint",
+  game.settings.register(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.BORDER_OFFSET, {
+    name: `${CONSTANTS.MODULE_ID}.setting.${CONSTANTS.SETTINGS.BORDER_OFFSET}.name`,
+    hint: `${CONSTANTS.MODULE_ID}.setting.${CONSTANTS.SETTINGS.BORDER_OFFSET}.hint`,
     scope: "world",
     type: Number,
-    default: 0,
+    default: CONSTANTS.DEFAULTS.BORDER_OFFSET,
     config: true,
   });
 
-  game.settings.register(CONSTANTS.MODULE_ID, "circleBorders", {
-    name: CONSTANTS.MODULE_ID + ".setting.circleBorders.name",
-    hint: CONSTANTS.MODULE_ID + ".setting.circleBorders.hint",
+  game.settings.register(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.CIRCLE_BORDERS, {
+    name: `${CONSTANTS.MODULE_ID}.setting.${CONSTANTS.SETTINGS.CIRCLE_BORDERS}.name`,
+    hint: `${CONSTANTS.MODULE_ID}.setting.${CONSTANTS.SETTINGS.CIRCLE_BORDERS}.hint`,
     scope: "world",
     type: Boolean,
-    default: false,
+    default: CONSTANTS.DEFAULTS.CIRCLE_BORDERS,
     config: true,
   });
 
-  game.settings.register(CONSTANTS.MODULE_ID, "scaleBorder", {
-    name: CONSTANTS.MODULE_ID + ".setting.scaleBorder.name",
-    hint: CONSTANTS.MODULE_ID + ".setting.scaleBorder.hint",
+  game.settings.register(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.SCALE_BORDER, {
+    name: `${CONSTANTS.MODULE_ID}.setting.${CONSTANTS.SETTINGS.SCALE_BORDER}.name`,
+    hint: `${CONSTANTS.MODULE_ID}.setting.${CONSTANTS.SETTINGS.SCALE_BORDER}.hint`,
     scope: "world",
     type: Boolean,
-    default: false,
+    default: CONSTANTS.DEFAULTS.SCALE_BORDER,
     config: true,
   });
 
-  game.settings.register(CONSTANTS.MODULE_ID, "hudEnable", {
-    name: CONSTANTS.MODULE_ID + ".setting.hudEnable.name",
-    hint: CONSTANTS.MODULE_ID + ".setting.hudEnable.hint",
+  game.settings.register(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.HUD_ENABLE, {
+    name: `${CONSTANTS.MODULE_ID}.setting.${CONSTANTS.SETTINGS.HUD_ENABLE}.name`,
+    hint: `${CONSTANTS.MODULE_ID}.setting.${CONSTANTS.SETTINGS.HUD_ENABLE}.hint`,
     scope: "world",
     type: Boolean,
-    default: true,
+    default: CONSTANTS.DEFAULTS.HUD_ENABLE,
     config: true,
   });
 
   /** Which column should the button be placed on */
-  game.settings.register(CONSTANTS.MODULE_ID, "hudColumn", {
-    name: `${CONSTANTS.MODULE_ID}.setting.hudColumn.name`,
-    hint: `${CONSTANTS.MODULE_ID}.setting.hudColumn.hint`,
+  game.settings.register(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.HUD_COLUMN, {
+    name: `${CONSTANTS.MODULE_ID}.setting.${CONSTANTS.SETTINGS.HUD_COLUMN}.name`,
+    hint: `${CONSTANTS.MODULE_ID}.setting.${CONSTANTS.SETTINGS.HUD_COLUMN}.hint`,
     scope: "world",
     config: true,
     type: String,
-    default: "Right",
+    default: CONSTANTS.DEFAULTS.HUD_COLUMN,
     choices: {
       Left: "Left",
       Right: "Right",
@@ -243,136 +177,124 @@ export const registerSettings = function () {
   });
 
   /** Whether the button should be placed on the top or bottom of the column */
-  game.settings.register(CONSTANTS.MODULE_ID, "hudTopBottom", {
-    name: `${CONSTANTS.MODULE_ID}.setting.hudTopBottom.name`,
-    hint: `${CONSTANTS.MODULE_ID}.setting.hudTopBottom.hint`,
+  game.settings.register(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.HUD_TOP_BOTTOM, {
+    name: `${CONSTANTS.MODULE_ID}.setting.${CONSTANTS.SETTINGS.HUD_TOP_BOTTOM}.name`,
+    hint: `${CONSTANTS.MODULE_ID}.setting.${CONSTANTS.SETTINGS.HUD_TOP_BOTTOM}.hint`,
     scope: "world",
     config: true,
     type: String,
-    default: "Bottom",
+    default: CONSTANTS.DEFAULTS.HUD_TOP_BOTTOM,
     choices: {
       Top: "Top",
       Bottom: "Bottom",
     },
   });
 
-  game.settings.register(CONSTANTS.MODULE_ID, "controlledColor", {
-    name: CONSTANTS.MODULE_ID + ".setting.controlledColor.name",
-    hint: CONSTANTS.MODULE_ID + ".setting.controlledColor.hint",
+  game.settings.register(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.CONTROLLED_COLOR, {
+    name: `${CONSTANTS.MODULE_ID}.setting.${CONSTANTS.SETTINGS.CONTROLLED_COLOR}.name`,
+    hint: `${CONSTANTS.MODULE_ID}.setting.${CONSTANTS.SETTINGS.CONTROLLED_COLOR}.hint`,
     scope: "world",
     type: String,
-    default: "#FF9829",
+    default: CONSTANTS.DEFAULTS.CONTROLLED_COLOR,
     config: true,
   });
 
-  game.settings.register(CONSTANTS.MODULE_ID, "controlledColorEx", {
-    name: CONSTANTS.MODULE_ID + ".setting.controlledColorEx.name",
-    hint: CONSTANTS.MODULE_ID + ".setting.controlledColorEx.hint",
+  game.settings.register(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.CONTROLLED_COLOR_EX, {
+    name: `${CONSTANTS.MODULE_ID}.setting.${CONSTANTS.SETTINGS.CONTROLLED_COLOR_EX}.name`,
+    hint: `${CONSTANTS.MODULE_ID}.setting.${CONSTANTS.SETTINGS.CONTROLLED_COLOR_EX}.hint`,
     scope: "world",
     type: String,
-    default: "#000000",
+    default: CONSTANTS.DEFAULTS.CONTROLLED_COLOR_EX,
     config: true,
   });
 
-  game.settings.register(CONSTANTS.MODULE_ID, "hostileColor", {
-    name: CONSTANTS.MODULE_ID + ".setting.hostileColor.name",
-    hint: CONSTANTS.MODULE_ID + ".setting.hostileColor.hint",
+  game.settings.register(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.HOSTILE_COLOR, {
+    name: `${CONSTANTS.MODULE_ID}.setting.${CONSTANTS.SETTINGS.HOSTILE_COLOR}.name`,
+    hint: `${CONSTANTS.MODULE_ID}.setting.${CONSTANTS.SETTINGS.HOSTILE_COLOR}.hint`,
     scope: "world",
     type: String,
-    default: "#E72124",
+    default: CONSTANTS.DEFAULTS.HOSTILE_COLOR,
     config: true,
   });
 
-  game.settings.register(CONSTANTS.MODULE_ID, "hostileColorEx", {
-    name: CONSTANTS.MODULE_ID + ".setting.hostileColorEx.name",
-    hint: CONSTANTS.MODULE_ID + ".setting.hostileColorEx.hint",
+  game.settings.register(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.HOSTILE_COLOR_EX, {
+    name: `${CONSTANTS.MODULE_ID}.setting.${CONSTANTS.SETTINGS.HOSTILE_COLOR_EX}.name`,
+    hint: `${CONSTANTS.MODULE_ID}.setting.${CONSTANTS.SETTINGS.HOSTILE_COLOR_EX}.hint`,
     scope: "world",
     type: String,
-    default: "#000000",
+    default: CONSTANTS.DEFAULTS.HOSTILE_COLOR_EX,
     config: true,
   });
 
-  game.settings.register(CONSTANTS.MODULE_ID, "friendlyColor", {
-    name: CONSTANTS.MODULE_ID + ".setting.friendlyColor.name",
-    hint: CONSTANTS.MODULE_ID + ".setting.friendlyColor.hint",
+  game.settings.register(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.FRIENDLY_COLOR, {
+    name: `${CONSTANTS.MODULE_ID}.setting.${CONSTANTS.SETTINGS.FRIENDLY_COLOR}.name`,
+    hint: `${CONSTANTS.MODULE_ID}.setting.${CONSTANTS.SETTINGS.FRIENDLY_COLOR}.hint`,
     scope: "world",
     type: String,
-    default: "#43DFDF",
+    default: CONSTANTS.DEFAULTS.FRIENDLY_COLOR,
     config: true,
   });
 
-  game.settings.register(CONSTANTS.MODULE_ID, "friendlyColorEx", {
-    name: CONSTANTS.MODULE_ID + ".setting.friendlyColorEx.name",
-    hint: CONSTANTS.MODULE_ID + ".setting.friendlyColorEx.hint",
+  game.settings.register(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.FRIENDLY_COLOR_EX, {
+    name: `${CONSTANTS.MODULE_ID}.setting.${CONSTANTS.SETTINGS.FRIENDLY_COLOR_EX}.name`,
+    hint: `${CONSTANTS.MODULE_ID}.setting.${CONSTANTS.SETTINGS.FRIENDLY_COLOR_EX}.hint`,
     scope: "world",
     type: String,
-    default: "#000000",
+    default: CONSTANTS.DEFAULTS.FRIENDLY_COLOR_EX,
     config: true,
   });
 
-  game.settings.register(CONSTANTS.MODULE_ID, "neutralColor", {
-    name: CONSTANTS.MODULE_ID + ".setting.neutralColor.name",
-    hint: CONSTANTS.MODULE_ID + ".setting.neutralColor.hint",
+  game.settings.register(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.NEUTRAL_COLOR, {
+    name: `${CONSTANTS.MODULE_ID}.setting.${CONSTANTS.SETTINGS.NEUTRAL_COLOR}.name`,
+    hint: `${CONSTANTS.MODULE_ID}.setting.${CONSTANTS.SETTINGS.NEUTRAL_COLOR}.hint`,
     scope: "world",
     type: String,
-    default: "#F1D836",
+    default: CONSTANTS.DEFAULTS.NEUTRAL_COLOR,
     config: true,
   });
 
-  game.settings.register(CONSTANTS.MODULE_ID, "neutralColorEx", {
-    name: CONSTANTS.MODULE_ID + ".setting.neutralColorEx.name",
-    hint: CONSTANTS.MODULE_ID + ".setting.neutralColorEx.hint",
+  game.settings.register(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.NEUTRAL_COLOR_EX, {
+    name: `${CONSTANTS.MODULE_ID}.setting.${CONSTANTS.SETTINGS.NEUTRAL_COLOR_EX}.name`,
+    hint: `${CONSTANTS.MODULE_ID}.setting.${CONSTANTS.SETTINGS.NEUTRAL_COLOR_EX}.hint`,
     scope: "world",
     type: String,
-    default: "#000000",
+    default: CONSTANTS.DEFAULTS.NEUTRAL_COLOR_EX,
     config: true,
   });
 
-  game.settings.register(CONSTANTS.MODULE_ID, "partyColor", {
-    name: CONSTANTS.MODULE_ID + ".setting.partyColor.name",
-    hint: CONSTANTS.MODULE_ID + ".setting.partyColor.hint",
+  game.settings.register(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.PARTY_COLOR, {
+    name: `${CONSTANTS.MODULE_ID}.setting.${CONSTANTS.SETTINGS.PARTY_COLOR}.name`,
+    hint: `${CONSTANTS.MODULE_ID}.setting.${CONSTANTS.SETTINGS.PARTY_COLOR}.hint`,
     scope: "world",
     type: String,
-    default: "#33BC4E",
+    default: CONSTANTS.DEFAULTS.PARTY_COLOR,
     config: true,
   });
 
-  game.settings.register(CONSTANTS.MODULE_ID, "partyColorEx", {
-    name: CONSTANTS.MODULE_ID + ".setting.partyColorEx.name",
-    hint: CONSTANTS.MODULE_ID + ".setting.partyColorEx.hint",
+  game.settings.register(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.PARTY_COLOR_EX, {
+    name: `${CONSTANTS.MODULE_ID}.setting.${CONSTANTS.SETTINGS.PARTY_COLOR_EX}.name`,
+    hint: `${CONSTANTS.MODULE_ID}.setting.${CONSTANTS.SETTINGS.PARTY_COLOR_EX}.hint`,
     scope: "world",
     type: String,
-    default: "#000000",
+    default: CONSTANTS.DEFAULTS.PARTY_COLOR_EX,
     config: true,
   });
 
-  game.settings.register(CONSTANTS.MODULE_ID, "actorFolderColorEx", {
-    name: CONSTANTS.MODULE_ID + ".setting.actorFolderColorEx.name",
-    hint: CONSTANTS.MODULE_ID + ".setting.actorFolderColorEx.hint",
+  game.settings.register(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.ACTOR_FOLDER_COLOR_EX, {
+    name: `${CONSTANTS.MODULE_ID}.setting.${CONSTANTS.SETTINGS.ACTOR_FOLDER_COLOR_EX}.name`,
+    hint: `${CONSTANTS.MODULE_ID}.setting.${CONSTANTS.SETTINGS.ACTOR_FOLDER_COLOR_EX}.hint`,
     scope: "world",
     type: String,
-    default: "#000000",
+    default: CONSTANTS.DEFAULTS.ACTOR_FOLDER_COLOR_EX,
     config: true,
   });
 
-  // Setting off
-  game.settings.register(CONSTANTS.MODULE_ID, "customDispositionColorEx", {
-    name: CONSTANTS.MODULE_ID + ".setting.customDispositionColorEx.name",
-    hint: CONSTANTS.MODULE_ID + ".setting.customDispositionColorEx.hint",
-    scope: "world",
-    type: String,
-    default: "#000000",
-    config: false,
-  });
-
-  // ========================================================================
-
-  game.settings.register(CONSTANTS.MODULE_ID, "debug", {
-    name: `${CONSTANTS.MODULE_ID}.setting.debug.name`,
-    hint: `${CONSTANTS.MODULE_ID}.setting.debug.hint`,
+  game.settings.register(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.DEBUG, {
+    name: `${CONSTANTS.MODULE_ID}.setting.${CONSTANTS.SETTINGS.DEBUG}.name`,
+    hint: `${CONSTANTS.MODULE_ID}.setting.${CONSTANTS.SETTINGS.DEBUG}.hint`,
     scope: "client",
     config: true,
-    default: false,
+    default: CONSTANTS.DEFAULTS.DEBUG,
     type: Boolean,
   });
 };
@@ -396,7 +318,7 @@ class ResetSettingsDialog extends FormApplication {
               ?.get("world")
               ?.filter((setting) => setting.key.startsWith(`${CONSTANTS.MODULE_ID}.`));
             for (let setting of worldSettings) {
-              console.log(`Reset setting '${setting.key}'`);
+              Logger.info(`Reset setting '${setting.key}'`);
               await setting.delete();
             }
             //window.location.reload();

@@ -6,6 +6,12 @@
   "library": "false",
   "authors": [
     {
+      "name": "Valmar",
+      "email": "gozgav@gmail.com",
+      "discord": "Valmar#512",
+      "reddit": "u/gozgav"
+    },
+    {
       "name": "Voldemalort",
       "email": "voldemalort@gmail.com",
       "discord": "Voldemalort#9415",
@@ -56,11 +62,6 @@
       "lang": "en",
       "name": "English",
       "path": "languages/en.json"
-    },
-    {
-      "lang": "de",
-      "name": "Deutsch",
-      "path": "languages/de.json"
     }
   ],
   "packs": [],
@@ -69,8 +70,8 @@
   "esmodules": ["module.js"],
   "styles": ["styles/style.css"],
   "compatibility": {
-    "minimum": 11,
-    "verified": 11,
+    "minimum": 12,
+    "verified": 12,
     "maximum": 12
   },
   "url": "https://github.com/p4535992/foundryvtt-token-factions",

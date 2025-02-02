@@ -2,24 +2,27 @@
 //License: MIT
 //Documentation: https://github.com/theripper93/injectConfig
 
-export var injectConfig = {
+export const injectConfig = {
   inject: function injectConfig(app, html, data, object) {
     this._generateTabStruct(app, html, data, object);
     const tabSize = data.tab?.width ?? 100;
     object = object || app.object;
     const moduleId = data.moduleId;
     let injectPoint;
+
     if (typeof data.inject === "string") {
       injectPoint = html.find(data.inject).first().closest(".form-group");
     } else {
       injectPoint = data.inject;
     }
+
     injectPoint = injectPoint
       ? $(injectPoint)
       : data.tab
-      ? html.find("form > .tab").last()
-      : html.find(".form-group").last();
+        ? html.find("form > .tab").last()
+        : html.find(".form-group").last();
     let injectHtml = "";
+
     for (const [k, v] of Object.entries(data)) {
       if (k === "moduleId" || k === "inject" || k === "tab") continue;
       const elemData = data[k];
@@ -27,21 +30,22 @@ export var injectConfig = {
       const flagValue = object?.getFlag(moduleId, k) ?? elemData.default ?? getDefaultFlag(k);
       const notes = v.notes ? `<p class="notes">${v.notes}</p>` : "";
       v.label = v.units ? v.label + `<span class="units"> (${v.units})</span>` : v.label;
+
       switch (elemData.type) {
         case "text":
           injectHtml += `<div class="form-group">
                         <label for="${k}">${v.label || ""}</label>
                             <input type="text" name="${flag}" ${
-            elemData.dType ? `data-dtype="${elemData.dType}"` : ""
-          } value="${flagValue}" placeholder="${v.placeholder || ""}">${notes}
+                              elemData.dType ? `data-dtype="${elemData.dType}"` : ""
+                            } value="${flagValue}" placeholder="${v.placeholder || ""}">${notes}
                     </div>`;
           break;
         case "number":
           injectHtml += `<div class="form-group">
                         <label for="${k}">${v.label || ""}</label>
                             <input type="number" name="${flag}" min="${v.min}" max="${v.max}" step="${
-            v.step ?? 1
-          }" value="${flagValue}" placeholder="${v.placeholder || ""}">${notes}
+                              v.step ?? 1
+                            }" value="${flagValue}" placeholder="${v.placeholder || ""}">${notes}
                     </div>`;
           break;
         case "checkbox":
@@ -65,8 +69,8 @@ export var injectConfig = {
                         <label for="${k}">${v.label || ""}</label>
                         <div class="form-fields">
                             <input type="range" name="${flag}" value="${flagValue}" min="${v.min}" max="${
-            v.max
-          }" step="${v.step ?? 1}">
+                              v.max
+                            }" step="${v.step ?? 1}">
                             <span class="range-value">${flagValue}</span>${notes}
                         </div>
                     </div>`;
@@ -85,6 +89,7 @@ export var injectConfig = {
           injectHtml += v.html;
           break;
       }
+
       if (elemData.type?.includes("filepicker")) {
         const fpType = elemData.type.split(".")[1] || "imagevideo";
         injectHtml += `<div class="form-group">
@@ -96,23 +101,35 @@ export var injectConfig = {
                         <i class="fas fa-file-import fa-fw"></i>
                     </button>
                     <input class="image" type="text" name="${flag}" placeholder="${
-          v.placeholder || ""
-        }" value="${flagValue}">
+                      v.placeholder || ""
+                    }" value="${flagValue}">
                 </div>${notes}
             </div>`;
       }
     }
+
     injectHtml = $(injectHtml);
     injectHtml.on("click", ".file-picker", this.fpTypes, _bindFilePicker);
     injectHtml.on("change", `input[type="color"]`, _colorChange);
+
     if (data.tab) {
       const injectTab = createTab(data.tab.name, data.tab.label, data.tab.icon).append(injectHtml);
       injectPoint.after(injectTab);
-      app?.setPosition({ height: "auto", width: data.tab ? app.options.width + tabSize : "auto" });
+      app?.setPosition({
+        height: "auto",
+        width: data.tab ? app.options.width + tabSize : "auto",
+      });
       return injectHtml;
     }
+
     injectPoint.after(injectHtml);
-    if (app) app?.setPosition({ height: "auto", width: data.tab ? app.options.width + tabSize : null });
+
+    if (app)
+      app?.setPosition({
+        height: "auto",
+        width: data.tab ? app.options.width + tabSize : null,
+      });
+
     return injectHtml;
 
     function createTab(name, label, icon) {
@@ -158,6 +175,7 @@ export var injectConfig = {
       return fp.browse();
     }
   },
+
   quickInject: function quickInject(injectData, data) {
     injectData = Array.isArray(injectData) ? injectData : [injectData];
     for (const doc of injectData) {
@@ -171,6 +189,7 @@ export var injectConfig = {
       });
     }
   },
+
   _generateTabStruct: function _generateTabStruct(app, html, data, object) {
     const isTabs = html.find(".sheet-tabs").length;
     const useTabs = data.tab;
@@ -198,7 +217,10 @@ export var injectConfig = {
       $(e.currentTarget).addClass("active");
       html.find(".tab").removeClass("active");
       html.find(`[data-tab="${e.currentTarget.dataset.tab}"]`).addClass("active");
-      app.setPosition({ height: "auto", width: data.tab ? app.options.width + tabSize : "auto" });
+      app.setPosition({
+        height: "auto",
+        width: data.tab ? app.options.width + tabSize : "auto",
+      });
     });
   },
 };

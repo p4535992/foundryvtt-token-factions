@@ -58,6 +58,7 @@ export function buildButton(html, tooltip, iconClass) {
 */
 export function getOwnedTokens(priorityToControlledIfGM) {
   const gm = game.user?.isGM;
+
   if (gm) {
     if (priorityToControlledIfGM) {
       const arr = canvas.tokens?.controlled;
@@ -70,6 +71,7 @@ export function getOwnedTokens(priorityToControlledIfGM) {
       return canvas.tokens?.placeables;
     }
   }
+
   if (priorityToControlledIfGM) {
     const arr = canvas.tokens?.controlled;
     if (arr && arr.length > 0) {
@@ -77,9 +79,10 @@ export function getOwnedTokens(priorityToControlledIfGM) {
     }
   }
   let ownedTokens = canvas.tokens?.placeables.filter((token) => token.isOwner && (!token.data.hidden || gm));
+
   if (ownedTokens.length === 0 || !canvas.tokens?.controlled[0]) {
     ownedTokens = canvas.tokens?.placeables.filter(
-      (token) => (token.observer || token.isOwner) && (!token.data.hidden || gm)
+      (token) => (token.observer || token.isOwner) && (!token.data.hidden || gm),
     );
   }
   return ownedTokens;
@@ -117,7 +120,11 @@ export function advancedLosTestInLos(sourceToken, token) {
     { x: token.x + tol, y: token.y + tol, z: targetLOSH },
     { x: token.x + token.w - tol, y: token.y + tol, z: targetLOSH },
     { x: token.x + tol, y: token.y + token.h - tol, z: targetLOSH },
-    { x: token.x + token.w - tol, y: token.y + token.h - tol, z: targetLOSH },
+    {
+      x: token.x + token.w - tol,
+      y: token.y + token.h - tol,
+      z: targetLOSH,
+    },
   ];
 
   if (CONFIG.Levels && CONFIG.Levels.settings.get("exactTokenVisibility")) {
@@ -129,8 +136,16 @@ export function advancedLosTestInLos(sourceToken, token) {
       },
       { x: token.center.x, y: token.center.y, z: targetElevation },
       { x: token.x + tol, y: token.y + tol, z: targetElevation },
-      { x: token.x + token.w - tol, y: token.y + tol, z: targetElevation },
-      { x: token.x + tol, y: token.y + token.h - tol, z: targetElevation },
+      {
+        x: token.x + token.w - tol,
+        y: token.y + tol,
+        z: targetElevation,
+      },
+      {
+        x: token.x + tol,
+        y: token.y + token.h - tol,
+        z: targetElevation,
+      },
       {
         x: token.x + token.w - tol,
         y: token.y + token.h - tol,
@@ -159,7 +174,7 @@ function testInAngle(sourceToken, token) {
 
   //check angled vision
   const angle = normalizeAngle(
-    Math.atan2(token.center.y - sourceToken.center.y, token.center.x - sourceToken.center.x)
+    Math.atan2(token.center.y - sourceToken.center.y, token.center.x - sourceToken.center.x),
   );
   const rotation = (((sourceToken.document.rotation + 90) % 360) * Math.PI) / 180;
   const end = normalizeAngle(rotation + (documentAngle * Math.PI) / 180 / 2);
@@ -353,13 +368,13 @@ function testCollision(p0, p1, type = "sight") {
         if (!wall.isDirectionBetweenAngles(...angleBounds)) continue;
       }
 
-      //calculate intersection point
+      // calculate intersection point
       const t = -(A * x0 + B * y0 + C * z0 + D) / (A * (x1 - x0) + B * (y1 - y0) + C * (z1 - z0)); //-(A*x0 + B*y0 + C*z0 + D) / (A*x1 + B*y1 + C*z1)
       const ix = x0 + (x1 - x0) * t;
       const iy = y0 + (y1 - y0) * t;
       const iz = Math.round(z0 + (z1 - z0) * t);
 
-      //return true if the point is inisde the rectangle
+      // return true if the point is inisde the rectangle
       const isb = isBetween({ x: wx1, y: wy1 }, { x: wx2, y: wy2 }, { x: ix, y: iy });
       if (isTerrain && isb && iz <= wallBotTop[1] && iz >= wallBotTop[0] && terrainWalls == 0) {
         terrainWalls++;

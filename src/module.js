@@ -13,7 +13,7 @@
 
 // Import TypeScript modules
 import { registerSettings } from "./scripts/settings.js";
-import { initHooks, readyHooks, setupHooks } from "./scripts/main.js";
+import { initHooks, readyHooks, setupHooks } from "./scripts/hooks.js";
 import CONSTANTS from "./scripts/constants.js";
 import API from "./scripts/api.js";
 import Logger from "./scripts/lib/Logger.js";
@@ -33,42 +33,20 @@ Hooks.once("init", () => {
 
   // Register custom module settings
   registerSettings();
-
   initHooks();
-  //readyHooks();
-
-  // Assign custom classes and constants here
-
-  // Register custom module settings
-  //registerSettings();
-  //fetchParams();
-
-  // Preload Handlebars templates
-  // await preloadTemplates();
-  // Register custom sheets (if any)
 });
 
 /* ------------------------------------ */
 /* Setup module							*/
 /* ------------------------------------ */
 Hooks.once("setup", function () {
-  // Do anything after initialization but before ready
-  //setupModules();
-
   setupHooks();
-
-  //registerSettings();
 });
 
 /* ------------------------------------ */
 /* When ready							*/
 /* ------------------------------------ */
 Hooks.once("ready", () => {
-  // if (!game.modules.get("socketLib")?.active && game.user?.isGM) {
-  // 	let word = "install and activate";
-  // 	if (game.modules.get("socketLib")) word = "activate";
-  // 	throw error(`Requires the 'socketLib' module. Please ${word} it.`);
-  // }
   // Do anything once the module is ready
   readyHooks();
 });

@@ -25,8 +25,7 @@
   "token-factions.setting.frame-style.hint": " ",
 
   "token-factions.setting.frame-style.opt.flat": "Default: Flat",
-  "token-factions.setting.frame-style.opt.beveled": "Beveled (Must be developed from much more expert developer...)",
-  "token-factions.setting.frame-style.opt.border": "Custom border (Must be developed from much more expert developer...)",
+  "token-factions.setting.frame-style.opt.beveled": "Beveled",
 
   "token-factions.setting.frame-width.name": "Frame Width (Percent of Grid Unit)",
   "token-factions.setting.frame-width.hint": " ",
@@ -40,8 +39,8 @@
   "token-factions.setting.removeBorders.name": "Remove Borders",
   "token-factions.setting.removeBorders.hint": "Remove the border from specific tokens",
 
-  "token-factions.setting.permanentBorder.name": "Permanent Border",
-  "token-factions.setting.permanentBorder.hint": "Permanently shows token borders unless directly hidden, selected tokens have double width borders",
+  "token-factions.setting.permanentBorder.name": "Selected Token Borders",
+  "token-factions.setting.permanentBorder.hint": "Selected tokens have double width borders",
 
   "token-factions.setting.scaleBorder.name": "Scale Borders",
   "token-factions.setting.scaleBorder.hint": "Scales token border according to the 'scale' token setting",
@@ -118,19 +117,17 @@
   "token-factions.setting.actorFolderColorEx.name": "Color: Actor Folder External",
   "token-factions.setting.actorFolderColorEx.hint": " ",
 
-  "token-factions.setting.customDispositionColorEx.name": "Color: Custom Disposition External",
-  "token-factions.setting.customDispositionColorEx.hint": " ",
-
   "token-factions.setting.overrideBorderGraphic.name": "Override the graphic of the border default token",
   "token-factions.setting.overrideBorderGraphic.hint": "This will not work with 'Border Control' module active",
 
-  "token-factions.label.factions": "Factions",
-  "token-factions.label.factionsCustomDisable": "Disable Faction Disposition",
-  "token-factions.label.factionsCustomColorTokenInt": "Custom color token (INT)",
-  "token-factions.label.factionsCustomColorTokenExt": "Custom color token (EXT)",
-  "token-factions.label.factionsCustomColorTokenFrameOpacity": "Custom color token Frame Opacity",
-  "token-factions.label.factionsCustomColorTokenBaseOpacity": "Custom color token Base Opacity",
-  "token-factions.label.factionsCustomColor": "Custom color faction",
+  "token-factions.tokeconfig.factions": "Factions",
+  "token-factions.tokeconfig.disableBorder": "Disable Faction Border",
+  "token-factions.tokeconfig.customBorder": "Custom border",
+  "token-factions.tokeconfig.customColorInt": "Custom color token (INT)",
+  "token-factions.tokeconfig.customColorExt": "Custom color token (EXT)",
+  "token-factions.tokeconfig.customFrameOpacity": "Custom color token Frame Opacity",
+  "token-factions.tokeconfig.customBaseOpacity": "Custom color token Base Opacity",
+  "token-factions.tokeconfig.customColor": "Custom color faction",
 
   "token-factions.label.chooseCustomColorToken": "Choose toogle border faction color",
   "token-factions.label.applyCustomColor": "Apply custom color",
