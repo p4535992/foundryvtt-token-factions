@@ -1,4 +1,4 @@
-export class FactionGraphic {
+export class FactionBorderGraphics {
   INT = 0;
   EX = 0;
   ICON = "";

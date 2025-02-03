@@ -79,7 +79,11 @@ export default () => {
     server: {
       port: 29999,
       open: "/game",
+      strictPort: true, // Prevents switching to a different port if 29999 is unavailable
       // open: false,
+      watch: {
+        usePolling: true, // Ensures file changes are detected
+      },
       proxy: {
         // Serves static files from main Foundry server.
         [`^(/${s_PACKAGE_ID}/(images|fonts|assets|lang|languages|packs|styles|templates|style.css))`]:
@@ -105,6 +109,9 @@ export default () => {
         entry: "./" + s_ENTRY_JAVASCRIPT, // "./module.js"
         formats: ["es"],
         fileName: "module",
+      },
+      rollupOptions: {
+        external: ["pixi.js"], // Prevent bundling PIXI.js
       },
     },
 
