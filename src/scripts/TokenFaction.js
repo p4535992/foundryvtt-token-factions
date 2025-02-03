@@ -7,11 +7,11 @@ import { isRealNumber } from "./lib/lib.js";
 import { drawBorderFaction } from "./render.js";
 
 export class TokenFaction {
-  static TOKEN_FACTIONS_FRAME_STYLE = {
-    FLAT: "flat",
-    BELEVELED: "beveled",
-    BORDER: "border",
-  };
+  // static TOKEN_FACTIONS_FRAME_STYLE = {
+  //   FLAT: "flat",
+  //   BELEVELED: "beveled",
+  //   BORDER: "border",
+  // };
 
   constructor(token) {
     Logger.debug("Creating token's faction for %s", token.name);
