@@ -1,7 +1,7 @@
 import CONSTANTS from "./constants.js";
 import Logger from "./lib/Logger.js";
 import { injectConfig } from "./lib/injectConfig.js";
-import { isRealNumber } from "./lib/lib.js";
+import { isRealBoolean, isRealNumber } from "./lib/lib.js";
 
 export const renderTokenConfig = async function (config, html) {
   renderTokenConfigHandler(config, html);
@@ -45,8 +45,12 @@ async function renderTokenConfigHandler(tokenConfig, html) {
       : {};
 
   const data = {
-    disableBorder: tokenFlags[CONSTANTS.FLAGS.FACTION_DISABLE_BORDER] ? "checked" : "",
-    customBorder: tokenFlags[CONSTANTS.FLAGS.FACTION_CUSTOM_BORDER] ? "checked" : "",
+    disableBorder: isRealBoolean(tokenFlags[CONSTANTS.FLAGS.FACTION_DISABLE_BORDER])
+      ? Boolean(tokenFlags[CONSTANTS.FLAGS.FACTION_DISABLE_BORDER])
+      : false,
+    customBorder: isRealBoolean(tokenFlags[CONSTANTS.FLAGS.FACTION_CUSTOM_BORDER])
+      ? Boolean(tokenFlags[CONSTANTS.FLAGS.FACTION_CUSTOM_BORDER])
+      : false,
     customColorInt:
       tokenFlags[CONSTANTS.FLAGS.FACTION_CUSTOM_COLOR_INT] ||
       game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.HOSTILE_COLOR),

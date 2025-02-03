@@ -1,3 +1,7 @@
+### 12.0.0 BETA (Breaking Changes)
+
+- Big rewrite https://github.com/p4535992/foundryvtt-token-factions/pull/34/files# ty to @DaniilTurceac
+
 ### 0.5.2
 
 - Update manifest for v12
