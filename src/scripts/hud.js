@@ -1,5 +1,4 @@
 import CONSTANTS from "./constants.js";
-import { isRealBoolean } from "./lib/lib.js";
 import Logger from "./lib/Logger.js";
 
 export const handleRenderHUD = (app, html, data) => {

@@ -1,4 +1,4 @@
-import { TokenFactions } from "./TokenFactions.js";
+import { TokenFactions } from "./tokenFactions.js";
 import CONSTANTS from "./constants.js";
 import Logger from "./lib/Logger.js";
 import { FactionBorderGraphics } from "./models.js";

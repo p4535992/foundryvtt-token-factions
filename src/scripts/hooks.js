@@ -1,4 +1,4 @@
-import { TokenFactions } from "./TokenFactions.js";
+import { TokenFactions } from "./tokenFactions.js";
 import CONSTANTS from "./constants.js";
 import API from "./api.js";
 import Logger from "./lib/Logger.js";
