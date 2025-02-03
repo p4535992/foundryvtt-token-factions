@@ -1,7 +1,6 @@
 import CONSTANTS from "./constants.js";
 import Logger from "./lib/Logger.js";
 import { isStringEquals } from "./lib/lib.js";
-import { TokenFactions } from "./TokenFactions.js";
 import { colorBorderFaction } from "./render.js";
 
 const API = {

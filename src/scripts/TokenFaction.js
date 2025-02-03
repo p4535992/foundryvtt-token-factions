@@ -1,9 +1,5 @@
-import { FactionBorderGraphics } from "./models.js";
-import { TokenFactions } from "./TokenFactions.js";
 import CONSTANTS from "./constants.js";
 import Logger from "./lib/Logger.js";
-import { injectConfig } from "./lib/injectConfig.js";
-import { isRealNumber } from "./lib/lib.js";
 import { drawBorderFaction } from "./render.js";
 
 export class TokenFaction {
