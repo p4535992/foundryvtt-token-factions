@@ -126,7 +126,7 @@ export default () => {
       run([
         {
           name: 'run sass',
-          run: ['sass',  `src/styles:dist/${s_MODULE_ID}/styles`]
+          run: ['sass', `--no-source-map`, `src/styles:dist/${s_MODULE_ID}/styles`]
         },
       ]),
       viteStaticCopy({
