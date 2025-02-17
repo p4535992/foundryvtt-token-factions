@@ -570,11 +570,8 @@ export function colorBorderFaction(token) {
 
   const overrides = {
     CONTROLLED: {
-      INT: parseInt(String(game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.CONTROLLED_COLOR)).substr(1), 16),
-      EX: parseInt(
-        String(game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.CONTROLLED_COLOR_EX)).substr(1),
-        16,
-      ),
+      INT: Color.fromString(game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.CONTROLLED_COLOR)),
+      EX: Color.fromString(game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.CONTROLLED_COLOR_EX)),
       ICON: "",
       TEXTURE_INT: PIXI.Texture.EMPTY,
       TEXTURE_EX: PIXI.Texture.EMPTY,
@@ -582,8 +579,8 @@ export function colorBorderFaction(token) {
       EX_S: String(game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.CONTROLLED_COLOR_EX)),
     },
     FRIENDLY: {
-      INT: parseInt(String(game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.FRIENDLY_COLOR)).substr(1), 16),
-      EX: parseInt(String(game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.FRIENDLY_COLOR_EX)).substr(1), 16),
+      INT: Color.fromString(game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.FRIENDLY_COLOR)),
+      EX: Color.fromString(game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.FRIENDLY_COLOR_EX)),
       ICON: "",
       TEXTURE_INT: PIXI.Texture.EMPTY,
       TEXTURE_EX: PIXI.Texture.EMPTY,
@@ -591,8 +588,8 @@ export function colorBorderFaction(token) {
       EX_S: String(game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.FRIENDLY_COLOR_EX)),
     },
     NEUTRAL: {
-      INT: parseInt(String(game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.NEUTRAL_COLOR)).substr(1), 16),
-      EX: parseInt(String(game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.NEUTRAL_COLOR_EX)).substr(1), 16),
+      INT: Color.fromString(game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.NEUTRAL_COLOR)),
+      EX: Color.fromString(game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.NEUTRAL_COLOR_EX)),
       ICON: "",
       TEXTURE_INT: PIXI.Texture.EMPTY,
       TEXTURE_EX: PIXI.Texture.EMPTY,
@@ -600,8 +597,8 @@ export function colorBorderFaction(token) {
       EX_S: String(game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.NEUTRAL_COLOR_EX)),
     },
     HOSTILE: {
-      INT: parseInt(String(game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.HOSTILE_COLOR)).substr(1), 16),
-      EX: parseInt(String(game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.HOSTILE_COLOR_EX)).substr(1), 16),
+      INT: Color.fromString(game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.HOSTILE_COLOR)),
+      EX: Color.fromString(game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.HOSTILE_COLOR_EX)),
       ICON: "",
       TEXTURE_INT: PIXI.Texture.EMPTY,
       TEXTURE_EX: PIXI.Texture.EMPTY,
@@ -609,8 +606,8 @@ export function colorBorderFaction(token) {
       EX_S: String(game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.HOSTILE_COLOR_EX)),
     },
     PARTY: {
-      INT: parseInt(String(game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.PARTY_COLOR)).substr(1), 16),
-      EX: parseInt(String(game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.PARTY_COLOR_EX)).substr(1), 16),
+      INT: Color.fromString(game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.PARTY_COLOR)),
+      EX: Color.fromString(game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.PARTY_COLOR_EX)),
       ICON: "",
       TEXTURE_INT: PIXI.Texture.EMPTY,
       TEXTURE_EX: PIXI.Texture.EMPTY,
@@ -618,15 +615,12 @@ export function colorBorderFaction(token) {
       EX_S: String(game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.PARTY_COLOR_EX)),
     },
     ACTOR_FOLDER_COLOR: {
-      INT: parseInt(String(color).substr(1), 16),
-      EX: parseInt(
-        String(game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.ACTOR_FOLDER_COLOR_EX)).substr(1),
-        16,
-      ),
+      INT: Color.fromString(color ? String(color) : CONSTANTS.DEFAULTS.ACTOR_FOLDER_COLOR_EX),
+      EX: Color.fromString(game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.ACTOR_FOLDER_COLOR_EX)),
       ICON: icon ? String(icon) : "",
       TEXTURE_INT: PIXI.Texture.EMPTY,
       TEXTURE_EX: PIXI.Texture.EMPTY,
-      INT_S: String(color),
+      INT_S: color ? String(color) : CONSTANTS.DEFAULTS.ACTOR_FOLDER_COLOR_EX,
       EX_S: String(game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.ACTOR_FOLDER_COLOR_EX)),
     },
   };
@@ -635,12 +629,11 @@ export function colorBorderFaction(token) {
 
   if (isBorderCustom) {
     const customColorInt = token.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.FACTION_CUSTOM_COLOR_INT);
-
     const customColorExt = token.document.getFlag(CONSTANTS.MODULE_ID, CONSTANTS.FLAGS.FACTION_CUSTOM_COLOR_EXT);
 
     return {
-      INT: parseInt(String(customColorInt).substr(1), 16),
-      EX: parseInt(String(customColorExt).substr(1), 16),
+      INT: Color.fromString(String(customColorInt)),
+      EX: Color.fromString(String(customColorExt)),
       ICON: "",
       TEXTURE_INT: PIXI.Texture.EMPTY,
       TEXTURE_EX: PIXI.Texture.EMPTY,
