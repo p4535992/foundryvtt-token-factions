@@ -81,23 +81,24 @@ export function shouldSkipDrawing(token) {
 }
 
 export function drawBeveledBorder(token, container, borderColor) {
-  const frameWidth =
-    canvas.grid?.sizeX * (game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.BORDER_WIDTH) / 100);
+  const { textureScaleX, textureScaleY } = getTextureScale(token);
 
-  const tokenBorderWidth = getTokenBorderWidth(token);
+  const borderWidth = getTokenBorderWidth(token);
   const borderOffset = game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.BORDER_OFFSET);
   const borderScale = getBorderScale();
   const frameOpacity = getFrameOpacity(token);
   const baseOpacity = getBaseOpacity(token);
   const fillTexture = game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.FILL_TEXTURE);
 
-  const halfBorderWidth = Math.round(tokenBorderWidth / 2);
-  const quarterBorderWidth = Math.round(halfBorderWidth / 2);
+  const tokenCenterX = token.w / 2;
+  const tokenCenterY = token.h / 2;
+  const tokenBorderRadiusX = (token.w * textureScaleX) / 2;
+  const tokenBorderRadiusY = (token.h * textureScaleY) / 2;
 
-  const outerRing = _drawGradient(token, borderColor.INT, bevelGradient);
+  const halfBorderWidth = Math.round(borderWidth / 2);
 
+  const outerRing = _drawGradient(token, borderColor.EX, bevelGradient);
   const innerRing = _drawGradient(token, borderColor.INT, bevelGradient);
-
   const ringTexture = _drawTexture(token, borderColor.INT, bevelTexture);
 
   const outerRingMask = new PIXI.Graphics();
@@ -114,12 +115,12 @@ export function drawBeveledBorder(token, container, borderColor) {
 
     factionBorder
       .beginFill(Color.from(borderColor.EX), baseOpacity)
-      .lineStyle(tokenBorderWidth * borderScale, borderColor.EX, 0.8)
+      .lineStyle(borderWidth * borderScale, borderColor.EX, 0.8)
       .drawEllipse(
-        token.w / 2,
-        token.h / 2,
-        token.w / 2 - tokenBorderWidth - borderOffset,
-        token.h / 2 - tokenBorderWidth - borderOffset,
+        tokenCenterX,
+        tokenCenterY,
+        tokenBorderRadiusX - borderWidth - borderOffset,
+        tokenBorderRadiusY - borderWidth - borderOffset,
       )
       .beginTextureFill({
         texture: PIXI.Texture.EMPTY,
@@ -132,10 +133,10 @@ export function drawBeveledBorder(token, container, borderColor) {
       .beginFill(Color.from(borderColor.INT), baseOpacity)
       .lineStyle(halfBorderWidth * borderScale, Color.from(borderColor.INT), 1.0)
       .drawEllipse(
-        token.w / 2,
-        token.h / 2,
-        token.w / 2 - halfBorderWidth - tokenBorderWidth / 2 - borderOffset,
-        token.h / 2 - halfBorderWidth - tokenBorderWidth / 2 - borderOffset,
+        tokenCenterX,
+        tokenCenterY,
+        tokenBorderRadiusX - halfBorderWidth - borderWidth / 2 - borderOffset,
+        tokenBorderRadiusY - halfBorderWidth - borderWidth / 2 - borderOffset,
       )
       .beginTextureFill({
         texture: PIXI.Texture.EMPTY,
@@ -146,21 +147,36 @@ export function drawBeveledBorder(token, container, borderColor) {
   }
 
   outerRingMask
-    .lineStyle(halfBorderWidth * borderScale, borderColor.EX, 1.0)
+    .lineStyle(borderWidth * borderScale, borderColor.EX, 1.0)
     .beginFill(Color.from(0xffffff), 0.0)
-    .drawEllipse(token.w / 2, token.h / 2, (token.w - frameWidth) / 2, (token.h - frameWidth) / 2)
+    .drawEllipse(
+      tokenCenterX,
+      tokenCenterY,
+      tokenBorderRadiusX - borderWidth - borderOffset,
+      tokenBorderRadiusY - borderWidth - borderOffset,
+    )
     .endFill();
 
   innerRingMask
     .lineStyle(halfBorderWidth * borderScale, borderColor.EX, 1.0)
     .beginFill(Color.from(0xffffff), 0.0)
-    .drawEllipse(token.w / 2, token.h / 2, (token.w - frameWidth) / 2, (token.h - frameWidth) / 2)
+    .drawEllipse(
+      tokenCenterX,
+      tokenCenterY,
+      tokenBorderRadiusX - halfBorderWidth - borderWidth / 2 - borderOffset,
+      tokenBorderRadiusY - halfBorderWidth - borderWidth / 2 - borderOffset,
+    )
     .endFill();
 
   ringTextureMask
     .lineStyle(halfBorderWidth * borderScale, borderColor.EX, 1.0)
     .beginFill(Color.from(0xffffff), 0.0)
-    .drawEllipse(token.w / 2, token.h / 2, (token.w - frameWidth) / 2, (token.h - frameWidth) / 2)
+    .drawEllipse(
+      tokenCenterX,
+      tokenCenterY,
+      tokenBorderRadiusX - halfBorderWidth - borderWidth / 2 - borderOffset,
+      tokenBorderRadiusY - halfBorderWidth - borderWidth / 2 - borderOffset,
+    )
     .endFill();
 
   container.addChild(outerRing);
@@ -492,7 +508,6 @@ export function colorBorderFaction(token) {
   const colorFrom = game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.COLOR_FROM);
 
   let color;
-  let icon;
 
   if (colorFrom === "token-disposition") {
     const disposition = TokenFactions.dispositionKey(token);
@@ -503,7 +518,6 @@ export function colorBorderFaction(token) {
   } else if (colorFrom === "actor-folder-color") {
     if (token.actor && token.actor.folder && token.actor.folder) {
       color = token.actor.folder.color;
-      icon = token.actor.folder.icon;
     }
   } else {
     // colorFrom === 'custom-disposition'
@@ -518,42 +532,36 @@ export function colorBorderFaction(token) {
     CONTROLLED: {
       INT: Color.fromString(game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.CONTROLLED_COLOR)),
       EX: Color.fromString(game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.CONTROLLED_COLOR_EX)),
-      ICON: "",
       INT_S: String(game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.CONTROLLED_COLOR)),
       EX_S: String(game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.CONTROLLED_COLOR_EX)),
     },
     FRIENDLY: {
       INT: Color.fromString(game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.FRIENDLY_COLOR)),
       EX: Color.fromString(game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.FRIENDLY_COLOR_EX)),
-      ICON: "",
       INT_S: String(game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.FRIENDLY_COLOR)),
       EX_S: String(game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.FRIENDLY_COLOR_EX)),
     },
     NEUTRAL: {
       INT: Color.fromString(game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.NEUTRAL_COLOR)),
       EX: Color.fromString(game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.NEUTRAL_COLOR_EX)),
-      ICON: "",
       INT_S: String(game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.NEUTRAL_COLOR)),
       EX_S: String(game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.NEUTRAL_COLOR_EX)),
     },
     HOSTILE: {
       INT: Color.fromString(game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.HOSTILE_COLOR)),
       EX: Color.fromString(game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.HOSTILE_COLOR_EX)),
-      ICON: "",
       INT_S: String(game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.HOSTILE_COLOR)),
       EX_S: String(game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.HOSTILE_COLOR_EX)),
     },
     PARTY: {
       INT: Color.fromString(game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.PARTY_COLOR)),
       EX: Color.fromString(game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.PARTY_COLOR_EX)),
-      ICON: "",
       INT_S: String(game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.PARTY_COLOR)),
       EX_S: String(game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.PARTY_COLOR_EX)),
     },
     ACTOR_FOLDER_COLOR: {
       INT: Color.fromString(color ? String(color) : CONSTANTS.DEFAULTS.ACTOR_FOLDER_COLOR_EX),
       EX: Color.fromString(game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.ACTOR_FOLDER_COLOR_EX)),
-      ICON: icon ? String(icon) : "",
       INT_S: color ? String(color) : CONSTANTS.DEFAULTS.ACTOR_FOLDER_COLOR_EX,
       EX_S: String(game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.ACTOR_FOLDER_COLOR_EX)),
     },
@@ -568,22 +576,21 @@ export function colorBorderFaction(token) {
     return {
       INT: Color.fromString(String(customColorInt)),
       EX: Color.fromString(String(customColorExt)),
-      ICON: "",
       INT_S: String(customColorInt),
       EX_S: String(customColorExt),
     };
   } else if (colorFrom === "token-disposition") {
     const disPath = CONST.TOKEN_DISPOSITIONS;
-    const d = parseInt(token.document.disposition);
+    const disposition = parseInt(token.document.disposition);
     let borderColor = new FactionBorderGraphics();
 
     if (!game.user?.isGM && token.isOwner) {
       borderColor = overrides.CONTROLLED;
     } else if (token.actor?.hasPlayerOwner) {
       borderColor = overrides.PARTY;
-    } else if (d === disPath.FRIENDLY) {
+    } else if (disposition === disPath.FRIENDLY) {
       borderColor = overrides.FRIENDLY;
-    } else if (d === disPath.NEUTRAL) {
+    } else if (disposition === disPath.NEUTRAL) {
       borderColor = overrides.NEUTRAL;
     } else {
       borderColor = overrides.HOSTILE;
