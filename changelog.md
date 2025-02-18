@@ -1,3 +1,7 @@
+### 12.0.2
+
+- Fix https://github.com/p4535992/foundryvtt-token-factions/pull/35 ty to @DaniilTurceac
+
 ### 12.0.0-1 BETA (Breaking Changes)
 
 - Big rewrite https://github.com/p4535992/foundryvtt-token-factions/pull/34/files# ty to @DaniilTurceac
@@ -8,14 +12,14 @@
 
 ### 0.5.1
 
-- Bug fix: https://github.com/p4535992/foundryvtt-token-factions/issues/30 ty to @strongpauly 
-- Apply PR: https://github.com/p4535992/foundryvtt-token-factions/pull/31 ty to @strongpauly 
+- Bug fix: https://github.com/p4535992/foundryvtt-token-factions/issues/30 ty to @strongpauly
+- Apply PR: https://github.com/p4535992/foundryvtt-token-factions/pull/31 ty to @strongpauly
 
-### 0.5.0 
+### 0.5.0
 
 - Rewrite some code
 
-### 0.4.9 
+### 0.4.9
 
 - Try to fix: with suggestion from Freeze023
 
