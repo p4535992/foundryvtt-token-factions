@@ -1,3 +1,7 @@
+### 12.0.3
+
+- Fix https://github.com/p4535992/foundryvtt-token-factions/pull/36 ty to @DaniilTurceac
+
 ### 12.0.2
 
 - Fix https://github.com/p4535992/foundryvtt-token-factions/pull/35 ty to @DaniilTurceac

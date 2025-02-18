@@ -2,7 +2,7 @@
   "id": "token-factions",
   "title": "Token Factions",
   "description": "Generate token bases based on token disposition or actor folder color.",
-  "version": "12.0.2",
+  "version": "12.0.3",
   "library": "false",
   "authors": [
     {
@@ -75,8 +75,8 @@
     "maximum": 12
   },
   "url": "https://github.com/p4535992/foundryvtt-token-factions",
-  "manifest": "https://github.com/p4535992/foundryvtt-token-factions/releases/download/12.0.2/module.json",
-  "download": "https://github.com/p4535992/foundryvtt-token-factions/releases/download/12.0.2/module.zip",
+  "manifest": "https://github.com/p4535992/foundryvtt-token-factions/releases/download/12.0.3/module.json",
+  "download": "https://github.com/p4535992/foundryvtt-token-factions/releases/download/12.0.3/module.zip",
   "readme": "https://github.com/p4535992/foundryvtt-token-factions/blob/master/README.md",
   "changelog": "https://github.com/p4535992/foundryvtt-token-factions/blob/master/CHANGELOG.md",
   "bugs": "https://github.com/p4535992/foundryvtt-token-factions/issues",
