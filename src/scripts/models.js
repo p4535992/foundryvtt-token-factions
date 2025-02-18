@@ -1,19 +1,13 @@
 export class FactionBorderGraphics {
-  INT = 0;
-  EX = 0;
-  ICON = "";
-  TEXTURE_INT = PIXI.Texture.EMPTY;
-  TEXTURE_EX = PIXI.Texture.EMPTY;
-  INT_S = "";
-  EX_S = "";
+  INT = Color.from(0);
+  EX = Color.from(0);
+  INT_S = "000";
+  EX_S = "000";
 
   constructor() {
-    this.INT = 0;
-    this.EX = 0;
-    this.ICON = "";
-    this.TEXTURE_INT = PIXI.Texture.EMPTY;
-    this.TEXTURE_EX = PIXI.Texture.EMPTY;
-    this.INT_S = "";
-    this.EX_S = "";
+    this.INT = Color.from(0);
+    this.EX = Color.from(0);
+    this.INT_S = "000";
+    this.EX_S = "000";
   }
 }
