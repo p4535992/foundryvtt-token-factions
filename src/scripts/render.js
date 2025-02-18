@@ -83,7 +83,6 @@ export function shouldSkipDrawing(token) {
 export function drawBeveledBorder(token, container, borderColor) {
   const { textureScaleX, textureScaleY } = getTextureScale(token);
 
-  const borderWidth = getTokenBorderWidth(token);
   const borderOffset = game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.BORDER_OFFSET);
   const borderScale = getBorderScale();
   const frameOpacity = getFrameOpacity(token);
@@ -95,9 +94,11 @@ export function drawBeveledBorder(token, container, borderColor) {
   const tokenBorderRadiusX = (token.w * textureScaleX) / 2;
   const tokenBorderRadiusY = (token.h * textureScaleY) / 2;
 
-  const halfBorderWidth = Math.round(borderWidth / 2);
+  const borderWidth = getTokenBorderWidth(token);
+  const scaledBorderWidth = borderWidth * borderScale;
+  const scaledHalfBorderWidth = scaledBorderWidth / 2;
 
-  const outerRing = _drawGradient(token, borderColor.EX, bevelGradient);
+  const outerRing = _drawGradient(token, borderColor.INT, bevelGradient);
   const innerRing = _drawGradient(token, borderColor.INT, bevelGradient);
   const ringTexture = _drawTexture(token, borderColor.INT, bevelTexture);
 
@@ -115,12 +116,12 @@ export function drawBeveledBorder(token, container, borderColor) {
 
     factionBorder
       .beginFill(Color.from(borderColor.EX), baseOpacity)
-      .lineStyle(borderWidth * borderScale, borderColor.EX, 0.8)
+      .lineStyle(scaledBorderWidth, borderColor.EX, 0.8)
       .drawEllipse(
         tokenCenterX,
         tokenCenterY,
-        tokenBorderRadiusX - borderWidth - borderOffset,
-        tokenBorderRadiusY - borderWidth - borderOffset,
+        tokenBorderRadiusX - scaledBorderWidth - borderOffset,
+        tokenBorderRadiusY - scaledBorderWidth - borderOffset,
       )
       .beginTextureFill({
         texture: PIXI.Texture.EMPTY,
@@ -131,12 +132,12 @@ export function drawBeveledBorder(token, container, borderColor) {
 
     factionBorder
       .beginFill(Color.from(borderColor.INT), baseOpacity)
-      .lineStyle(halfBorderWidth * borderScale, Color.from(borderColor.INT), 1.0)
+      .lineStyle(scaledHalfBorderWidth, Color.from(borderColor.INT), 1.0)
       .drawEllipse(
         tokenCenterX,
         tokenCenterY,
-        tokenBorderRadiusX - halfBorderWidth - borderWidth / 2 - borderOffset,
-        tokenBorderRadiusY - halfBorderWidth - borderWidth / 2 - borderOffset,
+        tokenBorderRadiusX - scaledHalfBorderWidth - scaledBorderWidth / 2 - borderOffset,
+        tokenBorderRadiusY - scaledHalfBorderWidth - scaledBorderWidth / 2 - borderOffset,
       )
       .beginTextureFill({
         texture: PIXI.Texture.EMPTY,
@@ -147,35 +148,38 @@ export function drawBeveledBorder(token, container, borderColor) {
   }
 
   outerRingMask
-    .lineStyle(borderWidth * borderScale, borderColor.EX, 1.0)
+    .lineStyle(scaledHalfBorderWidth, borderColor.EX, 1.0)
     .beginFill(Color.from(0xffffff), 0.0)
     .drawEllipse(
       tokenCenterX,
       tokenCenterY,
-      tokenBorderRadiusX - borderWidth - borderOffset,
-      tokenBorderRadiusY - borderWidth - borderOffset,
+      tokenBorderRadiusX - scaledBorderWidth - borderOffset,
+      tokenBorderRadiusY - scaledBorderWidth - borderOffset,
     )
     .endFill();
 
+  innerRing.anchor.set(1);
+  innerRing.rotation = Math.PI;
+
   innerRingMask
-    .lineStyle(halfBorderWidth * borderScale, borderColor.EX, 1.0)
+    .lineStyle(scaledHalfBorderWidth, borderColor.EX, 1.0)
     .beginFill(Color.from(0xffffff), 0.0)
     .drawEllipse(
       tokenCenterX,
       tokenCenterY,
-      tokenBorderRadiusX - halfBorderWidth - borderWidth / 2 - borderOffset,
-      tokenBorderRadiusY - halfBorderWidth - borderWidth / 2 - borderOffset,
+      tokenBorderRadiusX - scaledBorderWidth - borderOffset - scaledHalfBorderWidth,
+      tokenBorderRadiusY - scaledBorderWidth - borderOffset - scaledHalfBorderWidth,
     )
     .endFill();
 
   ringTextureMask
-    .lineStyle(halfBorderWidth * borderScale, borderColor.EX, 1.0)
+    .lineStyle(scaledBorderWidth, borderColor.EX, 1.0)
     .beginFill(Color.from(0xffffff), 0.0)
     .drawEllipse(
       tokenCenterX,
       tokenCenterY,
-      tokenBorderRadiusX - halfBorderWidth - borderWidth / 2 - borderOffset,
-      tokenBorderRadiusY - halfBorderWidth - borderWidth / 2 - borderOffset,
+      tokenBorderRadiusX - scaledBorderWidth - borderOffset - scaledHalfBorderWidth / 2,
+      tokenBorderRadiusY - scaledBorderWidth - borderOffset - scaledHalfBorderWidth / 2,
     )
     .endFill();
 
@@ -290,7 +294,8 @@ export function drawCircleBorder(
   baseOpacity,
 ) {
   const { textureScaleX, textureScaleY } = getTextureScale(token);
-  const halfBorderWidth = Math.round(borderWidth / 2);
+  const scaledBorderWidth = borderWidth * borderScale;
+  const scaledBorderHalfWidth = borderWidth * borderScale;
 
   const tokenCenterX = token.w / 2;
   const tokenCenterY = token.h / 2;
@@ -301,12 +306,12 @@ export function drawCircleBorder(
   if (isFilled) {
     graphics
       .beginFill(Color.from(borderColor.EX), baseOpacity)
-      .lineStyle(borderWidth * borderScale, borderColor.EX, 0.8)
+      .lineStyle(scaledBorderWidth, borderColor.EX, 0.8)
       .drawEllipse(
         tokenCenterX,
         tokenCenterY,
-        tokenBorderRadiusX - borderWidth - borderOffset,
-        tokenBorderRadiusY - borderWidth - borderOffset,
+        tokenBorderRadiusX - scaledBorderWidth - borderOffset,
+        tokenBorderRadiusY - scaledBorderWidth - borderOffset,
       )
       .beginTextureFill({
         texture: PIXI.Texture.EMPTY,
@@ -317,12 +322,12 @@ export function drawCircleBorder(
 
     graphics
       .beginFill(Color.from(borderColor.INT), baseOpacity)
-      .lineStyle(halfBorderWidth * borderScale, Color.from(borderColor.INT), 1.0)
+      .lineStyle(scaledBorderHalfWidth, Color.from(borderColor.INT), 1.0)
       .drawEllipse(
         tokenCenterX,
         tokenCenterY,
-        tokenBorderRadiusX - halfBorderWidth - borderWidth / 2 - borderOffset,
-        tokenBorderRadiusY - halfBorderWidth - borderWidth / 2 - borderOffset,
+        tokenBorderRadiusX - scaledBorderHalfWidth - scaledBorderWidth / 2 - borderOffset,
+        tokenBorderRadiusY - scaledBorderHalfWidth - scaledBorderWidth / 2 - borderOffset,
       )
       .beginTextureFill({
         texture: PIXI.Texture.EMPTY,
@@ -333,21 +338,21 @@ export function drawCircleBorder(
   }
 
   graphics
-    .lineStyle(borderWidth * borderScale, borderColor.EX, 0.8)
+    .lineStyle(scaledBorderWidth, borderColor.EX, 0.8)
     .drawEllipse(
       tokenCenterX,
       tokenCenterY,
-      tokenBorderRadiusX - borderWidth - borderOffset,
-      tokenBorderRadiusY - borderWidth - borderOffset,
+      tokenBorderRadiusX - scaledBorderWidth - borderOffset,
+      tokenBorderRadiusY - scaledBorderWidth - borderOffset,
     );
 
   graphics
-    .lineStyle(halfBorderWidth * borderScale, Color.from(borderColor.INT), 1.0)
+    .lineStyle(scaledBorderHalfWidth, Color.from(borderColor.INT), 1.0)
     .drawEllipse(
       tokenCenterX,
       tokenCenterY,
-      tokenBorderRadiusX - halfBorderWidth - borderWidth / 2 - borderOffset,
-      tokenBorderRadiusY - halfBorderWidth - borderWidth / 2 - borderOffset,
+      tokenBorderRadiusX - scaledBorderHalfWidth - scaledBorderWidth / 2 - borderOffset,
+      tokenBorderRadiusY - scaledBorderHalfWidth - scaledBorderWidth / 2 - borderOffset,
     );
 }
 
