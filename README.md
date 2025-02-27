@@ -43,11 +43,6 @@ To install this module manually:
 
 This module uses the [libWrapper](https://github.com/ruipin/fvtt-lib-wrapper) library for wrapping core methods. It is a hard dependency and it is recommended for the best experience and compatibility with other modules.
 
-## Known issue
-
-- The old "BLevel" frame style not work anymore, but i'll try for the feature to make more customizable faction image, there are already may options, but i don' have time for all the others. FOR NOW JUST USE THE FLAT SETTING
-- [With the fvtt 10 the border is now hidden behind the faction drawing](https://github.com/p4535992/foundryvtt-token-factions/issues/6)
-
 ## Configuration
 
 ![alt text](./wiki/default-settings.png?raw=true)
