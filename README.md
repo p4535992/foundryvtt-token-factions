@@ -27,13 +27,6 @@ Artwork and assets kindly provided by and used with permission of Caeora. [www.c
 
 ## NOTE: This module is under maintenance, I have no plans to update or add features. However, I will try to fix any bugs as possible. Any contribution is welcome.
 
-**Part of the code of this is module is inspired from the  wonderful work done by [kandashi](https://github.com/kandashi) with its [Border-Control](https://github.com/kandashi/Border-Control) and [Levels](https://github.com/theripper93/Levels) module.
-If you want to support more modules of this kind, I invite you to go and support his patreon.**
-
-[![alt-text](https://img.shields.io/badge/-Patreon-%23ff424d?style=for-the-badge)](https://www.patreon.com/kandashi)
-
-## NOTE: If you are a javascript developer and not a typescript developer, you can just use the javascript files under the dist folder
-
 ## Installation
 
 It's always easiest to install modules from the in game add-on browser.
