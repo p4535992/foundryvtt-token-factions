@@ -1,17 +1,20 @@
-import CONSTANTS from "./constants.js";
+import CONSTANTS from "./constants";
+import { ModuleSettings } from "./settings";
 
-export function handelRenderSettingsConfig(app, el, data) {
-  const neutralColor = game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.NEUTRAL_COLOR);
-  const friendlyColor = game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.FRIENDLY_COLOR);
-  const hostileColor = game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.HOSTILE_COLOR);
-  const controlledColor = game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.CONTROLLED_COLOR);
-  const partyColor = game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.PARTY_COLOR);
-  const neutralColorEx = game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.NEUTRAL_COLOR_EX);
-  const friendlyColorEx = game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.FRIENDLY_COLOR_EX);
-  const hostileColorEx = game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.HOSTILE_COLOR_EX);
-  const controlledColorEx = game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.CONTROLLED_COLOR_EX);
-  const partyColorEx = game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.PARTY_COLOR_EX);
-  const actorFolderColorEx = game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.ACTOR_FOLDER_COLOR_EX);
+declare const game: Game; 
+
+export function handelRenderSettingsConfig(app: SettingsConfig, el: JQuery, data: object): void {
+  const neutralColor = ModuleSettings.getNeutralColor();
+  const friendlyColor = ModuleSettings.getFriendlyColor();
+  const hostileColor = ModuleSettings.getHostileColor();
+  const controlledColor = ModuleSettings.getControlledColor();
+  const partyColor = ModuleSettings.getPartyColor();
+  const neutralColorEx = ModuleSettings.getNeutralColorEx();
+  const friendlyColorEx = ModuleSettings.getFriendlyColorEx();
+  const hostileColorEx = ModuleSettings.getHostileColorEx();
+  const controlledColorEx = ModuleSettings.getControlledColorEx();
+  const partyColorEx = ModuleSettings.getPartyColorEx();
+  const actorFolderColorEx = ModuleSettings.getActorFolderColorEx();
 
   el.find(`[name="${CONSTANTS.MODULE_ID}.${CONSTANTS.SETTINGS.NEUTRAL_COLOR}"]`)
     .parent()
@@ -70,4 +73,4 @@ export function handelRenderSettingsConfig(app, el, data) {
     .append(
       `<input type="color" value="${actorFolderColorEx}" data-edit="${CONSTANTS.MODULE_ID}.${CONSTANTS.SETTINGS.ACTOR_FOLDER_COLOR_EX}">`,
     );
-}
+} 

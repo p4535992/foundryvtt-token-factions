@@ -8,7 +8,7 @@
   "token-factions.setting.base-opacity.name": "Base Opacity",
   "token-factions.setting.base-opacity.hint": "Set the alpha gradient on the texture",
 
-  "token-factions.setting.color-from.name": "Generate Token Faction Color From",
+  "token-factions.setting.color-from.name": "Generate Faction Color From",
   "token-factions.setting.color-from.hint": " ",
 
   "token-factions.setting.color-from.opt.token-disposition": "Default: A Token's Disposition",
@@ -121,7 +121,7 @@
   "token-factions.setting.overrideBorderGraphic.hint": "This will not work with 'Border Control' module active",
 
   "token-factions.tokeconfig.factions": "Factions",
-  "token-factions.tokeconfig.disableBorder": "Disable Faction Border",
+  "token-factions.tokeconfig.enableBorder": "Enable border",
   "token-factions.tokeconfig.customBorder": "Custom border",
   "token-factions.tokeconfig.customColorInt": "Custom color token (INT)",
   "token-factions.tokeconfig.customColorExt": "Custom color token (EXT)",
@@ -133,6 +133,8 @@
   "token-factions.label.applyCustomColor": "Apply custom color",
   "token-factions.label.doNothing": "Do nothing",
 
+  "token-factions.setting.enable-default.name": "Enable Faction for all tokens",
+  "token-factions.setting.enable-default.hint": "Token faction will be enabled by default for all tokens. You can still disable it for specific tokens.",
   "token-factions.setting.reset.name": "Reset settings to default",
   "token-factions.setting.reset.label": "Reset Settings To Default",
   "token-factions.setting.reset.hint": "This will reset all of the settings of back to the active game system's default.",

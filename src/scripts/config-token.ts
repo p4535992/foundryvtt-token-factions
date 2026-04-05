@@ -1,10 +1,13 @@
-import CONSTANTS from "./constants.js";
-import Logger from "./lib/Logger.js";
-import { injectConfig } from "./lib/injectConfig.js";
-import { isRealBoolean, isRealNumber } from "./lib/lib.js";
+import CONSTANTS from "./constants";
+import Logger from "./lib/Logger";
+import { injectConfig } from "./lib/injectConfig";
+import { isRealBoolean, isRealNumber } from "./lib/lib";
+import { ModuleSettings } from "./settings";
 
-export const renderTokenConfig = async function (config, html) {
-  renderTokenConfigHandler(config, html);
+declare const game: Game; 
+
+export const renderTokenConfig = async function (config: TokenConfig, html: JQuery): Promise<void> {
+  await renderTokenConfigHandler(config, html); // Added await here as renderTokenConfigHandler is async
 };
 
 /**
@@ -16,14 +19,14 @@ export const renderTokenConfig = async function (config, html) {
  * @param {TokenConfig} tokenConfig
  * @param {JQuery} html
  */
-async function renderTokenConfigHandler(tokenConfig, html) {
+async function renderTokenConfigHandler(tokenConfig: TokenConfig, html: JQuery): Promise<void> {
   if (!html) {
     return;
   }
 
   injectConfig.inject(
     tokenConfig,
-    html,
+    $(html),
     {
       moduleId: CONSTANTS.MODULE_ID,
       tab: {
@@ -32,39 +35,34 @@ async function renderTokenConfigHandler(tokenConfig, html) {
         icon: "fas fa-user-circle",
       },
     },
-    tokenConfig.object,
+    tokenConfig.object as TokenDocument // Added type assertion
   );
 
-  const posTab = html.find(`.tab[data-tab="${CONSTANTS.MODULE_ID}"]`);
-  const tokenFlags = tokenConfig.options.sheetConfig
-    ? tokenConfig.object.flags
-      ? tokenConfig.object.flags[CONSTANTS.MODULE_ID] || {}
-      : {}
-    : tokenConfig.token.flags
-      ? tokenConfig.token.flags[CONSTANTS.MODULE_ID] || {}
-      : {};
-
+  const posTab = $(html).find(`.tab[data-tab="${CONSTANTS.MODULE_ID}"]`);
+  const tokenDocument = tokenConfig.document as TokenDocument;
+  const tokenFlags = tokenDocument.flags[CONSTANTS.MODULE_ID] || {};
+  
   const data = {
-    disableBorder: isRealBoolean(tokenFlags[CONSTANTS.FLAGS.FACTION_DISABLE_BORDER])
-      ? Boolean(tokenFlags[CONSTANTS.FLAGS.FACTION_DISABLE_BORDER])
+    enableBorder: isRealBoolean(tokenFlags[CONSTANTS.FLAGS.FACTION_ENABLE_BORDER])
+      ? Boolean(tokenFlags[CONSTANTS.FLAGS.FACTION_ENABLE_BORDER])
       : false,
     customBorder: isRealBoolean(tokenFlags[CONSTANTS.FLAGS.FACTION_CUSTOM_BORDER])
       ? Boolean(tokenFlags[CONSTANTS.FLAGS.FACTION_CUSTOM_BORDER])
       : false,
     customColorInt:
       tokenFlags[CONSTANTS.FLAGS.FACTION_CUSTOM_COLOR_INT] ||
-      game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.HOSTILE_COLOR),
+      ModuleSettings.getHostileColor(),
     customColorExt:
       tokenFlags[CONSTANTS.FLAGS.FACTION_CUSTOM_COLOR_EXT] ||
-      game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.HOSTILE_COLOR_EX),
+      ModuleSettings.getHostileColorEx(),
     customFrameOpacity: isRealNumber(tokenFlags[CONSTANTS.FLAGS.FACTION_CUSTOM_FRAME_OPACITY])
       ? tokenFlags[CONSTANTS.FLAGS.FACTION_CUSTOM_FRAME_OPACITY]
-      : game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.FRAME_OPACITY),
+      : ModuleSettings.getFrameOpacity(),
     customBaseOpacity: isRealNumber(tokenFlags[CONSTANTS.FLAGS.FACTION_CUSTOM_BASE_OPACITY])
       ? tokenFlags[CONSTANTS.FLAGS.FACTION_CUSTOM_BASE_OPACITY]
-      : game.settings.get(CONSTANTS.MODULE_ID, CONSTANTS.SETTINGS.BASE_OPACITY),
+      : ModuleSettings.getBaseOpacity(),
   };
 
   const insertHTML = await renderTemplate(`modules/${CONSTANTS.MODULE_ID}/templates/token-config.html`, data);
   posTab.append(insertHTML);
-}
+} 

@@ -9,23 +9,25 @@
  * Software License: [your license] Put your desired license here, which
  * 					 determines how others may use and modify your module
  */
-// Import JavaScript modules
-
 // Import TypeScript modules
-import { registerSettings } from "./scripts/settings.js";
-import { initHooks, readyHooks, setupHooks } from "./scripts/hooks.js";
-import CONSTANTS from "./scripts/constants.js";
-import API from "./scripts/api.js";
-import Logger from "./scripts/lib/Logger.js";
+import { initHooks, readyHooks, setupHooks } from "./scripts/hooks";
+import CONSTANTS from "./scripts/constants";
+import API from "./scripts/api";
+import Logger from "./scripts/lib/Logger";
+import { initTokenFlags } from "./scripts/lib/utils";
+import { registerSettings } from "./scripts/settings";
+
+declare const game: Game; 
 
 /* ------------------------------------ */
 /* Initialize module					*/
 /* ------------------------------------ */
 Hooks.once("init", () => {
   console.log(`${CONSTANTS.MODULE_ID} | Initializing ${CONSTANTS.MODULE_ID}`);
+  initTokenFlags();
 
   // Do anything once the module is ready
-  if (!game.modules.get("lib-wrapper")?.active && game.user?.isGM) {
+  if (!game.modules?.get("lib-wrapper")?.active && game.user?.isGM) {
     let word = "install and activate";
     if (game.modules.get("lib-wrapper")) word = "activate";
     throw Logger.error(`Requires the 'libWrapper' module. Please ${word} it.`);

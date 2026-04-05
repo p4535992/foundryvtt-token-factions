@@ -1,3 +1,7 @@
+### 13.0.0
+
+- Update manifest for v13 only compatibility
+
 ### 12.0.3
 
 - Fix https://github.com/p4535992/foundryvtt-token-factions/pull/36 ty to @DaniilTurceac

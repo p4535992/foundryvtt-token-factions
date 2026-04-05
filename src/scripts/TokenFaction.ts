@@ -1,23 +1,20 @@
-import CONSTANTS from "./constants.js";
-import Logger from "./lib/Logger.js";
-import { drawBorderFaction } from "./render.js";
+import CONSTANTS from "./constants";
+import Logger from "./lib/Logger";
+import { drawBorderFaction } from "./render";
 
 export class TokenFaction {
-  // static TOKEN_FACTIONS_FRAME_STYLE = {
-  //   FLAT: "flat",
-  //   BELEVELED: "beveled",
-  //   BORDER: "border",
-  // };
+  token: Token | null;
+  container: PIXI.Container;
 
-  constructor(token) {
+  constructor(token: Token) {
     Logger.debug("Creating token's faction for %s", token.name);
-    token.faction = this;
+    (token as any).faction = this;
     this.token = token;
     this.container = token.addChildAt(this.createTokenContainer(), 0);
     drawBorderFaction(token);
   }
 
-  updateToken() {
+  updateToken(): void {
     if (!this.token) {
       Logger.warn("No token was setup");
       return;
@@ -32,17 +29,20 @@ export class TokenFaction {
     drawBorderFaction(this.token);
   }
 
-  createTokenContainer() {
+  createTokenContainer(): PIXI.Container {
     const container = new PIXI.Container();
     container.name = CONSTANTS.MODULE_ID;
     return container;
   }
 
-  destroy() {
-    Logger.debug("Destroying token's faction for %s", this.token.name);
-    this.token.removeChild(this.container);
+  destroy(): void {
     this.container.destroy();
-    this.token.faction = null;
-    this.token = null;
+    
+    if(this.token){
+        Logger.debug("Destroying token's faction for %s", this.token.name);
+        this.token.removeChild(this.container);
+        (this.token as any).faction = null;
+        this.token = null;
+    }
   }
-}
+} 
